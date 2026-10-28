@@ -11,6 +11,9 @@ services:
     # Used by `docker compose up`; the VS Code dev container overrides it and runs
     # the same steps via `onCreateCommand` / `postStartCommand` instead.
     command: bash .devcontainer/run.sh
+    # Run an init process as PID 1 so that exited Lean servers are reaped (npm doesn't do
+    # this, so they would pile up as zombie processes).
+    init: true
     volumes:
       - ..:/home/node/game
       # Keep Mathlib and build outputs (several GB) in a Docker volume: much faster
