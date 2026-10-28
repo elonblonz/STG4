@@ -1,0 +1,6 @@
+# Keep LF endings everywhere, including Windows checkouts: shell scripts run inside the
+# Linux dev container, and translation keys are extracted from Lean string literals.
+* text=auto eol=lf
+
+*.png binary
+*.afdesign binary

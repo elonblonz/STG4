@@ -9,13 +9,10 @@
   // and https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user
   "remoteUser": "node",
   "updateRemoteUserUID": true,
-  // I don't know why I need this, but I did...
+  // Keep the container alive; the game server is started by `postStartCommand`.
   "overrideCommand": true,
-  "onCreateCommand": {
-    "npm_install": "(cd ~/lean4game && npm install) || echo \"ERROR: `cd ~/lean4game && npm install` failed\", try running it manually in your dev-container!",
-    "lake_build": "(cd ~/game && lake update -R && lake build) || echo \"ERROR: `cd ~/game && lake update -R && lake exe cache get && lake build` failed!, try running it manually in your dev-container!\""
-  },
-  "postStartCommand": "(cd ~/lean4game && export VITE_LEAN4GAME_SINGLE=true && npm start) || echo \"ERROR: Did not start game server! See if you have warnings above, then try to start it manually using `cd ~/lean4game && export VITE_LEAN4GAME_SINGLE=true && npm start`!\"",
+  "onCreateCommand": "bash .devcontainer/run.sh build || echo 'ERROR: build failed, try running `bash .devcontainer/run.sh build` manually in your dev container!'",
+  "postStartCommand": "bash .devcontainer/run.sh serve || echo 'ERROR: Did not start game server! See if you have warnings above, then try `bash .devcontainer/run.sh serve` manually!'",
   "customizations": {
     "vscode": {
       "settings": {

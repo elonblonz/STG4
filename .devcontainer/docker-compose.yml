@@ -1,11 +1,23 @@
-version: "3.9"
-
 services:
   game:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+      # Build against a lean4game fork, e.g.
+      #   LEAN4GAME_REPO=https://github.com/you/lean4game.git LEAN4GAME_REF=my-branch docker compose ... build
+      args:
+        LEAN4GAME_REPO: ${LEAN4GAME_REPO:-https://github.com/leanprover-community/lean4game.git}
+        LEAN4GAME_REF: ${LEAN4GAME_REF:-}
+    # Used by `docker compose up`; the VS Code dev container overrides it and runs
+    # the same steps via `onCreateCommand` / `postStartCommand` instead.
+    command: bash .devcontainer/run.sh
     volumes:
       - ..:/home/node/game
+      # Keep Mathlib and build outputs (several GB) in a Docker volume: much faster
+      # than a bind mount on Windows/macOS, and survives container rebuilds.
+      - lake:/home/node/game/.lake
     ports:
       - "3000:3000"
+
+volumes:
+  lake:
