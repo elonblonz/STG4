@@ -48,4 +48,7 @@ Statement (A B : Set U) (h1 : A ⊆ B) : 𝒫 A ⊆ 𝒫 B := by
 Conclusion
 "
 The converse is also true: if `𝒫 A ⊆ 𝒫 B`, then `A ⊆ B`.  Can you see why?  (Hint: `A ∈ 𝒫 A`.)
+
+How big is a power set?  If `A` has `n` elements, then `𝒫 A` has `2ⁿ` elements: a subset of
+`A` is determined by deciding, for each of the `n` elements of `A`, whether it is in or out.
 "

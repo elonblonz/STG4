@@ -19,6 +19,9 @@ What happens if the subset statement in the last level is reversed?
 \cap (\bigcup G)^c$.  Then $(\bigcup F) \cap (\bigcup G) \subseteq \bigcup (F \cap G)$.-/
 Statement (F G : Set (Set U)) (h1 : ⋃₀ (F ∩ Gᶜ) ⊆ (⋃₀ F) ∩ (⋃₀ G)ᶜ) :
     (⋃₀ F) ∩ (⋃₀ G) ⊆ ⋃₀ (F ∩ G) := by
+  Hint (hidden := true) "**The idea.**  Take `x` in both unions, and choose a set `t ∈ F` with `x ∈ t`.  This
+  `t` will be the witness, so you need to show that `t ∈ G`.  Suppose it isn't.  Then `t ∈ F ∩ Gᶜ`,
+  so `x ∈ ⋃₀ (F ∩ Gᶜ)`, and by `h1`, `x ∉ ⋃₀ G`.  That contradicts `x ∈ ⋃₀ G`."
   intro x h2
   have h2l := h2.left
   have h2r := h2.right

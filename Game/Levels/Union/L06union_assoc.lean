@@ -74,4 +74,14 @@ Conclusion
 You've mastered reasoning about complements, intersections, and unions.  Two worlds are now open:
 in Combination World we'll start mixing these operations up, and in Family Intersection World
 we'll intersect whole families of sets.
+
+**A dictionary.**  Each operation on sets matches a word of logic:
+
+* `x ∈ A ∩ B` means `x ∈ A ∧ x ∈ B` (\"and\")
+* `x ∈ A ∪ B` means `x ∈ A ∨ x ∈ B` (\"or\")
+* `x ∈ Aᶜ` means `¬(x ∈ A)` (\"not\")
+* `A ⊆ B` means `∀ x, x ∈ A → x ∈ B` (\"for all\" and \"if … then\")
+
+That is why proofs about sets use the same moves as proofs in logic.  Coming up: intersections
+and unions of whole families, which match \"for all\" and \"there exists\".
 "

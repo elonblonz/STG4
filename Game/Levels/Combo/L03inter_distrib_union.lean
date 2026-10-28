@@ -64,4 +64,7 @@ Conclusion
 "
 Whew!  That was a long proof.  This theorem is the *distributive law* for intersection over union.
 In the next level you'll prove the other distributive law, for union over intersection.
+
+It looks just like the law `a * (b + c) = a * b + a * c` from arithmetic, with `∩` playing the
+role of `*` and `∪` the role of `+`.
 "

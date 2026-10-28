@@ -71,5 +71,8 @@ Statement (A B : Set U) : A ∆ B = (A ∪ B) \ (A ∩ B) := by
 
 Conclusion
 "
+The symmetric difference is the set version of *exclusive or*: `x ∈ A ∆ B` means that `x`
+is in `A` or in `B`, but not in both.
+
 Congratulations!  You've completed Difference World.
 "

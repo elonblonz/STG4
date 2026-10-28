@@ -18,6 +18,9 @@ Here's a theorem about three related families of sets.
 /-- Suppose $F$, $G$, and $H$ are families of sets, and for every $s \in F$ there is some $u \in G$ such that $s \cap u \in H$.
 Then $(\bigcup F) \cap (\bigcap G) \subseteq \bigcup H$. -/
 Statement (F G H : Set (Set U)) (h1 : ∀ s ∈ F, ∃ u ∈ G, s ∩ u ∈ H) : (⋃₀ F) ∩ (⋂₀ G) ⊆ ⋃₀ H := by
+  Hint (hidden := true) "**The idea.**  Take `x` in both `⋃₀ F` and `⋂₀ G`.  Then `x ∈ t` for some `t ∈ F`.
+  By `h1`, there is a `u ∈ G` with `t ∩ u ∈ H`.  Since `x` is in every set in `G`, `x ∈ u`, so
+  `x ∈ t ∩ u`, which is a set in `H`.  Therefore `x ∈ ⋃₀ H`."
   Hint "Start by introducing `x` and the assumption `x ∈ (⋃₀ F) ∩ (⋂₀ G)`, and then separate
   that assumption into its left and right halves."
   intro x h2

@@ -50,5 +50,10 @@ Statement union_distrib_left (A B C : Set U) : A ∪ (B ∩ C) = (A ∪ B) ∩ (
 
 Conclusion
 "
+This is the second distributive law, and here the analogy with arithmetic breaks down:
+`a + (b * c) = (a + b) * (a + c)` is false for numbers, but for sets both distributive laws hold.
+In fact, any equation built from `∩`, `∪` and `ᶜ` stays true when you swap `∩` and `∪`
+everywhere.
+
 To finish off Combination World, we'll do one more tricky theorem.
 "

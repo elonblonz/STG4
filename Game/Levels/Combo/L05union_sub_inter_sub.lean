@@ -17,6 +17,9 @@ This proof is a bit tricky.  But you should know how to get started.
 
 /-- Suppose $A \cup C \subseteq B \cup C$ and $A \cap C \subseteq B \cap C$.  Then $A \subseteq B$. -/
 Statement (A B C : Set U) (h1 : A ∪ C ⊆ B ∪ C) (h2 : A ∩ C ⊆ B ∩ C) : A ⊆ B := by
+  Hint (hidden := true) "**The idea.**  Take `x ∈ A`.  Then `x ∈ A ∪ C`, so by `h1`, `x ∈ B ∪ C`: either
+  `x ∈ B`, and you are done, or `x ∈ C`.  In the second case `x` is in both `A` and `C`, so `h2`
+  gives `x ∈ B ∩ C`, and in particular `x ∈ B`."
   intro x h3
   Hint (strict := true) "Now use `have` to assert that `{x} ∈ A ∪ C`.  If you don't see right
   away how to justify this assertion, you can just write `have hAC : {x} ∈ A ∪ C` and Lean will

@@ -154,6 +154,110 @@ msgstr ""
 "\n"
 "Abra \"Información del juego\" en el menú \"≡\" en la esquina superior derecha para recursos, enlaces y formas de interactuar con la comunidad de Lean."
 
+#. §0: `h1`
+#. §1: `A`
+#. §2: `A`
+#. §3: `A`
+#. §4: `A`
+#: Game/Levels/FamCombo/L08singleton.lean:31
+msgid ""
+"**The idea.**  Apply §0 to a cleverly chosen family whose union is §1.  If every set\n"
+"in the family is very small, then knowing that §2 is in the family forces §3 itself to be very\n"
+"small.  Which very small sets have §4 as their union?"
+msgstr ""
+"**La idea.**  Aplica §0 a una familia bien elegida cuya unión sea §1.  Si todos los conjuntos\n"
+"de la familia son muy pequeños, saber que §2 está en la familia obliga a que el propio §3 sea muy\n"
+"pequeño.  ¿Qué conjuntos muy pequeños tienen a §4 como unión?"
+
+#. §0: `x`
+#. §1: `t ∈ F`
+#. §2: `x ∈ t`
+#. §3: `t`
+#. §4: `t ∈ G`
+#. §5: `t ∈ F ∩ Gᶜ`
+#. §6: `x ∈ ⋃₀ (F ∩ Gᶜ)`
+#. §7: `h1`
+#. §8: `x ∉ ⋃₀ G`
+#. §9: `x ∈ ⋃₀ G`
+#: Game/Levels/FamCombo/L06unionintunion.lean:22
+msgid ""
+"**The idea.**  Take §0 in both unions, and choose a set §1 with §2.  This\n"
+"§3 will be the witness, so you need to show that §4.  Suppose it isn't.  Then §5,\n"
+"so §6, and by §7, §8.  That contradicts §9."
+msgstr ""
+"**La idea.**  Toma §0 en ambas uniones y elige un conjunto §1 con §2.  Este\n"
+"§3 será el testigo, así que tienes que demostrar que §4.  Supón que no lo está.  Entonces §5,\n"
+"así que §6 y, por §7, §8.  Eso contradice §9."
+
+#. §0: `x`
+#. §1: `⋃₀ F`
+#. §2: `⋂₀ G`
+#. §3: `x ∈ t`
+#. §4: `t ∈ F`
+#. §5: `h1`
+#. §6: `u ∈ G`
+#. §7: `t ∩ u ∈ H`
+#. §8: `x`
+#. §9: `G`
+#. §10: `x ∈ u`
+#. §11: `x ∈ t ∩ u`
+#. §12: `H`
+#. §13: `x ∈ ⋃₀ H`
+#: Game/Levels/FamCombo/L04threefam.lean:21
+msgid ""
+"**The idea.**  Take §0 in both §1 and §2.  Then §3 for some §4.\n"
+"By §5, there is a §6 with §7.  Since §8 is in every set in §9, §10, so\n"
+"§11, which is a set in §12.  Therefore §13."
+msgstr ""
+"**La idea.**  Toma §0 que esté a la vez en §1 y en §2.  Entonces §3 para algún §4.\n"
+"Por §5, existe un §6 con §7.  Como §8 está en todos los conjuntos de §9, §10, así que\n"
+"§11, que es un conjunto de §12.  Por tanto, §13."
+
+#. §0: `x ∈ A`
+#. §1: `x ∈ A ∪ C`
+#. §2: `h1`
+#. §3: `x ∈ B ∪ C`
+#. §4: `x ∈ B`
+#. §5: `x ∈ C`
+#. §6: `x`
+#. §7: `A`
+#. §8: `C`
+#. §9: `h2`
+#. §10: `x ∈ B ∩ C`
+#. §11: `x ∈ B`
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:20
+msgid ""
+"**The idea.**  Take §0.  Then §1, so by §2, §3: either\n"
+"§4, and you are done, or §5.  In the second case §6 is in both §7 and §8, so §9\n"
+"gives §10, and in particular §11."
+msgstr ""
+"**La idea.**  Toma §0.  Entonces §1, así que por §2, §3: o bien\n"
+"§4, y has terminado, o bien §5.  En el segundo caso §6 está a la vez en §7 y en §8, así que §9\n"
+"da §10 y, en particular, §11."
+
+#. §0: `h2`
+#. §1: `s ∈ F`
+#. §2: `G`
+#. §3: `h1`
+#. §4: `s`
+#. §5: `t ∈ G`
+#. §6: `s ⊆ t`
+#. §7: `t ⊆ s`
+#. §8: `s`
+#. §9: `G`
+#. §10: `s = t`
+#. §11: `F`
+#. §12: `G`
+#: Game/Levels/FamCombo/L03commonelt.lean:24
+msgid ""
+"**The idea.**  §0 gives a set §1 that contains every set in §2.  Applying\n"
+"§3 to this §4 gives a set §5 with §6.  But also §7, because §8 contains every\n"
+"set in §9.  So §10, and this set is in both §11 and §12."
+msgstr ""
+"**La idea.**  §0 da un conjunto §1 que contiene a todos los conjuntos de §2.  Aplicando\n"
+"§3 a este §4 se obtiene un conjunto §5 con §6.  Pero también §7, porque §8 contiene a todos\n"
+"los conjuntos de §9.  Así que §10, y este conjunto está a la vez en §11 y en §12."
+
 #. §0: `x`
 #. §1: `⋂₀ G`
 #. §2: `x ∈ A`
@@ -1027,7 +1131,7 @@ msgstr ""
 "prueba de §6."
 
 #. §0: `t ∩ u`
-#: Game/Levels/FamCombo/L04threefam.lean:42
+#: Game/Levels/FamCombo/L04threefam.lean:45
 msgid "Choosing the right witness, §0, was the key step in this proof."
 msgstr "Elegir el testigo adecuado, §0, fue el paso clave de esta demostración."
 
@@ -1076,7 +1180,7 @@ msgstr "Equivalencia de contenido de complementarios"
 msgid "Complement subsets from subsets"
 msgstr "Conjuntos complementaros de subconjuntos"
 
-#: Game/Levels/FamCombo/L08singleton.lean:61
+#: Game/Levels/FamCombo/L08singleton.lean:64
 msgid ""
 "Congratulations!  You have completed the Set Theory Game!\n"
 "\n"
@@ -1085,10 +1189,6 @@ msgstr ""
 " Enhorabuena! Has completado el Juego de Teoría de Conjuntos.\n"
 "\n"
 "Si quieres aprender más sobre Lean, visita la [Comunidad Lean](https://leanprover-community.github.io)."
-
-#: Game/Levels/Diff/L06symmdiff.lean:72
-msgid "Congratulations!  You've completed Difference World."
-msgstr "¡Enhorabuena! Has completado el Mundo de las diferencias."
 
 #. §0: `h`
 #. §1: `x ∈ A`
@@ -2831,7 +2931,7 @@ msgstr " Si §0, entonces es fácil probar el objetivo. Esto sugiere dividir la 
 #. §1: `«{x}» ∈ ⋃₀ (F ∩ Gᶜ)`
 #. §2: `have`
 #. §3: `«{h1}»`
-#: Game/Levels/FamCombo/L06unionintunion.lean:33
+#: Game/Levels/FamCombo/L06unionintunion.lean:36
 msgid ""
 "If §0, then §1.  Use §2 to assert that, and then see what §3\n"
 "tells you."
@@ -3586,7 +3686,7 @@ msgstr "Sea §0 un conjunto cualquiera.  Entonces §1."
 
 #. §0: `«{s}»`
 #. §1: `«{t}»`
-#: Game/Levels/FamCombo/L03commonelt.lean:28
+#: Game/Levels/FamCombo/L03commonelt.lean:31
 msgid "Look at what you know about §0 and §1."
 msgstr " Mira lo que sabes sobre §0 y §1."
 
@@ -3615,7 +3715,7 @@ msgstr "No queda nada"
 
 #. §0: `∀`
 #. §1: `∃`
-#: Game/Levels/FamCombo/L03commonelt.lean:36
+#: Game/Levels/FamCombo/L03commonelt.lean:39
 msgid ""
 "Notice how the proof followed the structure of the quantifiers in the assumptions: each §0 told you\n"
 "something you could apply, and each §1 gave you a new object to work with."
@@ -3687,7 +3787,7 @@ msgid ""
 msgstr "Fíjate en que tienes suposiciones contradictorias. Puedes probar cualquier cosa a partir de suposiciones contradictorias. ¿Ves cómo?"
 
 #. §0: `h2`
-#: Game/Levels/Combo/L05union_sub_inter_sub.lean:37
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:40
 msgid "Notice that you haven't used §0 yet..."
 msgstr "Fíjate que aún no has utilizado §0..."
 
@@ -3773,7 +3873,7 @@ msgid ""
 msgstr " Ahora que tienes §0, puedes utilizar §1 para reemplazar §2 con §3 en el objetivo."
 
 #. §0: `«{x}» ∈ B ∪ C`
-#: Game/Levels/Combo/L05union_sub_inter_sub.lean:32
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:35
 msgid ""
 "Now that you know §0, you can use that\n"
 "statement as the basis for breaking your proof into cases."
@@ -3798,7 +3898,7 @@ msgstr ""
 #. §3: `«{x}» ∈ A ∪ C`
 #. §4: `hAC : «{x}» ∈ A ∪ C`
 #. §5: `have`
-#: Game/Levels/Combo/L05union_sub_inter_sub.lean:21
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:24
 msgid ""
 "Now use §0 to assert that §1.  If you don't see right\n"
 "away how to justify this assertion, you can just write §2 and Lean will\n"
@@ -3871,7 +3971,7 @@ msgstr " Ahora tienes *dos* objetivos. Para el primero, la hipótesis §0 ha sid
 #. §1: `«{h1}»`
 #. §2: `«{t}»`
 #. §3: `«{ht}».left`
-#: Game/Levels/FamCombo/L04threefam.lean:29
+#: Game/Levels/FamCombo/L04threefam.lean:32
 msgid ""
 "Now you have §0.  What do you get if you apply §1 to §2 and\n"
 "§3?"
@@ -4425,7 +4525,7 @@ msgstr ""
 
 #. §0: `x`
 #. §1: `x ∈ (⋃₀ F) ∩ (⋂₀ G)`
-#: Game/Levels/FamCombo/L04threefam.lean:21
+#: Game/Levels/FamCombo/L04threefam.lean:24
 msgid ""
 "Start by introducing §0 and the assumption §1, and then separate\n"
 "that assumption into its left and right halves."
@@ -4440,7 +4540,7 @@ msgstr "Empieza escribiendo todas las definiciones."
 
 #. §0: `have h2 := h1 {s | ...}`
 #. §1: `...`
-#: Game/Levels/FamCombo/L08singleton.lean:31
+#: Game/Levels/FamCombo/L08singleton.lean:34
 msgid ""
 "Start with §0.  The hard part is figuring out\n"
 "how to fill in the §1."
@@ -4814,9 +4914,24 @@ msgstr "El complementario del conjunto vacío"
 #. §0: `𝒫 A ⊆ 𝒫 B`
 #. §1: `A ⊆ B`
 #. §2: `A ∈ 𝒫 A`
+#. §3: `A`
+#. §4: `n`
+#. §5: `𝒫 A`
+#. §6: `2ⁿ`
+#. §7: `A`
+#. §8: `n`
+#. §9: `A`
 #: Game/Levels/FamUnion/L08powerset.lean:48
-msgid "The converse is also true: if §0, then §1.  Can you see why?  (Hint: §2.)"
-msgstr "El recíproco también es cierto: si §0, entonces §1. ¿Ves por qué? (Pista: §2.)"
+msgid ""
+"The converse is also true: if §0, then §1.  Can you see why?  (Hint: §2.)\n"
+"\n"
+"How big is a power set?  If §3 has §4 elements, then §5 has §6 elements: a subset of\n"
+"§7 is determined by deciding, for each of the §8 elements of §9, whether it is in or out."
+msgstr ""
+"El recíproco también es cierto: si §0, entonces §1. ¿Ves por qué? (Pista: §2.)\n"
+"\n"
+"¿Cómo de grande es un conjunto potencia?  Si §3 tiene §4 elementos, entonces §5 tiene §6 elementos: un subconjunto\n"
+"de §7 queda determinado al decidir, para cada uno de los §8 elementos de §9, si está dentro o fuera."
 
 #: Game/Levels/Diff/L01diffdef.lean:11
 msgid "The definition of difference"
@@ -4973,7 +5088,7 @@ msgstr ""
 #. §2: `(⋃₀ F) ∩ (⋃₀ G)`
 #. §3: `F`
 #. §4: `G`
-#: Game/Levels/FamCombo/L06unionintunion.lean:50
+#: Game/Levels/FamCombo/L06unionintunion.lean:53
 msgid ""
 "The reverse of the subset statement from the last level is not true for all families §0 and §1.\n"
 "This level shows that when it does hold, every element of §2 belongs to some set\n"
@@ -4990,6 +5105,22 @@ msgstr "El segundo objetivo es similar, pero un poquito más difícil."
 #: Game/Levels/Subset/L05subref.lean:42
 msgid "The situation now should remind you of your first proof, in level 1 of this world."
 msgstr "La situación ahora debería recordarte a tu primera demostración, en el nivel 1 de este mundo."
+
+#. §0: `x ∈ A ∆ B`
+#. §1: `x`
+#. §2: `A`
+#. §3: `B`
+#: Game/Levels/Diff/L06symmdiff.lean:72
+msgid ""
+"The symmetric difference is the set version of *exclusive or*: §0 means that §1\n"
+"is in §2 or in §3, but not in both.\n"
+"\n"
+"Congratulations!  You've completed Difference World."
+msgstr ""
+"La diferencia simétrica es la versión para conjuntos del *o exclusivo*: §0 significa que §1\n"
+"está en §2 o en §3, pero no en ambos.\n"
+"\n"
+"¡Enhorabuena! Has completado el Mundo de las diferencias."
 
 #. §0: `by_cases h : P`
 #. §1: `h : P`
@@ -5161,6 +5292,28 @@ msgstr ""
 "\n"
 "Pero si no ves el atajo, puedes usar un enfoque directo. Si lograste hacerlo con el último, también puedes hacerlo con este."
 
+#. §0: `a + (b * c) = (a + b) * (a + c)`
+#. §1: `∩`
+#. §2: `∪`
+#. §3: `ᶜ`
+#. §4: `∩`
+#. §5: `∪`
+#: Game/Levels/Combo/L04union_distrib_inter.lean:51
+msgid ""
+"This is the second distributive law, and here the analogy with arithmetic breaks down:\n"
+"§0 is false for numbers, but for sets both distributive laws hold.\n"
+"In fact, any equation built from §1, §2 and §3 stays true when you swap §4 and §5\n"
+"everywhere.\n"
+"\n"
+"To finish off Combination World, we'll do one more tricky theorem."
+msgstr ""
+"Esta es la segunda ley distributiva, y aquí la analogía con la aritmética falla:\n"
+"§0 es falso para los números, pero para los conjuntos se cumplen las dos leyes distributivas.\n"
+"De hecho, cualquier igualdad construida con §1, §2 y §3 sigue siendo cierta si intercambias §4 y §5\n"
+"en todas partes.\n"
+"\n"
+"Para terminar el mundo combinado, haremos un último teorema algo más difícil."
+
 #. §0: `∀`
 #. §1: `∃`
 #: Game/Levels/FamCombo/L03commonelt.lean:13
@@ -5282,10 +5435,6 @@ msgstr "Esta vez el objetivo es un enunciado negativo, así que prueba §0."
 #: Game/Levels/FamCombo/L07unionintcompint.lean:13
 msgid "This time we'll study the intersection of §0 and §1."
 msgstr " Esta vez estudiaremos la intersección de §0 y §1."
-
-#: Game/Levels/Combo/L04union_distrib_inter.lean:51
-msgid "To finish off Combination World, we'll do one more tricky theorem."
-msgstr " Para terminar el mundo combinado, haremos un último teorema algo más difícil."
 
 #. §0: `have h4 : x ∈ B := h1 h3`
 #. §1: `∈`
@@ -5683,7 +5832,7 @@ msgstr ""
 "En una demostración escrita, §15 para un objetivo sobre todos los objetos (como §16) corresponde a la frase \"Sea §17 arbitrario.\"  Para un objetivo §18, §19 corresponde a \"Supongamos que §20.\""
 
 #. §0: `h1`
-#: Game/Levels/Combo/L05union_sub_inter_sub.lean:30
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:33
 msgid "Use §0."
 msgstr "Usa §0."
 
@@ -5809,13 +5958,24 @@ msgstr "¿A qué conjunto puedes aplicar §0?"
 msgid "What statement would you like to contradict to complete the proof?"
 msgstr "¿Qué afirmación te gustaría contradecir para completar la prueba?"
 
+#. §0: `a * (b + c) = a * b + a * c`
+#. §1: `∩`
+#. §2: `*`
+#. §3: `∪`
+#. §4: `+`
 #: Game/Levels/Combo/L03inter_distrib_union.lean:63
 msgid ""
 "Whew!  That was a long proof.  This theorem is the *distributive law* for intersection over union.\n"
-"In the next level you'll prove the other distributive law, for union over intersection."
+"In the next level you'll prove the other distributive law, for union over intersection.\n"
+"\n"
+"It looks just like the law §0 from arithmetic, with §1 playing the\n"
+"role of §2 and §3 the role of §4."
 msgstr ""
 "¡Uf! Ha sido una demostración larga. Este teorema es la *ley distributiva* de la intersección respecto de la unión.\n"
-"En el siguiente nivel demostrarás la otra ley distributiva, de la unión respecto de la intersección."
+"En el siguiente nivel demostrarás la otra ley distributiva, de la unión respecto de la intersección.\n"
+"\n"
+"Se parece mucho a la ley §0 de la aritmética, donde §1 hace el\n"
+"papel de §2 y §3 el de §4."
 
 #. §0: `{s | ∃ u ∈ F, ∃ v ∈ G, s = u ∩ vᶜ}`
 #. §1: `«{x}»`
@@ -5826,7 +5986,7 @@ msgstr "¿Qué conjunto de §0 contiene a §1?"
 #. §0: `H`
 #. §1: `«{x}»`
 #. §2: `«{hu}».right`
-#: Game/Levels/FamCombo/L04threefam.lean:35
+#: Game/Levels/FamCombo/L04threefam.lean:38
 msgid "Which set in §0 contains §1?  Look at §2."
 msgstr "¿Qué conjunto de §0 contiene a §1? Fíjate en §2."
 
@@ -6018,7 +6178,7 @@ msgstr ""
 #. §1: `A`
 #. §2: `A`
 #. §3: `A`
-#: Game/Levels/FamCombo/L08singleton.lean:33
+#: Game/Levels/FamCombo/L08singleton.lean:36
 msgid ""
 "You need to apply §0 to a family of sets with two\n"
 "properties: the union of the family must be §1, and knowing that §2 belongs to the\n"
@@ -6067,19 +6227,47 @@ msgid ""
 "that union is commutative."
 msgstr "En el siguiente nivel podrás utilizar el teorema §0 para probar que la unión es conmutativa."
 
-#: Game/Levels/Combo/L05union_sub_inter_sub.lean:45
+#: Game/Levels/Combo/L05union_sub_inter_sub.lean:48
 msgid "You've finished Combination World!"
 msgstr " ¡Terminaste el mundo Combinado!"
 
+#. §0: `x ∈ A ∩ B`
+#. §1: `x ∈ A ∧ x ∈ B`
+#. §2: `x ∈ A ∪ B`
+#. §3: `x ∈ A ∨ x ∈ B`
+#. §4: `x ∈ Aᶜ`
+#. §5: `¬(x ∈ A)`
+#. §6: `A ⊆ B`
+#. §7: `∀ x, x ∈ A → x ∈ B`
 #: Game/Levels/Union/L06union_assoc.lean:72
 msgid ""
 "You've mastered reasoning about complements, intersections, and unions.  Two worlds are now open:\n"
 "in Combination World we'll start mixing these operations up, and in Family Intersection World\n"
-"we'll intersect whole families of sets."
+"we'll intersect whole families of sets.\n"
+"\n"
+"**A dictionary.**  Each operation on sets matches a word of logic:\n"
+"\n"
+"* §0 means §1 (\"and\")\n"
+"* §2 means §3 (\"or\")\n"
+"* §4 means §5 (\"not\")\n"
+"* §6 means §7 (\"for all\" and \"if … then\")\n"
+"\n"
+"That is why proofs about sets use the same moves as proofs in logic.  Coming up: intersections\n"
+"and unions of whole families, which match \"for all\" and \"there exists\"."
 msgstr ""
 "Dominaste el razonamiento sobre complementarios, intersecciones y uniones. Ahora hay dos mundos abiertos:\n"
 "en el Mundo de las combinaciones empezaremos a combinar estas operaciones, y en el Mundo de las intersecciones de familias\n"
-"intersecaremos familias enteras de conjuntos."
+"intersecaremos familias enteras de conjuntos.\n"
+"\n"
+"**Un diccionario.**  Cada operación con conjuntos corresponde a una palabra de la lógica:\n"
+"\n"
+"* §0 significa §1 (\"y\")\n"
+"* §2 significa §3 (\"o\")\n"
+"* §4 significa §5 (\"no\")\n"
+"* §6 significa §7 (\"para todo\" y \"si … entonces\")\n"
+"\n"
+"Por eso las demostraciones sobre conjuntos usan los mismos pasos que las demostraciones en lógica.  A continuación:\n"
+"intersecciones y uniones de familias enteras, que corresponden a \"para todo\" y \"existe\"."
 
 #. §0: `False`
 #: Game/Levels/Diff/L05diffinter.lean:31
@@ -6225,7 +6413,7 @@ msgstr " §0 es la intersección de la familia de conjuntos §1. Para ingresar e
 
 #. §0: `«{t}»`
 #. §1: `«{t}» ∈ G`
-#: Game/Levels/FamCombo/L06unionintunion.lean:27
+#: Game/Levels/FamCombo/L06unionintunion.lean:30
 msgid "§0 is the natural witness for the goal.  The hard part will be showing that §1."
 msgstr "§0 es el testigo natural para el objetivo. Lo difícil será demostrar que §1."
 
@@ -6569,7 +6757,7 @@ msgstr ""
 
 #. §0: `«{h5}».right`
 #. §1: `«{x}» ∈ (⋃₀ G)ᶜ`
-#: Game/Levels/FamCombo/L06unionintunion.lean:44
+#: Game/Levels/FamCombo/L06unionintunion.lean:47
 msgid "§0 says §1.  Does that contradict anything you know?"
 msgstr "§0 dice que §1. ¿Contradice eso algo que sepas?"
 

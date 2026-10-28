@@ -6,7 +6,7 @@ Poedit), then regenerate the JSON with `lake exe i18n --export-json`.
 
 Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
-190 strings in total, listed by the file that uses them.
+206 strings in total, listed by the file that uses them.
 
 ## `Game.lean`
 
@@ -31,9 +31,14 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 - [es, ru] This proof is longer than previous ones, but it doesn't require any new tactics or theorems.…
 - [es, ru] Whew!  That was a long proof.  This theorem is the *distributive law* for intersection over union.…
 
+## `Game/Levels/Combo/L04union_distrib_inter.lean`
+
+- [es, ru] This is the second distributive law, and here the analogy with arithmetic breaks down:…
+
 ## `Game/Levels/Combo/L05union_sub_inter_sub.lean`
 
 - [es, ru] Now use §0 to assert that §1.  If you don't see right…
+- [es, ru] **The idea.**  Take §0.  Then §1, so by §2, §3: either…
 
 ## `Game/Levels/Comp/L01contra.lean`
 
@@ -87,6 +92,8 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 ## `Game/Levels/Comp/L07subuniv.lean`
 
 - [es, ru] At the other extreme from §0 is the set of *all* objects in the universe §1.  Lean calls this…
+- [es, ru] For any set §0, §1 is a proof of §2.  In Mathlib, the name of this…
+- [es, ru] For any set §0, §1.
 - [es, ru] For any §0, §1 is a proof of §2.  In Mathlib, the name of this theorem is…
 - [es, ru] So every set is a subset of §0, and §1 is a subset of every set.  In the next level you'll…
 - [es, ru] The universe
@@ -111,6 +118,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/Diff/L01diffdef.lean`
 
+- [es, ru] If §0 and §1 are sets, then §2 is the set of objects that are elements of §3 but…
 - [es, ru] If §0 and §1 are sets, then §2 is the set of objects that are elements of §3 but not…
 - [es, ru] Let §0 be an object in the universe §1, and let §2 and §3 be sets whose elements come…
 - [es, ru] Now you can use §0 to write out the definition of §1.
@@ -120,12 +128,14 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 ## `Game/Levels/Diff/L02diffsub.lean`
 
 - [es, ru] A difference is a subset
+- [es, ru] For any sets §0 and §1, §2 is a proof of §3.  In Mathlib, the name…
 - [es, ru] Here's a first theorem about differences.
 - [es, ru] Write out the definition of difference in §0.
 
 ## `Game/Levels/Diff/L03diffeq.lean`
 
 - [es, ru] Difference and complement
+- [es, ru] For any sets §0 and §1, §2 is a proof of §3.  In Mathlib, the name…
 - [es, ru] Now both sides of the §0 are the same statement.
 - [es, ru] Removing the elements of §0 from §1 is the same as intersecting §2 with the complement of…
 - [es, ru] So differences can always be written in terms of intersections and complements.  But the…
@@ -142,6 +152,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/Diff/L05diffinter.lean`
 
+- [es, ru] For any sets §0 and §1, §2 is a proof of §3.  In Mathlib,…
 - [es, ru] If you remove the elements of §0 from §1, then nothing in what's left can be an element of §2.…
 - [es, ru] Nothing left
 - [es, ru] There's nothing in §0, so §1 is a contradictory assumption.
@@ -150,13 +161,14 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/Diff/L06symmdiff.lean`
 
-- [es, ru] Congratulations!  You've completed Difference World.
 - [es, ru] Lean will recognize §0 as a proof of any statement of the form…
+- [es, ru] Start by writing out all of the definitions.
 - [es, ru] Symmetric difference
 - [es, ru] The *symmetric difference* of §0 and §1, written §2, is the set of objects that are in…
 - [es, ru] §0 is an "or" statement, so break the proof into cases.
 - [es, ru] §0 is the *symmetric difference* of §1 and §2: the set of objects that are in…
 - [es, ru] §0 says that §1 is in §2 or in §3.  Consider the two cases.
+- [es, ru] The symmetric difference is the set version of *exclusive or*: §0 means that §1…
 
 ## `Game/Levels/FamCombo/L01compunion.lean`
 
@@ -175,6 +187,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 ## `Game/Levels/FamCombo/L03commonelt.lean`
 
 - [es, ru] Notice how the proof followed the structure of the quantifiers in the assumptions: each §0 told you…
+- [es, ru] **The idea.**  §0 gives a set §1 that contains every set in §2.  Applying…
 
 ## `Game/Levels/FamCombo/L04threefam.lean`
 
@@ -183,6 +196,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 - [es, ru] Start by introducing §0 and the assumption §1, and then separate…
 - [es, ru] Suppose §0, §1, and §2 are families of sets, and for every §3 there is some §4 such that §5.…
 - [es, ru] Which set in §0 contains §1?  Look at §2.
+- [es, ru] **The idea.**  Take §0 in both §1 and §2.  Then §3 for some §4.…
 
 ## `Game/Levels/FamCombo/L05unionintcompunion.lean`
 
@@ -196,6 +210,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 - [es, ru] The reverse of the subset statement from the last level is not true for all families §0 and §1.…
 - [es, ru] §0 is the natural witness for the goal.  The hard part will be showing that §1.
 - [es, ru] §0 says §1.  Does that contradict anything you know?
+- [es, ru] **The idea.**  Take §0 in both unions, and choose a set §1 with §2.  This…
 
 ## `Game/Levels/FamCombo/L07unionintcompint.lean`
 
@@ -203,6 +218,10 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 - [es, ru] Which set in §0 contains §1?
 - [es, ru] You need two more witnesses, §0 and §1.  The final goal is an equation that §2…
 - [es, ru] §0 says §1.  Write out the definitions of complement and §2, and then…
+
+## `Game/Levels/FamCombo/L08singleton.lean`
+
+- [es, ru] **The idea.**  Apply §0 to a cleverly chosen family whose union is §1.  If every set…
 
 ## `Game/Levels/FamInter/L01intersub.lean`
 
@@ -246,6 +265,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/FamUnion/L02subunion.lean`
 
+- [es, ru] If §0 is a set, §1 is a family of sets, and §2, then §3 is a…
 - [es] Subset of family union
 - [es, ru] **The proof, written out.**…
 - [es, ru] If your goal is §0, where §1 represents some statement about §2, and §3 is a…
@@ -269,6 +289,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/FamUnion/L06unionsub.lean`
 
+- [es, ru] If §0 is a set and §1 is a family of sets, then §2 is a proof of…
 - [es, ru] This theorem is the mirror image of the one in Family Intersection World about when §0:…
 
 ## `Game/Levels/FamUnion/L07eltwiseinter.lean`
@@ -288,8 +309,8 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 
 ## `Game/Levels/FamUnion/L09powersetinter.lean`
 
-- [es, ru] For any sets §0 and §1, §2 is a proof of §3.  In…
 - [es, ru] Apply §0 and §1 to §2.
+- [es, ru] For any sets §0 and §1, §2 is a proof of §3.  In…
 - [es, ru] How is the power set of §0 related to the power sets of §1 and §2?
 - [es, ru] In other words, a set is a subset of §0 exactly when it is a subset of both §1 and §2.…
 - [es, ru] Power set of an intersection
@@ -298,6 +319,7 @@ Credited translators: Miguel Marco (es), Konstantin Belyanin (ru).
 ## `Game/Levels/FamUnion/L10sunionpowerset.lean`
 
 - [es, ru] Every element of §0 belongs to some subset of §1 (for example, §2 itself), and every subset of…
+- [es, ru] For any set §0, §1.
 - [es, ru] In this last level of Family Union World, you'll find out what you get if you take the union…
 - [es, ru] Union of a power set
 - [es, ru] Which subset of §0 contains §1?
