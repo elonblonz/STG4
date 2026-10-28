@@ -26,9 +26,9 @@ RUN git clone --depth 1 --branch "${LEAN4GAME_REF:-$(grep -oE '[^:]+$' /lean-too
     "$LEAN4GAME_REPO" lean4game \
   && cd lean4game && npm install
 
-# Engine fixes we carry on top of upstream (exported from our engine fork with
-# `git format-patch`). Patches the engine already contains, e.g. when building against
-# our fork, are skipped.
+# Engine changes we carry on top of upstream: `0001-stg4-engine.patch` is `git diff` of our
+# engine fork against the upstream tag (its header lists the fork's commits). Patches the
+# engine already contains, e.g. when building against our fork, are skipped.
 COPY --chown=node .devcontainer/lean4game-patches /home/node/lean4game-patches
 RUN cd lean4game && for p in ../lean4game-patches/*.patch; do \
     [ -e "$p" ] || continue; \

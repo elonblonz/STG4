@@ -96,8 +96,11 @@ Strings that were drafted without native-speaker review are listed in
 ## Running against a lean4game fork
 
 The game's UI comes from the [lean4game](https://github.com/leanprover-community/lean4game)
-engine, not from this repository. To work on the engine itself, point the Docker build at
-your fork:
+engine, not from this repository. The Docker image applies our engine changes on top of
+upstream from `.devcontainer/lean4game-patches/0001-stg4-engine.patch` (dark mode, the
+phone and tablet layout, the visual refresh, and fixes to level navigation and submitting
+commands; the patch's header lists the commits). To work on the engine itself, point the
+Docker build at your fork:
 
 ```sh
 LEAN4GAME_REPO=https://github.com/<you>/lean4game.git LEAN4GAME_REF=<branch> \
@@ -113,6 +116,9 @@ To use a local checkout of the engine's Lean server instead of the published one
 Pushing to `main` builds the game and uploads it as a workflow artifact. To publish it to
 [adam.math.hhu.de](https://adam.math.hhu.de), open
 `https://adam.math.hhu.de/import/trigger/<owner>/<repo>`.
+
+If you host the patched engine yourself, replace the placeholder impressum and privacy
+policy in the engine's `client/public/legal/` (`impressum.md`, `privacy.md`) with your own.
 
 ## License
 

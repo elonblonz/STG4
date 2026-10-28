@@ -1,0 +1,3785 @@
+Set Theory Game engine changes on top of lean4game v4.35.0, as one patch.
+Generated with `git diff v4.35.0 stg4-ui` from our lean4game fork (branch stg4-ui at ae9b53c), which has these commits:
+
+  c483467 fix: don't spin forever when the Lean session is lost; stop image jitter
+  04a2017 fix: typewriter feedback after a failed command; keep the world image visible
+  641ded0 Use the single-panel layout below 1024px; hide inactive mobile panels
+  92684de Fit the layout to the visible viewport and the on-screen keyboard
+  a7dcb7c Route every UI colour through CSS colour tokens
+  1ffc47f Add a dark colour palette
+  3b213a3 Add a theme preference and apply it to the page, MUI and Monaco
+  a76e9be Add an Appearance setting to the preferences popup
+  d50dffd Show hints button, completion message and Next on mobile
+  18010ee Mobile level: Proof | Inventory switch, Prev/Next in the app bar
+  be52e27 Make the world map usable on touch screens
+  8781915 Fit popups to small screens
+  c5dd904 Mobile readability: scrolling docs, taller inventory rows, wrapped errors
+  ed78271 Don't show "undefined" in the level title while the level loads
+  03eaf0e Switch the command line editor's theme when the theme changes
+  5bfff82 Keep desktop app bar height; fit the preferences slider on phones
+  9479722 Mobile inventory: one scrolling column instead of wrapping into columns
+  b9d2e86 Merge ui-responsive: phone and tablet layout
+  530a80c Merge ui-darkmode: colour tokens and dark mode
+  a0f914f fix: make level navigation and submitting commands reliable
+  ae9b53c feat: a more modern look, Set Theory Game branding, operator-provided legal pages
+
+diff --git a/client/index.html b/client/index.html
+index e83b2d2..a2a37b3 100644
+--- a/client/index.html
++++ b/client/index.html
+@@ -3,7 +3,7 @@
+ 
+ <head>
+   <meta charset="UTF-8" />
+-  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+   <title>Lean Game Server</title>
+   <style>
+     body {
+diff --git a/client/public/legal/impressum.md b/client/public/legal/impressum.md
+new file mode 100644
+index 0000000..0d54545
+--- /dev/null
++++ b/client/public/legal/impressum.md
+@@ -0,0 +1,9 @@
++## Impressum
++
++**Operator of this site:**\
++[Name]\
++[Postal address]\
++[Email address]
++
++*This is a placeholder: whoever runs this site must replace it with their own legal notice,
++in `client/public/legal/impressum.md`.*
+diff --git a/client/public/legal/privacy.md b/client/public/legal/privacy.md
+new file mode 100644
+index 0000000..33e8e69
+--- /dev/null
++++ b/client/public/legal/privacy.md
+@@ -0,0 +1,19 @@
++## Privacy Policy
++
++Our server collects metadata (such as IP address, browser, operating system) and the data that
++you enter into the editor. The data is used to compute the Lean output and display it to you.
++The information is kept while you are on the website and deleted immediately afterwards. We keep
++logs to improve our software, but the data in them is anonymized.
++
++We do not use cookies, but your game progress is stored in the browser as site data. Your game
++progress is not saved on the server; if you delete your browser storage, it is completely gone.
++
++Our server is located in [country].
++
++**Contact:**\
++[Name]\
++[Postal address]\
++[Email address]
++
++*This is a placeholder: whoever runs this site must check this policy and fill in the details
++above, in `client/public/legal/privacy.md`.*
+diff --git a/client/public/locales/de/translation.json b/client/public/locales/de/translation.json
+index 3bdbdef..acc66a0 100644
+--- a/client/public/locales/de/translation.json
++++ b/client/public/locales/de/translation.json
+@@ -96,6 +96,10 @@
+   "Download & Delete": "Herunterladen & löschen",
+   "Cancel": "Abbrechen",
+   "Layout": "Seitenlayout",
++  "Appearance": "Darstellung",
++  "Same as system": "Wie im System",
++  "Light": "Hell",
++  "Dark": "Dunkel",
+   "Always visible": "Immer sichtbar",
+   "Save my settings (in the browser store)": "Einstellungen im Browser speichern.",
+     "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Wähle eine JSON-Datei mit einem Spielstand, um diesen zu laden.</p><1><0>Achtung:</0> Deraktuelle Spielstand wird dabei überschrieben! Wenn du noch einmal zum aktuellen Spielstand zurückkehren möchtest, solltest du zunächst den <2>aktuellen Spielstand herunterladen</2>!</1>",
+@@ -109,6 +113,7 @@
+   "Introduction": "Prolog",
+   "Retry proof from here": "Ab hier neu ansetzen",
+   "Retry": "Noch einmal",
++  "Undo": "Rückgängig",
+   "Failed command": "Gescheiterter Befehl",
+   "<0>Most aspects of the games and the infrastructure are still in development. Feel free to file a <1>GitHub Issue</1> about any problems you experience!</0>": "Der Spieleserver und die alle Spiele befinden sich in fortlaufender Entwicklung.  Wir bitten darum, Fehler und Ungereimtheiten als <1>GitHub Issue</1> zu melden.",
+   "RAM": "RAM",
+@@ -125,5 +130,7 @@
+   "close menu": "Menü schließen",
+   "open menu": "Menü öffnen",
+   "Editor Mode": "",
+-  "Typewriter Mode": ""
++  "Typewriter Mode": "",
++  "Proof": "Beweis",
++  "Inventory": "Inventar"
+ }
+diff --git a/client/public/locales/en/translation.json b/client/public/locales/en/translation.json
+index 62754ad..f7d9a76 100644
+--- a/client/public/locales/en/translation.json
++++ b/client/public/locales/en/translation.json
+@@ -93,6 +93,10 @@
+   "Download & Delete": "Download & Delete",
+   "Cancel": "Cancel",
+   "Layout": "Layout",
++  "Appearance": "Appearance",
++  "Same as system": "Same as system",
++  "Light": "Light",
++  "Dark": "Dark",
+   "Always visible": "Always visible",
+   "Save my settings (in the browser store)": "Save my settings (in the browser store)",
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>",
+@@ -106,6 +110,7 @@
+   "Introduction": "Introduction",
+   "Retry proof from here": "Retry proof from here",
+   "Retry": "Retry",
++  "Undo": "Undo",
+   "Failed command": "Failed command",
+   " used": " used",
+   "view the Lean game server on Github": "view the Lean game server on Github",
+@@ -121,5 +126,8 @@
+   "close menu": "close menu",
+   "open menu": "open menu",
+   "Editor Mode": "Editor Mode",
+-  "Typewriter Mode": "Typewriter Mode"
++  "Typewriter Mode": "Typewriter Mode",
++  "Proof": "Proof",
++  "Inventory": "Inventory",
++  "The operator of this site has not provided this information yet.": "The operator of this site has not provided this information yet."
+ }
+diff --git a/client/public/locales/es/translation.json b/client/public/locales/es/translation.json
+index 06610de..b8dc533 100644
+--- a/client/public/locales/es/translation.json
++++ b/client/public/locales/es/translation.json
+@@ -63,6 +63,7 @@
+   "Failed command": "Comando fallido",
+   "Retry proof from here": "Reintentar la prueba desde aquí",
+   "Retry": "Reintentar",
++  "Undo": "Deshacer",
+   "Active Goal": "Objetivo activo",
+   "Crashed! Go to editor mode and fix your proof! Last server response:": "¡Error! Ve al modo editor y corrige tu prueba. Última respuesta del servidor:",
+   "Line": "Línea",
+@@ -89,6 +90,10 @@
+   "Auto": "Automático",
+   "Desktop": "Escritorio",
+   "Layout": "Diseño",
++  "Appearance": "Apariencia",
++  "Same as system": "Igual que el sistema",
++  "Light": "Claro",
++  "Dark": "Oscuro",
+   "Always visible": "Siempre visible",
+   "Save my settings (in the browser store)": "Guardar mis ajustes (en el navegador)",
+   "<p>Game rules determine if it is allowed to skip levels and if the games runs checks to only allow unlocked tactics and theorems in proofs.</p><1>Note: \"Unlocked\" tactics (or theorems) are determined by two things: The set of minimal tactics needed to solve a level, plus any tactics you unlocked in another level. That means if you unlock <1>simp</1> in a level, you can use it henceforth in any level.</1><p>The options are:</p>": "<p>Las reglas del juego determinan si puedes saltarte niveles y si puedes usar tácticas y teoremas no aún desbloqueados.</p><1>Nota: las tácticas o teoremas \"Desbloqueados\" están determinados por dos cosas: el conjunto mínimo de tácticas necesarias para resolver un nivel, más cualquier táctica que hayas desbloqueado en otro nivel. Esto significa que si desbloqueas <1>simp</1> en un nivel, puedes usarlo en cualquier otro nivel a partir de entonces.</1><p>Las opciones son:</p>",
+@@ -104,5 +109,6 @@
+   "Rules": "Reglas",
+   "RAM": "RAM",
+   " used": " usada",
+-  "CPU": "CPU"
++  "CPU": "CPU",
++  "Proof": "Demostración"
+ }
+diff --git a/client/public/locales/fr/translation.json b/client/public/locales/fr/translation.json
+index 08b25bc..19a91e1 100644
+--- a/client/public/locales/fr/translation.json
++++ b/client/public/locales/fr/translation.json
+@@ -63,6 +63,7 @@
+   "Failed command": "Commande échouée",
+   "Retry proof from here": "Recommencer la preuve à partir d'ici",
+   "Retry": "Recommencer",
++  "Undo": "Annuler",
+   "Active Goal": "Objectif en cours",
+   "Crashed! Go to editor mode and fix your proof! Last server response:": "Plantage ! Passez en mode éditeur et corrigez votre preuve ! Dernière réponse du serveur :",
+   "Line": "Ligne",
+@@ -93,6 +94,10 @@
+   "Auto": "Auto",
+   "Desktop": "Bureau",
+   "Layout": "Disposition",
++  "Appearance": "Apparence",
++  "Same as system": "Comme le système",
++  "Light": "Clair",
++  "Dark": "Sombre",
+   "Always visible": "Toujours visible",
+   "Save my settings (in the browser store)": "Sauvegarder mes paramètres (dans le stockage du navigateur)",
+   "<p>Game rules determine if it is allowed to skip levels and if the games runs checks to only allow unlocked tactics and theorems in proofs.</p><1>Note: \"Unlocked\" tactics (or theorems) are determined by two things: The set of minimal tactics needed to solve a level, plus any tactics you unlocked in another level. That means if you unlock <1>simp</1> in a level, you can use it henceforth in any level.</1><p>The options are:</p>": "<p>Les règles du jeu déterminent s'il est autorisé de passer des niveaux et si le jeu effectue des vérifications pour n'autoriser que les tactiques et théorèmes déverrouillés dans les preuves.</p><1>Remarque : Les tactiques (ou théorèmes) \"déverrouillées\" sont déterminées par deux choses : L'ensemble des tactiques minimales nécessaires pour résoudre un niveau, plus toutes les tactiques que vous avez déverrouillées dans un autre niveau. Cela signifie que si vous déverrouillez <1>simp</1> dans un niveau, vous pouvez l'utiliser désormais dans n'importe quel niveau.</1><p>Les options sont :</p>",
+@@ -105,5 +110,6 @@
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Sélectionnez un fichier JSON avec la progression du jeu sauvegardée pour charger votre progression.</p><1><0>Attention :</0> Cela va supprimer votre progression actuelle du jeu ! Pensez à <2>télécharger votre progression actuelle</2> d'abord !</1>",
+   "Upload Saved Progress": "Téléverser la progression sauvegardée",
+   "Load selected file": "Charger le fichier sélectionné",
+-  "Rules": "Règles"
++  "Rules": "Règles",
++  "Proof": "Preuve"
+ }
+diff --git a/client/public/locales/it/translation.json b/client/public/locales/it/translation.json
+index e069b12..3c6724e 100644
+--- a/client/public/locales/it/translation.json
++++ b/client/public/locales/it/translation.json
+@@ -63,6 +63,7 @@
+   "Failed command": "Comando fallito",
+   "Retry proof from here": "Riprendi la dimostrazione da qui",
+   "Retry": "Ritenta",
++  "Undo": "Annulla",
+   "Active Goal": "Goal corrente",
+   "Crashed! Go to editor mode and fix your proof! Last server response:": "Server crashato! Rientra in modalità editor e aggiusta la tua dimostrazione. Ultimo messaggio del server:",
+   "Line": "Linea",
+@@ -92,6 +93,10 @@
+   "Auto": "Auto",
+   "Desktop": "Desktop",
+   "Layout": "Layout",
++  "Appearance": "Aspetto",
++  "Same as system": "Come il sistema",
++  "Light": "Chiaro",
++  "Dark": "Scuro",
+   "Always visible": "Sempre visibile",
+   "Save my settings (in the browser store)": "Salva le mie opzioni (nella memoria del browser)",
+   "<p>Game rules determine if it is allowed to skip levels and if the games runs checks to only allow unlocked tactics and theorems in proofs.</p><1>Note: \"Unlocked\" tactics (or theorems) are determined by two things: The set of minimal tactics needed to solve a level, plus any tactics you unlocked in another level. That means if you unlock <1>simp</1> in a level, you can use it henceforth in any level.</1><p>The options are:</p>": "<p>Le regole del gioco determinano se si possono saltare i livelli e se si possono usare le tattiche e i teoremi non ancora sbloccati nelle dimostrazioni.</p><1>Nota: Le tattiche \"sbloccate\" per un dato livello sono l'insieme più piccolo di tattiche necessarie per risolvere il livello, più tutte le tattiche che hai sbloccato fino a quel punto nel gioco (lo stesso discorso vale per i teoremi). Ad esempio, se sblocchi la tattica <1>simp</1> in un livello, puoi usarla da lì in poi nel resto del gioco.</1><p>Le opzioni sono:</p>",
+@@ -105,5 +110,6 @@
+   "Upload Saved Progress": "Importa progresso salvato",
+   "Load selected file": "Carica file selezionato",
+   "Rules": "Regole",
+-  "Introduction": ""
++  "Introduction": "",
++  "Proof": "Dimostrazione"
+ }
+diff --git a/client/public/locales/ko/target/translation.json b/client/public/locales/ko/target/translation.json
+index d213d04..08a3da2 100644
+--- a/client/public/locales/ko/target/translation.json
++++ b/client/public/locales/ko/target/translation.json
+@@ -103,6 +103,7 @@
+   "Introduction": "소개",
+   "Retry proof from here": "여기부터 증명 다시 시도하기",
+   "Retry": "다시 시도하기",
++  "Undo": "실행 취소",
+   "Failed command": "실패한 명령",
+   "This server has been developed as part of the project <1>ADAM: Anticipating the Digital Age of Mathematics</1> at Heinrich Heine University Düsseldorf.": "이 서버는 뒤셀도르프의 하인리히-하이네 대학에서 진행하는 <1>'아담(ADAM): 수학의 디지털 시대 준비하기'<\/1> 프로젝트의 일환으로 개발됐습니다.",
+   " used": " 쓰임"
+diff --git a/client/public/locales/pt-BR/translation.json b/client/public/locales/pt-BR/translation.json
+index 77961af..0319e47 100644
+--- a/client/public/locales/pt-BR/translation.json
++++ b/client/public/locales/pt-BR/translation.json
+@@ -93,6 +93,10 @@
+   "Download & Delete": "Baixar e excluir",
+   "Cancel": "Cancelar",
+   "Layout": "Layout",
++  "Appearance": "Aparência",
++  "Same as system": "Igual ao sistema",
++  "Light": "Claro",
++  "Dark": "Escuro",
+   "Always visible": "Sempre visível",
+   "Save my settings (in the browser store)": "Salvar minhas configurações (no armazenamento do navegador)",
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Selecione um arquivo JSON com o progresso salvo para carregar seu progresso.</p><1><0>Atenção:</0> Isso vai excluir seu progresso atual no jogo! Considere <2>baixar seu progresso atual</2> antes!</1>",
+@@ -106,6 +110,7 @@
+   "Introduction": "Introdução",
+   "Retry proof from here": "Tentar a prova de novo a partir daqui",
+   "Retry": "Tentar de novo",
++  "Undo": "Desfazer",
+   "Failed command": "Comando que falhou",
+   " used": " usado",
+   "view the Lean game server on Github": "ver o servidor do jogo Lean no Github",
+@@ -140,5 +145,6 @@
+   "close inventory": "fechar inventário",
+   "next level": "próximo nível",
+   "previous level": "nível anterior",
+-  "show inventory": "mostrar inventário"
++  "show inventory": "mostrar inventário",
++  "Proof": "Prova"
+ }
+diff --git a/client/public/locales/ru/translation.json b/client/public/locales/ru/translation.json
+index e3fd196..9c00ee9 100644
+--- a/client/public/locales/ru/translation.json
++++ b/client/public/locales/ru/translation.json
+@@ -130,6 +130,10 @@
+   "Download & Delete": "Скачать и удалить",
+   "Cancel": "Отмена",
+   "Layout": "Режим отображения",
++  "Appearance": "Оформление",
++  "Same as system": "Как в системе",
++  "Light": "Светлое",
++  "Dark": "Тёмное",
+   "Always visible": "Всегда отображать",
+   "Save my settings (in the browser store)": "Сохранять мои настройки (в хранилище браузера)",
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Выберите файл JSON с сохранённым игровым прогрессом для его загрузки.</p><1><0>Внимание:</0> ваш текущий игровой прогресс будет удалён! Рекомендуем сначала <2>скачать файл с текущим прогрессом</2>!</1>",
+@@ -142,6 +146,7 @@
+   "Introduction": "Введение",
+   "Retry proof from here": "Повторить доказательство отсюда",
+   "Retry": "Повторить",
++  "Undo": "Отменить",
+   "Failed command": "Ошибка при выполнении команды",
+   "view the Lean game server on Github": "посмотреть Lean Game Server на GitHub",
+   "Impressum": "Юридическая информация",
+@@ -151,5 +156,6 @@
+   "close language menu": "закрыть меню выбора языка",
+   "open language menu": "открыть меню выбора языка",
+   "close menu": "закрыть меню",
+-  "open menu": "открыть меню"
++  "open menu": "открыть меню",
++  "Proof": "Доказательство"
+ }
+diff --git a/client/public/locales/uk/translation.json b/client/public/locales/uk/translation.json
+index 2f1ee58..b71e5ba 100644
+--- a/client/public/locales/uk/translation.json
++++ b/client/public/locales/uk/translation.json
+@@ -103,6 +103,10 @@
+   "Download & Delete": "Скачати та видалити",
+   "Cancel": "Скасувати",
+   "Layout": "Макет",
++  "Appearance": "Оформлення",
++  "Same as system": "Як у системі",
++  "Light": "Світле",
++  "Dark": "Темне",
+   "Always visible": "Завжди видно",
+   "Save my settings (in the browser store)": "Зберегти мої налаштування (в сховищі браузера)",
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>Виберіть файл JSON із збереженим прогресом гри, щоб завантажити ваш прогрес.</p><1><0>Увага:</0> Це видалить ваш поточний прогрес у грі! Спершу <2>завантажте свій поточний прогрес</2>!</1>",
+@@ -115,6 +119,7 @@
+   "Introduction": "Вступ",
+   "Retry proof from here": "Повторіть доказ звідси",
+   "Retry": "Повторити",
++  "Undo": "Скасувати",
+   "Failed command": "Невдала команда",
+   "close language menu": "закрити меню мови",
+   "open language menu": "відкрити меню мови",
+@@ -137,5 +142,6 @@
+   "Show locked inventory items": "Показувати заблоковані предмети інвентаря",
+   "Controls": "Контроль",
+   "Browser Storage": "Браузерне сховище",
+-  "<0>Privacy Policy</0><p>Our server collects metadata (such as IP address, browser, operating system) and the data that the user enters into the editor. The data is used to compute the Lean output and display it to the user. The information will be stored as long as the user stays on our website and will be deleted immediately afterwards. We keep logs to improve our software, but the contained data is anonymized.</p><p>We do not use cookies, but your game progress is stored in the browser as site data. Your game progress is not saved on the server; if you delete your browser storage, it is completely gone.</p><p>Our server is located in Germany.</p><4><strong>Contact:</strong><br/>Marcus Zibrowius<br/>Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br/>Universitätsstr. 1<br/>40225 Düsseldorf<br/>Germany<br/>+49 211 81 13858<br/><14>Contact Details</14><br/><16>Technical Contact</16></4>": "<0>Політика конфіденційності</0><p>Наш сервер збирає метадані (такі як IP-адреса, браузер, операційна система) та дані, які користувач вводить у редактор. Ці дані використовуються для обчислення результату Lean і його відображення користувачеві. Інформація зберігається протягом часу перебування користувача на нашому вебсайті й одразу після цього видаляється. Ми ведемо журнали (логи) для вдосконалення нашого програмного забезпечення, але всі дані в них анонімізовані.</p><p>Ми не використовуємо файли cookie, проте ваш ігровий прогрес зберігається в браузері як дані сайту. Ваш ігровий прогрес не зберігається на сервері; якщо ви видалите дані сховища браузера, він буде повністю втрачений.</p><p>Наш сервер розташований у Німеччині.</p><4><strong>Контактна інформація:</strong><br/>Маркус Цібровіус (Marcus Zibrowius)<br/>Математичний інститут Університету імені Генріха Гейне в Дюссельдорфі<br/>Universitätsstr. 1<br/>40225 Дюссельдорф<br/>Німеччина<br/>+49 211 81 13858<br/><14>Контактні дані</14><br/><16>Технічний контакт</16></4>"
++  "<0>Privacy Policy</0><p>Our server collects metadata (such as IP address, browser, operating system) and the data that the user enters into the editor. The data is used to compute the Lean output and display it to the user. The information will be stored as long as the user stays on our website and will be deleted immediately afterwards. We keep logs to improve our software, but the contained data is anonymized.</p><p>We do not use cookies, but your game progress is stored in the browser as site data. Your game progress is not saved on the server; if you delete your browser storage, it is completely gone.</p><p>Our server is located in Germany.</p><4><strong>Contact:</strong><br/>Marcus Zibrowius<br/>Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br/>Universitätsstr. 1<br/>40225 Düsseldorf<br/>Germany<br/>+49 211 81 13858<br/><14>Contact Details</14><br/><16>Technical Contact</16></4>": "<0>Політика конфіденційності</0><p>Наш сервер збирає метадані (такі як IP-адреса, браузер, операційна система) та дані, які користувач вводить у редактор. Ці дані використовуються для обчислення результату Lean і його відображення користувачеві. Інформація зберігається протягом часу перебування користувача на нашому вебсайті й одразу після цього видаляється. Ми ведемо журнали (логи) для вдосконалення нашого програмного забезпечення, але всі дані в них анонімізовані.</p><p>Ми не використовуємо файли cookie, проте ваш ігровий прогрес зберігається в браузері як дані сайту. Ваш ігровий прогрес не зберігається на сервері; якщо ви видалите дані сховища браузера, він буде повністю втрачений.</p><p>Наш сервер розташований у Німеччині.</p><4><strong>Контактна інформація:</strong><br/>Маркус Цібровіус (Marcus Zibrowius)<br/>Математичний інститут Університету імені Генріха Гейне в Дюссельдорфі<br/>Universitätsstr. 1<br/>40225 Дюссельдорф<br/>Німеччина<br/>+49 211 81 13858<br/><14>Контактні дані</14><br/><16>Технічний контакт</16></4>",
++  "Proof": "Доведення"
+ }
+diff --git a/client/public/locales/zh/translation.json b/client/public/locales/zh/translation.json
+index 4399ee8..b4934ec 100644
+--- a/client/public/locales/zh/translation.json
++++ b/client/public/locales/zh/translation.json
+@@ -85,6 +85,10 @@
+   "Download & Delete": "下载和删除",
+   "Cancel": "取消",
+   "Layout": "布局",
++  "Appearance": "外观",
++  "Same as system": "跟随系统",
++  "Light": "浅色",
++  "Dark": "深色",
+   "Always visible": "始终可见",
+   "Save my settings (in the browser store)": "保存我的设置（在浏览器中存储）",
+   "<p>Select a JSON file with the saved game progress to load your progress.</p><1><0>Warning:</0> This will delete your current game progress! Consider <2>downloading your current progress</2> first!</1>": "<p>选择一个包含已保存游戏进度的 JSON 文件来加载您的进度。</p><1><0>警告：</0>这将删除您当前的游戏进度！请考虑先<2>下载您当前的进度</2>！</1>",
+@@ -96,6 +100,7 @@
+   "Level": "关卡",
+   "Introduction": "介绍",
+   "Retry": "重试",
++  "Undo": "撤销",
+   "Failed command": "命令失败",
+   "<p>As this server runs lean on our university machines, it has a limited capacity. Our current estimate is about 70 simultaneous games.</p>": "",
+   "<0>Most aspects of the games and the infrastructure are still in development. Feel free to file a <1>GitHub Issue</1> about any problems you experience!</0>": "",
+@@ -109,5 +114,6 @@
+   "Privacy Policy": "隐私政策",
+   "<0>Impressum</0><1><strong>Contact:</strong><br/>Marcus Zibrowius, Jon Eugster<br/>Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br/>Universitätsstr. 1<br/>40225 Düsseldorf<br/>Germany<br/>+49 211 81-14690<br/><14>Contact Details</14></1><2><strong>Legal form:</strong><br/>The Heinrich Heine University Düsseldorf is a corporation under public law. It is legally represented by the Rector Prof. Dr. Anja Steinbeck. The responsible supervisory authority is the Ministry of Culture and Science of North Rhine-Westphalia, Völklinger Straße 49, 40221 Düsseldorf.</2><3><strong>VAT identification number:</strong><br/>according to §27a Sales Tax Act<br/>DE 811222416</3><4><0>Impressum HHU</0></4>": "",
+   "<0>Progress saving</0><1>The game stores your progress in your local browser storage. If you delete it, your progress will be lost!<br/>Warning: In most browsers, deleting cookies will also clear the local storage (or \"local site data\"). Make sure to download your game progress first!</1><2>Development</2><3>The game engine has been created by <strong>Alexander Bentkamp</strong>, <strong>Jon Eugster</strong>. On a prototype by <strong>Patrick Massot</strong>.</3><4>The source code of this Lean game engine is <1>available on Github</1>. If you experience any problems, please file an <3>Issue on Github</3> or get directly in contact.</4><5>Funding</5><6>The game engine has been developed as part of the project <1>ADAM: Anticipating the Digital Age of Mathematics</1> at Heinrich-Heine-Universität Düsseldorf. It is funded by the <i>Stiftung Innovation in der Hochschullehre</i> as part of project <i>Freiraum 2022</i>.</6>": "",
+-  "<0>Privacy Policy</0><p>Our server collects metadata (such as IP address, browser, operating system) and the data that the user enters into the editor. The data is used to compute the Lean output and display it to the user. The information will be stored as long as the user stays on our website and will be deleted immediately afterwards. We keep logs to improve our software, but the contained data is anonymized.</p><p>We do not use cookies, but your game progress is stored in the browser as site data. Your game progress is not saved on the server; if you delete your browser storage, it is completely gone.</p><p>Our server is located in Germany.</p><4><strong>Contact:</strong><br/>Marcus Zibrowius, Jon Eugster<br/>Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br/>Universitätsstr. 1<br/>40225 Düsseldorf<br/>Germany<br/>+49 211 81-14690<br/><14>Contact Details</14></4>": ""
++  "<0>Privacy Policy</0><p>Our server collects metadata (such as IP address, browser, operating system) and the data that the user enters into the editor. The data is used to compute the Lean output and display it to the user. The information will be stored as long as the user stays on our website and will be deleted immediately afterwards. We keep logs to improve our software, but the contained data is anonymized.</p><p>We do not use cookies, but your game progress is stored in the browser as site data. Your game progress is not saved on the server; if you delete your browser storage, it is completely gone.</p><p>Our server is located in Germany.</p><4><strong>Contact:</strong><br/>Marcus Zibrowius, Jon Eugster<br/>Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br/>Universitätsstr. 1<br/>40225 Düsseldorf<br/>Germany<br/>+49 211 81-14690<br/><14>Contact Details</14></4>": "",
++  "Proof": "证明"
+ }
+diff --git a/client/public/manifest.json b/client/public/manifest.json
+index d326277..1ce6730 100644
+--- a/client/public/manifest.json
++++ b/client/public/manifest.json
+@@ -1,6 +1,6 @@
+ {
+-  "short_name": "Lean4game",
+-  "name": "Learning games for Lean",
++  "short_name": "Set Theory Game",
++  "name": "Set Theory Game",
+   "icons": [
+     {
+       "src": "favicon.ico",
+@@ -20,6 +20,6 @@
+   ],
+   "start_url": ".",
+   "display": "standalone",
+-  "theme_color": "#000000",
++  "theme_color": "#1976d2",
+   "background_color": "#ffffff"
+ }
+diff --git a/client/src/app.tsx b/client/src/app.tsx
+index 66ac7b1..f9b443a 100644
+--- a/client/src/app.tsx
++++ b/client/src/app.tsx
+@@ -1,6 +1,7 @@
+ import * as React from 'react';
+-import { useEffect, useRef } from 'react';
++import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+ import { useAtom } from 'jotai';
++import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+ import '@fontsource/roboto/300.css';
+ import '@fontsource/roboto/400.css';
+@@ -19,23 +20,39 @@ import "./css/tab_bar.css"
+ import "./css/typewriter.css"
+ import "./css/welcome.css"
+ import "./css/world_tree.css"
++import "./css/modern.css"
+ 
+ import i18n from './i18n';
+ import { Popup } from './components/popup/popup';
+ import { leanMonacoAtom, leanMonacoOptionsAtom } from './store/editor-atoms';
+ import { LeanMonaco } from 'lean4monaco';
+-import { preferencesAtom } from './store/preferences-atoms';
++import * as monaco from 'monaco-editor';
++import { darkModeAtom, preferencesAtom } from './store/preferences-atoms';
++import { gameInfoAtom } from './store/query-atoms';
++
++/** Colours that MUI and Monaco need as literals. Keep in sync with the dark palette in `app.css`. */
++const DARK_BACKGROUND = '#1e2127'
++const DARK_SURFACE = '#252830'
++const DARK_TEXT = '#e6e8ec'
++const PRIMARY = '#1976d2'
+ 
+ function App({ children }: { children?: React.ReactNode }) {
+ 
+   const [leanMonaco, setLeanMonaco] = useAtom(leanMonacoAtom)
+   const [leanMonacoOptions] = useAtom(leanMonacoOptionsAtom)
+   const [preferences] = useAtom(preferencesAtom)
++  const [darkMode] = useAtom(darkModeAtom)
+ 
+   useEffect(() => {
+     i18n.changeLanguage(preferences.language)
+   }, [preferences.language])
+ 
++  // Name the browser tab after the game being played.
++  const [{ data: gameInfo }] = useAtom(gameInfoAtom)
++  useEffect(() => {
++    if (gameInfo?.title) document.title = gameInfo.title
++  }, [gameInfo?.title])
++
+   // You need to start one `LeanMonaco` instance once in your application using a `useEffect`
+   useEffect(() => {
+     const _leanMonaco = new LeanMonaco()
+@@ -47,19 +64,60 @@ function App({ children }: { children?: React.ReactNode }) {
+     })()
+ 
+     return () => {
+-      if (leanMonaco && typeof leanMonaco?.dispose === "function") {
+-        leanMonaco?.dispose?.()
+-      }
++      // Dispose the instance this effect started (`leanMonaco` is the previous render's value).
++      _leanMonaco.dispose()
++      setLeanMonaco(null)
+     }
+   }, [leanMonacoOptions, setLeanMonaco])
+ 
++  // Switch the CSS colour tokens (see `app.css`) before the browser paints.
++  useLayoutEffect(() => {
++    document.documentElement.dataset.theme = darkMode ? "dark" : "light"
++  }, [darkMode])
++
++  // Monaco's theme is global. `LeanMonaco.start` sets it from the browser setting, so this
++  // overrides it once LeanMonaco is ready. The theme is deliberately not part of
++  // `leanMonacoOptionsAtom`: changing those options restarts the Lean connection.
++  // The standalone editors (e.g. the typewriter command line) only follow `setTheme`;
++  // the workbench setting is kept in step for everything else that reads it.
++  useEffect(() => {
++    if (!leanMonaco) return
++    let cancelled = false
++    leanMonaco.whenReady.then(() => {
++      if (cancelled || leanMonaco.disposed) return
++      monaco.editor.setTheme(darkMode ? "Visual Studio Dark" : "Visual Studio Light")
++      leanMonaco.updateVSCodeOptions({
++        "workbench.colorTheme": darkMode ? "Visual Studio Dark" : "Visual Studio Light",
++        // Give the editors the same background as the panels around them.
++        "workbench.colorCustomizations": {
++          "[Visual Studio Dark]": {
++            "editor.background": DARK_SURFACE,
++          },
++        },
++      })
++    })
++    return () => { cancelled = true }
++  }, [leanMonaco, darkMode])
++
++  const muiTheme = useMemo(() => createTheme({
++    palette: darkMode ? {
++      mode: 'dark',
++      primary: { main: PRIMARY },
++      background: { default: DARK_BACKGROUND, paper: DARK_SURFACE },
++      text: { primary: DARK_TEXT },
++    } : {
++      mode: 'light',
++      primary: { main: PRIMARY },
++    },
++  }), [darkMode])
++
+   return (
+-    <>
++    <ThemeProvider theme={muiTheme}>
+       <React.Suspense>
+         {children}
+       </React.Suspense>
+       <Popup />
+-    </>
++    </ThemeProvider>
+   )
+ }
+ 
+diff --git a/client/src/components/app_bar.tsx b/client/src/components/app_bar.tsx
+index 505f78a..307d9dd 100644
+--- a/client/src/components/app_bar.tsx
++++ b/client/src/components/app_bar.tsx
+@@ -17,7 +17,7 @@ import { gameIdAtom, levelIdAtom, navigateToLandingPageAtom, worldIdAtom } from
+ import { completedAtom, difficultyAtom, progressAtom } from '../store/progress-atoms'
+ import { gameInfoAtom } from '../store/query-atoms'
+ import { readGameIntroAtom } from '../store/chat-atoms'
+-import { lockEditorModeAtom, proofAtom, typewriterModeAtom } from '../store/editor-atoms'
++import { currentProofAtom, lockEditorModeAtom, typewriterModeAtom } from '../store/editor-atoms'
+ import { mobileAtom, preferencesAtom } from '../store/preferences-atoms'
+ import { NavButton } from './navigation/nav_button'
+ import { Flag } from './flag'
+@@ -80,34 +80,36 @@ export function MenuButton() {
+  * button to go one level futher.
+  * for the last level, this button turns into a button going back to the welcome page.
+  */
+-function NextButton({worldSize} : {worldSize: number }) {
++function NextButton({worldSize, iconOnly=false} : {worldSize: number, iconOnly?: boolean}) {
+   const [, closeNav] = useAtom(closeNavAtom)
+   const { t } = useTranslation()
+   const [gameId, navigateToGame] = useAtom(gameIdAtom)
+   const [levelId, navigateToLevel] = useAtom(levelIdAtom)
+   const [difficulty] = useAtom(difficultyAtom)
+-  const [proof] = useAtom(proofAtom)
++  // Solved before (saved), or solved now: `proofAtom` may still be the previous text's.
++  const [completed] = useAtom(completedAtom)
++  const [currentProof] = useAtom(currentProofAtom)
+   if (levelId === undefined) return null
+   if (levelId == 0) return (
+     <Button inverted={true}
+         onClick={() => {navigateToLevel(levelId + 1); closeNav()}}
+          title={t("next level")}
+       >
+-      <FontAwesomeIcon icon={faArrowRight} />&nbsp;{t("Start")}
++      <FontAwesomeIcon icon={faArrowRight} />{!iconOnly && <>&nbsp;{t("Start")}</>}
+     </Button>
+   )
+   if (levelId < worldSize) return (
+     <Button inverted={true}
+         onClick={() => {navigateToLevel(levelId + 1); closeNav()}}
+         title={t("next level")}
+-        disabled={difficulty >= 2 && !(proof?.completed || levelId === 0)}
++        disabled={difficulty >= 2 && !(completed || currentProof?.completed)}
+       >
+-      <FontAwesomeIcon icon={faArrowRight} />&nbsp;{t("Next")}
++      <FontAwesomeIcon icon={faArrowRight} />{!iconOnly && <>&nbsp;{t("Next")}</>}
+     </Button>
+   )
+   return (
+     <Button onClick={() => {if (gameId) navigateToGame(gameId)}}  inverted={true} title={t("Home")} id="home-btn">
+-      <FontAwesomeIcon icon={faHome} />&nbsp;{t("Home")}
++      <FontAwesomeIcon icon={faHome} />{!iconOnly && <>&nbsp;{t("Home")}</>}
+     </Button>
+   )
+ }
+@@ -115,7 +117,7 @@ function NextButton({worldSize} : {worldSize: number }) {
+ /** button to go one level back.
+  * only renders if the current level id is > 0.
+  */
+-function PreviousButton() {
++function PreviousButton({iconOnly=false} : {iconOnly?: boolean}) {
+   const [, closeNav] = useAtom(closeNavAtom)
+   const { t } = useTranslation()
+   const [gameId] = useAtom(gameIdAtom)
+@@ -127,7 +129,7 @@ function PreviousButton() {
+         onClick={() => {navigateToLevel(levelId - 1); closeNav()}}
+         title={t("previous level")}
+       >
+-      <FontAwesomeIcon icon={faArrowLeft} />&nbsp;{t("Previous")}
++      <FontAwesomeIcon icon={faArrowLeft} />{!iconOnly && <>&nbsp;{t("Previous")}</>}
+     </Button>
+   )
+ }
+@@ -295,20 +297,6 @@ function LandingPageButton() {
+     </Button>
+ }
+ 
+-/** button in mobile level to toggle inventory.
+- * only displays a button if `setPageNumber` is set.
+- */
+-function InventoryButton({pageNumber, setPageNumber} : {pageNumber: number, setPageNumber: (val: number) => void}) {
+-  const { t } = useTranslation()
+-  return (setPageNumber &&
+-    <Button  className="btn btn-inverted toggle-width"
+-      title={pageNumber ? t("close inventory") : t("show inventory")}
+-      inverted={true} onClick={() => {setPageNumber(pageNumber ? 0 : 1)}}>
+-      <FontAwesomeIcon icon={pageNumber ? faBookOpen : faBook} />
+-    </Button>
+-  )
+-}
+-
+ /** the navigation bar on the welcome page */
+ export function WelcomeAppBar({pageNumber, setPageNumber} : {
+   pageNumber: number,
+@@ -320,7 +308,7 @@ export function WelcomeAppBar({pageNumber, setPageNumber} : {
+   const [mobile] = useAtom(mobileAtom)
+   const [navOpen, setNavOpen] = useAtom(navOpenAtom)
+ 
+-  return <div className="app-bar">
++  return <div className={`app-bar${mobile ? " mobile" : ""}`}>
+     <div className='app-bar-left'>
+       <LandingPageButton />
+       <span className="app-bar-title"></span>
+@@ -363,20 +351,19 @@ export function LevelAppBar({isLoading, levelTitle, pageNumber=1, setPageNumber=
+ 
+   let worldTitle = worldId ? gameInfo?.worlds?.nodes[worldId]?.title : ""
+ 
+-  return <div className="app-bar" style={isLoading ? {display: "none"} : undefined} >
++  return <div className={`app-bar${mobile ? " mobile" : ""}`} style={isLoading ? {display: "none"} : undefined} >
+     {mobile ?
+       <>
+         {/* MOBILE VERSION */}
+-        <div>
++        <div className="app-bar-main">
+           <span className="app-bar-title">{levelTitle}</span>
+         </div>
+         <div className="nav-btns">
+-          <InventoryButton pageNumber={pageNumber} setPageNumber={setPageNumber}/>
++          <PreviousButton iconOnly={true} />
++          <NextButton worldSize={gameInfo?.worldSize?.[worldId]} iconOnly={true} />
+           <MenuButton />
+         </div>
+         <div className={'menu dropdown' + (navOpen ? '' : ' hidden')}>
+-          <NextButton worldSize={gameInfo?.worldSize?.[worldId]} />
+-          <PreviousButton />
+           <HomeButton isDropdown={true} />
+           <InputModeButton isDropdown={true}/>
+           <GameInfoButton />
+diff --git a/client/src/components/chat/ChatPanel.tsx b/client/src/components/chat/ChatPanel.tsx
+index 492a40e..3b23096 100644
+--- a/client/src/components/chat/ChatPanel.tsx
++++ b/client/src/components/chat/ChatPanel.tsx
+@@ -8,12 +8,26 @@ import { gameIdAtom, levelIdAtom } from '../../store/location-atoms'
+ import { levelInfoAtom } from '../../store/query-atoms'
+ import { deletedChatAtom, helpAtom, selectedStepAtom } from '../../store/chat-atoms'
+ import { proofAtom } from '../../store/editor-atoms'
+-import { DeletedHints, filterHints, Hint, Hints, MoreHelpButton } from '../hints'
++import { DeletedHints, filterHints, Hint, Hints, isLastStepWithErrors, lastStepHasErrors, MoreHelpButton } from '../hints'
+ import Markdown from 'react-markdown'
+ import { faArrowRight, faHome } from '@fortawesome/free-solid-svg-icons'
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+ import { Button } from '../button'
+ 
++/** "Next" button below the hints of a solved level, "Home" on the last level of a world. */
++export const NextLevelButton = React.forwardRef<HTMLButtonElement, {lastLevel: boolean}>(({lastLevel}, ref) => {
++  const { t } = useTranslation()
++  const [gameId, navigateToGame] = useAtom(gameIdAtom)
++  const [levelId, navigateToLevel] = useAtom(levelIdAtom)
++  return lastLevel ?
++    <Button ref={ref} onClick={() => {if (gameId) navigateToGame(gameId)}} >
++      <FontAwesomeIcon icon={faHome} />&nbsp;{t("Home")}
++    </Button> :
++    <Button ref={ref} onClick={() => {if(levelId !== undefined) navigateToLevel(levelId + 1)}}  >
++      {t("Next")}&nbsp;<FontAwesomeIcon icon={faArrowRight} />
++    </Button>
++})
++
+ /** Appears on the left of playable levels */
+ export function ChatPanel({lastLevel, visible = true}: {lastLevel: boolean, visible: boolean}) {
+   let { t } = useTranslation()
+@@ -66,7 +80,7 @@ export function ChatPanel({lastLevel, visible = true}: {lastLevel: boolean, visi
+ 
+   let introText: Array<string> = gT(levelInfo?.introduction ?? "").split(/\n(\s*\n)+/)
+ 
+-  const focusRef = useRef<HTMLButtonElement>()
++  const focusRef = useRef<HTMLButtonElement>(null)
+   useEffect(() => {
+    if (proof?.completed) {
+      focusRef.current?.focus()
+@@ -114,21 +128,8 @@ export function ChatPanel({lastLevel, visible = true}: {lastLevel: boolean, visi
+       }
+     </div>
+     <div className="button-row">
+-      {proof?.completed && (lastLevel ?
+-        <Button ref={focusRef} onClick={() => {if (gameId) navigateToGame(gameId)}} >
+-          <FontAwesomeIcon icon={faHome} />&nbsp;{t("Home")}
+-        </Button> :
+-        <Button ref={focusRef} onClick={() => {if(levelId !== undefined) navigateToLevel(levelId + 1)}}  >
+-          {t("Next")}&nbsp;<FontAwesomeIcon icon={faArrowRight} />
+-        </Button>)
+-        }
++      {proof?.completed && <NextLevelButton ref={focusRef} lastLevel={lastLevel} />}
+       <MoreHelpButton selected={null} />
+     </div>
+   </div>
+ }
+-
+-//FIXME: implement
+-function lastStepHasErrors(x: any) {return false}
+-
+-//FIXME: implement
+-function isLastStepWithErrors(x: any, y: any) {return false}
+diff --git a/client/src/components/chat/MobileLevelFooter.tsx b/client/src/components/chat/MobileLevelFooter.tsx
+new file mode 100644
+index 0000000..28944ae
+--- /dev/null
++++ b/client/src/components/chat/MobileLevelFooter.tsx
+@@ -0,0 +1,49 @@
++import * as React from 'react'
++import { useEffect, useRef } from 'react'
++import { useAtom } from 'jotai'
++import { Markdown } from '../markdown'
++import { useGameTranslation } from '../../utils/translation'
++import { levelIdAtom, worldIdAtom } from '../../store/location-atoms'
++import { gameInfoAtom, levelInfoAtom } from '../../store/query-atoms'
++import { proofAtom } from '../../store/editor-atoms'
++import { MoreHelpButton } from '../hints'
++import { NextLevelButton } from './ChatPanel'
++
++/**
++ * On mobile there is no chat panel: the hints are shown inside the proof steps, and this
++ * shows what the chat panel would show below them: the "Show more help!" button and,
++ * once the level is solved, the conclusion and the Next button.
++ */
++export function MobileLevelFooter() {
++  const { t: gT } = useGameTranslation()
++  const [worldId] = useAtom(worldIdAtom)
++  const [levelId] = useAtom(levelIdAtom)
++  const [{ data: gameInfo }] = useAtom(gameInfoAtom)
++  const [{ data: levelInfo }] = useAtom(levelInfoAtom)
++  const [proof] = useAtom(proofAtom)
++  const lastLevel = !!worldId && levelId !== undefined && levelId >= (gameInfo?.worldSize?.[worldId] ?? 0)
++
++  const focusRef = useRef<HTMLButtonElement>(null)
++  useEffect(() => {
++    if (proof?.completed) {
++      focusRef.current?.focus()
++    }
++  }, [!!proof?.completed])
++
++  if (!proof) return null
++
++  return <div className="mobile-level-footer">
++    {/* The proof itself already ends with the game's "level completed" message. */}
++    {proof.completed && <>
++      {levelInfo?.conclusion?.trim() &&
++        <div className="message information recent">
++          <Markdown>{gT(levelInfo?.conclusion ?? "")}</Markdown>
++        </div>
++      }
++    </>}
++    <div className="button-row mobile">
++      {proof.completed && <NextLevelButton ref={focusRef} lastLevel={lastLevel} />}
++      <MoreHelpButton selected={null} />
++    </div>
++  </div>
++}
+diff --git a/client/src/components/editor/typewriter/Typewriter.tsx b/client/src/components/editor/typewriter/Typewriter.tsx
+index a3378d1..948cbd9 100644
+--- a/client/src/components/editor/typewriter/Typewriter.tsx
++++ b/client/src/components/editor/typewriter/Typewriter.tsx
+@@ -1,14 +1,28 @@
+-import React, { useRef } from "react";
++import React, { useEffect, useRef } from "react";
+ import { useAtom } from "jotai";
++import { useTranslation } from "react-i18next";
+ import { gameInfoAtom } from "../../../store/query-atoms";
+ import { gameIdAtom, worldIdAtom } from "../../../store/location-atoms";
+ import path from "node:path";
+-import { proofAtom, proofQueryAtom } from "../../../store/editor-atoms";
++import { needsReconnect, proofAtom, proofQueryAtom } from "../../../store/editor-atoms";
+ import { ExerciseStatement } from "../ExerciseStatement";
+ import { ProofStep } from "./proof_step/ProofStep";
+ import { TypewriterCommandLine } from "./TypewriterCommandline";
+ import { LoadingIcon } from "../../utils";
+ import { CircularProgress } from "@mui/material";
++import { Button } from "../../button";
++import { mobileAtom } from "../../../store/preferences-atoms";
++import { MobileLevelFooter } from "../../chat/MobileLevelFooter";
++
++/** Shown instead of the proof when the Lean server can't be reached. */
++function ProofStateError({ retry }: { retry: () => void }) {
++  const { t } = useTranslation()
++  return <div className="proof-state-error">
++    <p>{t("The connection to the Lean server was lost, or the server didn't respond.")}</p>
++    <Button onClick={() => retry()}>{t("Retry")}</Button>
++    <Button onClick={() => window.location.reload()}>{t("Reload page")}</Button>
++  </div>
++}
+ 
+ /**
+  * Der Typewriter bestehend aus Eingabezeile, Beweisschritten, Aufgabenstellung und Hintergrundbild
+@@ -18,9 +32,18 @@ export function Typewriter() {
+   const [gameId] = useAtom(gameIdAtom)
+   const [worldId] = useAtom(worldIdAtom)
+   const [proof] = useAtom(proofAtom)
++  const [mobile] = useAtom(mobileAtom)
++  const [{ error, isFetching, refetch }] = useAtom(proofQueryAtom)
++  // An outdated session is reconnected automatically (see `PlayableLevel`), so keep waiting.
++  const failed = error && !isFetching && !needsReconnect(error)
+ 
+   const proofPanelRef = useRef<HTMLDivElement>(null)
+ 
++  // Keep the newest step (and its errors) in view, scrolling no further than needed.
++  useEffect(() => {
++    proofPanelRef.current?.lastElementChild?.scrollIntoView({ block: "nearest" })
++  }, [proof])
++
+   let image = gameInfo?.worlds?.nodes[worldId!]?.image
+ 
+   return <div className="typewriter-canvas">
+@@ -29,8 +52,11 @@ export function Typewriter() {
+       <div className="pusher" />
+       <div className='proof' ref={proofPanelRef}>
+         <ExerciseStatement showLeanStatement={true} />
+-        {proof ? proof.steps.map((step, i) => <ProofStep key={i} step={step} idx={i} />)
+-      : <div className="centered-spinner"><CircularProgress /></div>}
++        {proof?.steps.map((step, i) => <ProofStep key={i} step={step} idx={i} />)}
++        {/* Also when an older proof state is still shown: it's out of date. */}
++        {failed ? <ProofStateError retry={refetch} />
++          : !proof && <div className="centered-spinner"><CircularProgress /></div>}
++        {mobile && proof && <MobileLevelFooter />}
+       </div>
+     </div>
+     <TypewriterCommandLine />
+diff --git a/client/src/components/editor/typewriter/TypewriterCommandline.tsx b/client/src/components/editor/typewriter/TypewriterCommandline.tsx
+index ffd1ef2..1014456 100644
+--- a/client/src/components/editor/typewriter/TypewriterCommandline.tsx
++++ b/client/src/components/editor/typewriter/TypewriterCommandline.tsx
+@@ -1,56 +1,59 @@
+-import React, { FormEvent, useEffect, useRef, useState } from "react";
++import React, { FormEvent, useEffect, useRef } from "react";
+ import "../../../css/typewriter.css"
+ import { useTranslation } from "react-i18next";
+ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+ import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+ import { useAtom } from "jotai";
+ import * as monaco from 'monaco-editor'
+-import { typewriterContentAtom, codeAtom, modelAtom, appendCodeLineAtom } from "../../../store/editor-atoms";
++import { typewriterContentAtom, codeAtom, appendCodeLineAtom, lastProofStepErrorCommandAtom, proofAtom, proofPendingAtom } from "../../../store/editor-atoms";
+ import { twMerge } from "tailwind-merge";
+ import { deletedChatAtom } from "../../../store/chat-atoms";
+ import { oneLineEditorAtom } from "./typewriter-atoms";
++import { darkModeAtom } from "../../../store/preferences-atoms";
+ 
+ /** The input field */
+ export function TypewriterCommandLine() {
+   let { t } = useTranslation()
+-  const [isProcessing, setProcessing] = useState(false)
+   const [oneLineEditor, setOneLineEditor] = useAtom(oneLineEditorAtom)
+-  const [model] = useAtom(modelAtom)
+   const [code] = useAtom(codeAtom)
+   const [, appendLine] = useAtom(appendCodeLineAtom)
+   const [, setDeletedChatAtom] = useAtom(deletedChatAtom)
+-  const [typewriter, setTypewriter] = useAtom(typewriterContentAtom)
++  const [, setTypewriter] = useAtom(typewriterContentAtom)
++  // While Lean hasn't answered for the current text, a new command waits (it would be
++  // appended to a proof whose last command may still turn out to have failed).
++  const [pending] = useAtom(proofPendingAtom)
++  const [failedCommand] = useAtom(lastProofStepErrorCommandAtom)
++  const [proof] = useAtom(proofAtom)
++  const [darkMode] = useAtom(darkModeAtom)
+   const oneLineEditorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+   const inputRef = useRef<HTMLDivElement>(null)
+ 
+-  /** Handle keyboard events */
+-  function handleKeyDown(event: KeyboardEvent) {
+-    if (event.key == "Enter" || event.key == "NumpadEnter") {
+-      event.preventDefault()
+-      handleSubmit()
+-    }
+-  }
+-
+-  /** Wrapper to set the typewriter to processing. */
+-  function handleSubmit(ev?: FormEvent<HTMLFormElement>) {
+-    ev?.preventDefault()
+-    setProcessing(true)
+-    try { handleSubmitAux(ev) } finally { setProcessing(false) }
+-  }
+-
+-  /** Process the entered command */
+-  async function handleSubmitAux(ev?: FormEvent<HTMLFormElement>) {
+-    const content = typewriter.trimEnd()
++  /** Submit the command line's text. A ref, so that the editor's key binding (created once)
++   * always calls the current version. */
++  const submitRef = useRef<() => void>(() => {})
++  /** A submit while Lean is still checking the previous command; done once it has answered. */
++  const queuedRef = useRef(false)
++  submitRef.current = () => {
++    const editor = oneLineEditorRef.current
++    if (!editor) return
++    if (pending) { queuedRef.current = true; return }
++    queuedRef.current = false
++    const content = editor.getValue().trim()
+     if (content.length == 0) return
+-
+-    // Add typewriter content to the editor
++    // Clear the input first, so that a second Enter (or click) right away finds nothing to submit.
++    editor.setValue('')
+     appendLine(content)
+-
+     // TODO: Desired logic is to only reset this after a new *error-free* command has been entered
+     setDeletedChatAtom([])
++  }
++
++  useEffect(() => {
++    if (!pending && queuedRef.current) submitRef.current()
++  }, [pending])
+ 
+-    // Clear typewriter
+-    oneLineEditor?.getModel()?.setValue('')
++  function handleSubmit(ev?: FormEvent<HTMLFormElement>) {
++    ev?.preventDefault()
++    submitRef.current()
+   }
+ 
+   // start the editor used in the typewriter command line
+@@ -68,7 +71,8 @@ export function TypewriterCommandLine() {
+     }
+ 
+     const editorConfig: monaco.editor.IStandaloneEditorConstructionOptions = {
+-      value: typewriter,
++      // Each level starts with an empty command line.
++      value: "",
+       language: "lean4",
+       quickSuggestions: false,
+       unicodeHighlight: {
+@@ -97,7 +101,7 @@ export function TypewriterCommandLine() {
+       },
+       scrollBeyondLastLine: false,
+       overviewRulerBorder: false,
+-      theme: 'Visual Studio Light',
++      theme: darkMode ? 'Visual Studio Dark' : 'Visual Studio Light',
+       contextmenu: false
+     }
+ 
+@@ -119,6 +123,10 @@ export function TypewriterCommandLine() {
+     myEditor.onDidContentSizeChange(layoutInput)
+     layoutInput()
+ 
++    // Enter submits; only in this editor, and not while a completion list is open.
++    myEditor.addCommand(monaco.KeyCode.Enter, () => submitRef.current(), '!suggestWidgetVisible')
++    setTypewriter("")
++
+     const changeDisposable = myEditor.getModel()?.onDidChangeContent(() => {
+       const value = myEditor.getValue()
+       setTypewriter(value)
+@@ -143,21 +151,24 @@ export function TypewriterCommandLine() {
+     }
+   }, [setTypewriter, setOneLineEditor])
+ 
+-  // Handle keyboard events (i.e. "Enter")
++  // Put a failed command back into the input so it can be corrected rather than retyped
++  // (it is replaced when the next command is submitted). Don't overwrite anything typed since,
++  // and ignore a proof state that is still Lean's answer for the previous code.
+   useEffect(() => {
+-    document.addEventListener('keydown', handleKeyDown)
+-    return () => {
+-      document.removeEventListener('keydown', handleKeyDown)
+-    }
+-  }, [handleKeyDown])
++    if (!failedCommand || !oneLineEditor || oneLineEditor.getValue().trim()) return
++    const lastLine = code?.trimEnd().split('\n').pop()?.trim()
++    if (lastLine != failedCommand.trim()) return
++    oneLineEditor.setValue(failedCommand)
++    oneLineEditor.setPosition({ lineNumber: 1, column: failedCommand.length + 1 })
++  }, [proof, failedCommand, oneLineEditor, code])
+ 
+   // do not display if the proof is completed (with potential warnings still present)
+-  return <div className={twMerge("typewriter", isProcessing && "disabled")}>
++  return <div className={twMerge("typewriter", pending && "pending")}>
+         <form onSubmit={handleSubmit}>
+           <div className="typewriter-input-wrapper">
+             <div ref={inputRef} className="typewriter-input" />
+           </div>
+-          <button type="submit" disabled={isProcessing} className="btn btn-inverted">
++          <button type="submit" className="btn btn-inverted">
+             <FontAwesomeIcon icon={faWandMagicSparkles} />&nbsp;{t("Execute")}
+           </button>
+         </form>
+diff --git a/client/src/components/editor/typewriter/proof_step/Command.tsx b/client/src/components/editor/typewriter/proof_step/Command.tsx
+index 74cb06d..5e67282 100644
+--- a/client/src/components/editor/typewriter/proof_step/Command.tsx
++++ b/client/src/components/editor/typewriter/proof_step/Command.tsx
+@@ -4,31 +4,22 @@ import React from "react"
+ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+ import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons"
+ import { filterHints } from "../../../hints"
+-import { deletedChatAtom, helpAtom } from "../../../../store/chat-atoms"
+ import { useAtom } from "jotai"
+ import { editor } from 'monaco-editor'
+-import { codeAtom, deleteCodeFromLineAtom, lastProofStepHasErrorsAtom } from "../../../../store/editor-atoms"
++import { deleteProofFromStepAtom, lastProofStepHasErrorsAtom } from "../../../../store/editor-atoms"
+ import { Button } from "../../../button"
+ 
+-//FIXME: implement
+-function isLastStepWithErrors(x: any, y: any) {
+-  return false
+-}
+-
+ /** The display of a single entered lean command */
+ export function Command({ proof, i }: { proof: ProofState, i: number }) {
+   let {t} = useTranslation()
+   const [lastProofStepHasErrors,] = useAtom(lastProofStepHasErrorsAtom)
+-  const [, setDeletedChat] = useAtom(deletedChatAtom)
+-  const [help, setHelp] = useAtom(helpAtom)
+-  const [, setCode] = useAtom(codeAtom)
+-  const [, deleteCodeFromLine] = useAtom(deleteCodeFromLineAtom)
++  const [, deleteProofFromStep] = useAtom(deleteProofFromStepAtom)
+ 
+   // The first step will always have an empty command
+   if (!proof.steps[i]?.command) { return <></> }
+ 
+-  //if (isLastStepWithErrors(proof, i))
+-  if (lastProofStepHasErrors){
++  // Only the last command can be the failed one; the commands before it were accepted.
++  if (lastProofStepHasErrors && i == proof.steps.length - 1) {
+     // If the last step has errors, we display the command in a different style
+     // indicating that it will be removed on the next try.
+     return <div className="failed-command">
+@@ -38,10 +29,10 @@ export function Command({ proof, i }: { proof: ProofState, i: number }) {
+     return <div className="command">
+       <div className="command-text">{proof.steps[i].command}</div>
+       <Button className="undo-button btn btn-inverted" title={t("Retry proof from here")} onClick={ev => {
+-        deleteCodeFromLine(i-1)
++        deleteProofFromStep(i)
+         ev.stopPropagation()
+       }}>
+-        <FontAwesomeIcon icon={faDeleteLeft} />&nbsp;{t("Retry")}
++        <FontAwesomeIcon icon={faDeleteLeft} />&nbsp;{t("Undo")}
+       </Button>
+     </div>
+   }
+diff --git a/client/src/components/editor/typewriter/proof_step/GoalsTab.tsx b/client/src/components/editor/typewriter/proof_step/GoalsTab.tsx
+index dd7b2a0..9abae1c 100644
+--- a/client/src/components/editor/typewriter/proof_step/GoalsTab.tsx
++++ b/client/src/components/editor/typewriter/proof_step/GoalsTab.tsx
+@@ -1,7 +1,7 @@
+ import { useTranslation } from "react-i18next"
+ import { InteractiveGoalsWithHints } from "../../../../api/rpc_api"
+ import { useAtom } from "jotai"
+-import { mobileAtom } from "../../../../store/preferences-atoms"
++import { darkModeAtom, mobileAtom } from "../../../../store/preferences-atoms"
+ import React from "react"
+ import { Goal } from "./Goal"
+ 
+@@ -9,6 +9,7 @@ import { Goal } from "./Goal"
+ export function GoalsTabs({ proofStep, last, onClick, onGoalChange=(n)=>{}}: { proofStep: InteractiveGoalsWithHints, last : boolean, onClick? : any, onGoalChange?: (n?: number) => void }) {
+   let { t } = useTranslation()
+   const [mobile] = useAtom(mobileAtom)
++  const [darkMode] = useAtom(darkModeAtom)
+   const [selectedGoal, setSelectedGoal] = React.useState<number>(0)
+ 
+   if (proofStep.goals.length == 0) {
+@@ -28,7 +29,7 @@ export function GoalsTabs({ proofStep, last, onClick, onGoalChange=(n)=>{}}: { p
+         </div>
+       ))}
+     </div>
+-    <div className="goal-tab vscode-light" style={{flexDirection: mobile ? "column" : "row"}}>
++    <div className={`goal-tab ${darkMode ? "vscode-dark" : "vscode-light"}`} style={{flexDirection: mobile ? "column" : "row"}}>
+       <Goal goal={goal} />
+     </div>
+   </div>
+diff --git a/client/src/components/editor/typewriter/proof_step/ProofStep.tsx b/client/src/components/editor/typewriter/proof_step/ProofStep.tsx
+index 5d88050..d8376a8 100644
+--- a/client/src/components/editor/typewriter/proof_step/ProofStep.tsx
++++ b/client/src/components/editor/typewriter/proof_step/ProofStep.tsx
+@@ -11,7 +11,6 @@ import { mobileAtom } from "../../../../store/preferences-atoms";
+ import { gameInfoAtom, levelInfoAtom } from "../../../../store/query-atoms";
+ import { useGameTranslation } from "../../../../utils/translation";
+ import { filterHints, Hint, Hints } from "../../../hints";
+-import { i } from "@tanstack/query-core/build/legacy/hydration-BlEVG2Lp";
+ import { GoalsTabs } from "./GoalsTab";
+ import { GameHint } from "../../types";
+ 
+diff --git a/client/src/components/hints.tsx b/client/src/components/hints.tsx
+index 204f945..7970027 100644
+--- a/client/src/components/hints.tsx
++++ b/client/src/components/hints.tsx
+@@ -8,9 +8,21 @@ import { gameIdAtom } from "../store/location-atoms";
+ import { deletedChatAtom, helpAtom } from "../store/chat-atoms";
+ import { proofAtom } from "../store/editor-atoms";
+ import { GameHint, InteractiveGoalsWithHints } from './infoview/types';
++import { ProofState } from '../api/rpc_api';
++import { DiagnosticSeverity } from 'vscode-languageserver-types';
++
++/** Whether the proof's last step has errors: it is then the failed command, which is replaced
++ * by the next one, so its hints are not shown and help applies to the step before it. */
++export function lastStepHasErrors(proof: ProofState | null | undefined): boolean {
++  if (!proof?.steps.length) return false
++  const diags = [...proof.steps[proof.steps.length - 1].diags, ...proof.diagnostics]
++  return diags.some(d => d.severity == DiagnosticSeverity.Error)
++}
+ 
+-//FIXME: implement
+-function lastStepHasErrors(x: any) {return false}
++/** Whether step `i` is the proof's failed last command. */
++export function isLastStepWithErrors(proof: ProofState | null | undefined, i: number): boolean {
++  return !!proof && i == proof.steps.length - 1 && lastStepHasErrors(proof)
++}
+ 
+ 
+ /** Plug-in the variable names in a hint. We do this client-side to prepare
+diff --git a/client/src/components/inventory/inventory_item.tsx b/client/src/components/inventory/inventory_item.tsx
+index 31f29fb..1c3bf26 100644
+--- a/client/src/components/inventory/inventory_item.tsx
++++ b/client/src/components/inventory/inventory_item.tsx
+@@ -43,7 +43,8 @@ export function InventoryItem({tile, isTheorem, recent=false, enableAll=false} :
+     // navigator.clipboard.writeText(tile.displayName)
+     appendTypewriterInput(ev.shiftKey, tile.displayName, isTheorem, false)
+     setInserted(true)
+-    setInterval(() => {
++    // Show "inserted" for a moment.
++    setTimeout(() => {
+       setInserted(false)
+     }, 3000);
+     ev.stopPropagation()
+diff --git a/client/src/components/level/PlayableLevel.tsx b/client/src/components/level/PlayableLevel.tsx
+index 6a17508..3332706 100644
+--- a/client/src/components/level/PlayableLevel.tsx
++++ b/client/src/components/level/PlayableLevel.tsx
+@@ -2,7 +2,10 @@ import { useTranslation } from "react-i18next"
+ import { useGameTranslation } from "../../utils/translation"
+ import { useEffect, useRef, useState } from "react"
+ import { useAtom } from "jotai"
+-import { clientAtom, codeStorageAtom, rpcSessionAtom, editorAtom, leanMonacoAtom, lockEditorModeAtom, modelAtom, typewriterModeAtom, uriAtom } from "../../store/editor-atoms"
++import { clientAtom, codeStorageAtom, rpcSessionAtom, editorAtom, leanMonacoAtom, lockEditorModeAtom, modelAtom, typewriterModeAtom, uriAtom, proofQueryAtom, needsReconnect, levelUriAtom, modelVersionAtom, syncedVersionAtom, typewriterContentAtom, currentProofAtom } from "../../store/editor-atoms"
++import { deletedChatAtom, selectedStepAtom } from "../../store/chat-atoms"
++import { inventoryAtom, selectedDocTileAtom } from "../../store/inventory-atoms"
++import { completedAtom } from "../../store/progress-atoms"
+ import { gameIdAtom, levelIdAtom, worldIdAtom } from "../../store/location-atoms"
+ import { mobileAtom } from "../../store/preferences-atoms"
+ import { gameInfoAtom, levelInfoAtom } from "../../store/query-atoms"
+@@ -32,9 +35,10 @@ export function PlayableLevel() {
+ 
+   // Only for mobile layout
+   const [pageNumber, setPageNumber] = useState(0)
++  // Show the proof again when another level is opened
++  useEffect(() => { setPageNumber(0) }, [worldId, levelId])
+   // set to true to prevent switching between typewriter and editor
+   const [lockEditorMode] = useAtom(lockEditorModeAtom)
+-  const [, setTypewriterInput] = useState("")
+   const lastLevel = worldId && (levelId !== undefined) && levelId >= (gameInfo?.worldSize?.[worldId] ?? 0)
+ 
+   // When clicking on an inventory item, the inventory is overlayed by the item's doc.
+@@ -48,40 +52,89 @@ export function PlayableLevel() {
+   const [client, setClient] = useAtom(clientAtom)
+   const [uri] = useAtom(uriAtom)
+   const [rpcSess, setRpcSess] = useAtom(rpcSessionAtom)
++  const [levelUri] = useAtom(levelUriAtom)
++  const [modelVersion, setModelVersion] = useAtom(modelVersionAtom)
++  const [syncedVersion, setSyncedVersion] = useAtom(syncedVersionAtom)
++  const [, setTypewriterContent] = useAtom(typewriterContentAtom)
++  const [, setDeletedChat] = useAtom(deletedChatAtom)
++  const [, setSelectedStep] = useAtom(selectedStepAtom)
++  const [, setSelectedDocTile] = useAtom(selectedDocTileAtom)
+ 
+-  // Start the editor, following lean4monaco demo
++  // Start the editor, following lean4monaco demo. Each level has its own document,
++  // `file:///<world>/<level>.lean` (the relay gives Lean one level at a time).
+   useEffect(() => {
+     if (leanMonaco) {
+       const leanMonacoEditor = new LeanMonacoEditor()
+-      const uriStr = `file:///${worldId}/${levelId}.lean`
++      let disposed = false
+ 
+       ;(async () => {
+         await leanMonaco!.whenReady
+         console.debug('[lean4game]: starting editor')
+-        await leanMonacoEditor.start(codeviewRef.current!, uriStr, code ?? "")
++        await leanMonacoEditor.start(codeviewRef.current!, levelUri, code ?? "")
+         console.debug('[lean4game]: editor started')
++        if (disposed) return
++        // The document was opened with this version; changes from now on are reported by
++        // the client's `didChange` (see below).
++        const version = leanMonacoEditor.editor?.getModel()?.getVersionId()
++        setModelVersion(version)
++        setSyncedVersion(version)
+         setEditor(leanMonacoEditor.editor)
+       })()
+ 
+       return () => {
++        disposed = true
+         leanMonacoEditor.dispose()
++        // Forget everything that belongs to this level, so the next one doesn't use it
++        // (all of these are global atoms).
++        setEditor(null)
++        setRpcSess(sess => { sess?.dispose(); return undefined })
++        setModelVersion(undefined)
++        setSyncedVersion(undefined)
++        setTypewriterContent("")
++        setDeletedChat([])
++        setSelectedStep(undefined)
++        setSelectedDocTile(null)
+       }
+     }
+   }, [leanMonaco, worldId, levelId])
+ 
+-  // Persist editor text into progress whenever the model changes.
++  // Persist editor text into progress whenever the model changes. Only for this level's
++  // editor: right after switching levels, `editor` can still be the previous level's.
+   useEffect(() => {
+-    if (!editor) return
++    const model = editor?.getModel()
++    if (!editor || !model || model.uri.toString() !== levelUri) return
+ 
+     setCode(editor.getValue())
+     const disposable = editor.onDidChangeModelContent(() => {
+       setCode(editor.getValue())
++      setModelVersion(model.getVersionId())
+     })
+ 
+     return () => {
+       disposable.dispose()
+     }
+-  }, [editor, setCode])
++  }, [editor, setCode, levelUri])
++
++  // Track which version of the text Lean has: the proof state is only requested for that.
++  useEffect(() => {
++    if (!client) return
++    const disposable = client.didChange((params: { textDocument: { uri: string, version: number } }) => {
++      if (decodeURIComponent(params.textDocument.uri) == decodeURIComponent(levelUri)) {
++        setSyncedVersion(params.textDocument.version)
++      }
++    })
++    return () => disposable.dispose()
++  }, [client, levelUri])
++
++  // In case a change is never reported (it should be), don't wait for it forever.
++  useEffect(() => {
++    if (modelVersion === undefined || syncedVersion === modelVersion) return
++    const timer = setTimeout(() => {
++      console.warn(`[lean4game] Lean did not report receiving version ${modelVersion}; asking anyway`)
++      setSyncedVersion(modelVersion)
++    }, 2000)
++    return () => clearTimeout(timer)
++  }, [modelVersion, syncedVersion])
+ 
+   // wait until the client exists
+   // TODO: it didn't work to define an atom `get(editorAtom)?.clientProvider?.getClients()?.[0]`
+@@ -106,35 +159,66 @@ export function PlayableLevel() {
+     return () => clearInterval(interval)
+   }, [leanMonaco?.clientProvider])
+ 
+-  // Start RPC session
++  // Start an RPC session for this level once its editor exists.
++  const connecting = useRef(false)
+   useEffect(() => {
+-    function updateRpcSession() {
+-      if (rpcSess) return true
+-      if (!client || !uri) return false
++    if (rpcSess?.uri === levelUri) return
++    if (!client || uri?.toString() !== levelUri) return
++    let cancelled = false
++    function connect() {
++      if (connecting.current || !client) return
++      connecting.current = true
+       console.debug('rpc session connecting...')
+-      client.sendRequest('$/lean/rpc/connect', {uri: uri.toString()} as RpcConnectParams).then(result => {
++      client.sendRequest('$/lean/rpc/connect', {uri: levelUri} as RpcConnectParams).then(result => {
+         const sessionId = result.sessionId
+         console.debug(`rpc session id: ${sessionId}`)
+-        const _rpcSess = new RpcSessionAtPos(client, sessionId, uri.toString())
+-        setRpcSess(_rpcSess)
++        const _rpcSess = new RpcSessionAtPos(client, sessionId, levelUri)
++        if (cancelled) { _rpcSess.dispose(); return }
++        setRpcSess(old => { old?.dispose(); return _rpcSess })
+       }).catch((err) => {
+         console.debug("rpc connect failed: ", err)
++      }).finally(() => {
++        connecting.current = false
+       })
+     }
+-    updateRpcSession()
+-    const interval = setInterval(() => {
+-      // try to get `rpcSess` until successful
+-      if (updateRpcSession()) {
+-        clearInterval(interval)
+-      }
+-    }, 500)
+-    return () => clearInterval(interval)
+-  }, [client, uri, rpcSess])
++    connect()
++    // Retry until it works, e.g. while Lean is still starting.
++    const interval = setInterval(connect, 2000)
++    return () => {
++      cancelled = true
++      clearInterval(interval)
++    }
++  }, [client, uri, rpcSess, levelUri])
++
++  // If Lean no longer knows our RPC session (e.g. the server restarted the file worker),
++  // drop it so that the effect above connects a new one.
++  const [{ error: proofError }] = useAtom(proofQueryAtom)
++  useEffect(() => {
++    if (needsReconnect(proofError)) {
++      console.debug('rpc session outdated, reconnecting')
++      setRpcSess(sess => { sess?.dispose(); return undefined })
++    }
++  }, [proofError])
++
++  // When the proof is complete, mark the level as completed and add its new items (and the
++  // theorem just proved) to the inventory. Only for a proof state of the current text.
++  const [currentProof] = useAtom(currentProofAtom)
++  const [, setCompleted] = useAtom(completedAtom)
++  const [, addToInventory] = useAtom(inventoryAtom)
++  useEffect(() => {
++    if (!currentProof?.completed || !levelInfo) return
++    setCompleted(true)
++    const newTiles = [
++      ...levelInfo.tactics ?? [],
++      ...levelInfo.lemmas ?? [],
++      ...levelInfo.definitions ?? []
++    ].filter(tile => tile.new).map(tile => tile.name)
++    if (levelInfo.statementName != null) {
++      newTiles.push(levelInfo.statementName)
++    }
++    addToInventory(newTiles)
++  }, [currentProof, levelInfo])
+ 
+-  // Select and highlight proof steps and corresponding hints
+-  // TODO: with the new design, there is no difference between the introduction and
+-  // a hint at the beginning of the proof...
+-  const [selectedStep, setSelectedStep] = useState<number>()
+ 
+   useEffect (() => {
+     // Lock editor mode
+@@ -164,24 +248,9 @@ export function PlayableLevel() {
+   }, [levelInfo, levelId, worldId, gameId, editor])
+ 
+ 
++  // Focus the editor when switching to editor mode.
+   useEffect(() => {
+-    // TODO: That's a problem if the saved proof contains an error
+-    // Reset command line input when loading a new level
+-    setTypewriterInput("")
+-
+-  }, [gameId, worldId, levelId])
+-
+-  useEffect(() => {
+-    const selection = editor?.getSelection();
+-    if (!typewriterMode && editor && selection) {
+-      // Delete last input attempt from command line
+-      editor.executeEdits("typewriter", [{
+-        range: selection,
+-        text: "",
+-        forceMoveMarkers: false
+-      }]);
+-      editor?.focus() // leanMonacoEditor?.editor.focus()
+-    }
++    if (!typewriterMode) editor?.focus()
+   }, [typewriterMode])
+ 
+   // useEffect(() => {
+@@ -234,12 +303,18 @@ export function PlayableLevel() {
+       pageNumber={pageNumber} setPageNumber={setPageNumber}
+       isLoading={levelInfoIsLoading}
+       levelTitle={(mobile ? "" : t("Level")) + ` ${levelId} / ${worldId ? gameInfo?.worldSize?.[worldId] ?? "" : ""}` +
+-        (levelInfo?.title && ` : ${gT(levelInfo?.title ?? "")}`)}
++        (levelInfo?.title ? ` : ${gT(levelInfo.title)}` : "")}
+       />
+     {mobile?
+       // TODO: This is copied from the `Split` component below...
+       <>
+         <div className={`app-content level-mobile ${levelInfoIsLoading ? 'hidden' : ''}`}>
++          <div className="mobile-page-switch" role="tablist">
++            <button role="tab" aria-selected={pageNumber == 0} className={pageNumber == 0 ? "active" : ""}
++              onClick={() => setPageNumber(0)}>{t("Proof")}</button>
++            <button role="tab" aria-selected={pageNumber == 1} className={pageNumber == 1 ? "active" : ""}
++              onClick={() => setPageNumber(1)}>{t("Inventory")}</button>
++          </div>
+           <ExercisePanel codeviewRef={codeviewRef} visible={pageNumber == 0} />
+           <InventoryPanel levelInfo={levelInfo} visible={pageNumber == 1} />
+         </div>
+diff --git a/client/src/components/popup/impressum.tsx b/client/src/components/popup/impressum.tsx
+index 4054a24..a1431dd 100644
+--- a/client/src/components/popup/impressum.tsx
++++ b/client/src/components/popup/impressum.tsx
+@@ -1,43 +1,7 @@
+ import * as React from 'react'
+-import { Trans, useTranslation } from 'react-i18next';
++import { LegalPage } from './legal'
+ 
+-/** Pop-up that is displayed when opening the privacy policy. */
++/** Pop-up that is displayed when opening the impressum (`client/public/legal/impressum.md`). */
+ export function ImpressumPopup () {
+-  let { i18n } = useTranslation()
+-
+-  function content (lng = i18n.language) {
+-    const tt = i18n.getFixedT(lng);
+-    return <Trans t={tt} >
+-      <h2>Impressum</h2>
+-      <p>
+-        <strong>Contact:</strong><br />
+-        Marcus Zibrowius<br />
+-        Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br />
+-        Universitätsstr. 1<br />
+-        40225 Düsseldorf<br />
+-        Germany<br />
+-        +49 211 81-14690<br />
+-        <a href="https://www.math.uni-duesseldorf.de/~zibrowius" target="_blank">Contact Details</a>
+-      </p>
+-      <p>
+-        <strong>Legal form:</strong><br />
+-        The Heinrich Heine University Düsseldorf is a corporation under public law. It is legally represented by the Rector Prof. Dr. Anja Steinbeck. The responsible supervisory authority is the Ministry of Culture and Science of North Rhine-Westphalia, Völklinger Straße 49, 40221 Düsseldorf.
+-      </p>
+-      <p>
+-        <strong>VAT identification number:</strong><br />
+-          according to §27a Sales Tax Act<br />
+-          DE 811222416
+-      </p>
+-      <p><a href="https://www.hhu.de/impressum" target="_blank">Impressum HHU</a></p>
+-    </Trans>
+-  }
+-
+-  return <>
+-    {i18n.language != 'en' && <>
+-      <p><i>(English version below)</i></p>
+-      {content()}
+-      <hr />
+-    </>}
+-    {content('en')}
+-  </>
++  return <LegalPage name="impressum" title="Impressum" />
+ }
+diff --git a/client/src/components/popup/legal.tsx b/client/src/components/popup/legal.tsx
+new file mode 100644
+index 0000000..3adb263
+--- /dev/null
++++ b/client/src/components/popup/legal.tsx
+@@ -0,0 +1,32 @@
++import * as React from 'react'
++import { useEffect, useState } from 'react'
++import { useTranslation } from 'react-i18next'
++import { Markdown } from '../markdown'
++
++/**
++ * A legal page (impressum, privacy policy) provided by whoever runs the site, as Markdown in
++ * `client/public/legal/<name>.md`. If there is none, say so rather than showing someone else's.
++ */
++export function LegalPage({ name, title }: { name: string, title: string }) {
++  const { t } = useTranslation()
++  const [text, setText] = useState<string | null | undefined>(undefined)
++
++  useEffect(() => {
++    let cancelled = false
++    fetch(`${window.location.origin}${import.meta.env.BASE_URL ?? '/'}legal/${name}.md`)
++      .then(async res => {
++        const body = res.ok ? await res.text() : ''
++        // A dev server answers unknown paths with the app's `index.html`.
++        if (!cancelled) setText(body.trim() && !body.trimStart().startsWith('<') ? body : null)
++      })
++      .catch(() => { if (!cancelled) setText(null) })
++    return () => { cancelled = true }
++  }, [name])
++
++  if (text === undefined) return null
++  if (text === null) return <>
++    <h2>{title}</h2>
++    <p>{t("The operator of this site has not provided this information yet.")}</p>
++  </>
++  return <Markdown>{text}</Markdown>
++}
+diff --git a/client/src/components/popup/preferences.tsx b/client/src/components/popup/preferences.tsx
+index 88d2977..4769797 100644
+--- a/client/src/components/popup/preferences.tsx
++++ b/client/src/components/popup/preferences.tsx
+@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
+ import ReactCountryFlag from 'react-country-flag';
+ import { useTranslation } from 'react-i18next';
+ import { useAtom } from 'jotai';
+-import { preferencesAtom } from '../../store/preferences-atoms';
++import { Preferences, preferencesAtom } from '../../store/preferences-atoms';
+ 
+ export function PreferencesPopup() {
+   let { t } = useTranslation()
+@@ -43,6 +43,10 @@ export function PreferencesPopup() {
+     setPreferences(prev => ({ ...prev, language: ev.target.value }))
+   }
+ 
++  const handlerChangeTheme = (ev: SelectChangeEvent<Preferences["theme"]>) => {
++    setPreferences(prev => ({ ...prev, theme: ev.target.value as Preferences["theme"] }))
++  }
++
+   return <Typography variant="body1" component="div" className="settings">
+         <div className='preferences-category'>
+           <div className='category-title'>
+@@ -126,6 +130,28 @@ export function PreferencesPopup() {
+             />
+           </div>
+         </div>
++        <div className='preferences-category'>
++          <div className='category-title'>
++            <h3>{t("Appearance")}</h3>
++          </div>
++          <div className='preferences-item first leave-left-gap'>
++            <FormControlLabel
++              control={
++                <Box sx={{ width: 300 }}>
++                  <Select
++                    value={preferences.theme ?? "system"}
++                    label={t("Appearance")}
++                    onChange={handlerChangeTheme}>
++                      <MenuItem value="system">{t("Same as system")}</MenuItem>
++                      <MenuItem value="light">{t("Light")}</MenuItem>
++                      <MenuItem value="dark">{t("Dark")}</MenuItem>
++                  </Select>
++                </Box>
++              }
++              label=""
++            />
++          </div>
++        </div>
+         <div className='preferences-category'>
+           <div className='category-title'>
+             <h3>{t("Controls")}</h3>
+diff --git a/client/src/components/popup/privacy.tsx b/client/src/components/popup/privacy.tsx
+index d46fb65..59b1ea1 100644
+--- a/client/src/components/popup/privacy.tsx
++++ b/client/src/components/popup/privacy.tsx
+@@ -1,46 +1,9 @@
+ import * as React from 'react'
+-import { Trans, useTranslation } from 'react-i18next';
++import { useTranslation } from 'react-i18next'
++import { LegalPage } from './legal'
+ 
+-/** Pop-up that is displayed when opening the privacy policy. */
++/** Pop-up that is displayed when opening the privacy policy (`client/public/legal/privacy.md`). */
+ export function PrivacyPolicyPopup () {
+-  let {t, i18n} = useTranslation()
+-  function content (lng = i18n.language) {
+-    const tt = i18n.getFixedT(lng);
+-    return <Trans t={tt} >
+-      <h2>Privacy Policy</h2>
+-      <p>
+-        Our server collects metadata (such as IP address, browser, operating system)
+-        and the data that the user enters into the editor. The data is used to
+-        compute the Lean output and display it to the user. The information will be stored
+-        as long as the user stays on our website and will be deleted immediately afterwards.
+-        We keep logs to improve our software, but the contained data is anonymized.
+-      </p>
+-      <p>
+-        We do not use cookies, but your game progress is stored in the browser
+-        as site data. Your game progress is not saved on the server; if you delete
+-        your browser storage, it is completely gone.
+-      </p>
+-      <p>Our server is located in Germany.</p>
+-      <p>
+-        <strong>Contact:</strong><br />
+-        Marcus Zibrowius<br />
+-        Mathematisches Institut der Heinrich-Heine-Universität Düsseldorf<br />
+-        Universitätsstr. 1<br />
+-        40225 Düsseldorf<br />
+-        Germany<br />
+-        +49 211 81 13858<br />
+-        <a href="https://www.math.uni-duesseldorf.de/~zibrowius/" target="_blank">Contact Details</a><br />
+-        <a href="mailto:matvey.lorkish@hhu.de?subject=Lean4Game: <Your%20Question>">Technical Contact</a>
+-      </p>
+-    </Trans>
+-  }
+-
+-  return <>
+-    {i18n.language != 'en' && <>
+-      <p><i>(English version below)</i></p>
+-      {content()}
+-      <hr />
+-    </>}
+-    {content('en')}
+-  </>
++  const { t } = useTranslation()
++  return <LegalPage name="privacy" title={t("Privacy Policy")} />
+ }
+diff --git a/client/src/components/world_tree.tsx b/client/src/components/world_tree.tsx
+index 51d0cba..184cd4f 100644
+--- a/client/src/components/world_tree.tsx
++++ b/client/src/components/world_tree.tsx
+@@ -25,6 +25,7 @@ const r = 16              // radius of a level
+ const s = 10              // global scale
+ const lineWidth = 10      //
+ const ds = .75  // scale the resulting svg image
++const dsMobile = 1.25  // larger on touch screens, so that level icons are big enough to tap
+ 
+ const NMIN = 5   // min. worldsize
+ const NLABEL = 8 // max. world size to display label below the world
+@@ -34,14 +35,14 @@ const NSPIRAL = 12 // world size if NMAX has been passed and need to spiral.
+ const MINFONT = 12
+ 
+ // colours
+-const grey = '#999'
+-const lightgrey = '#bbb'
+-const green = 'green' // 118a11?
+-const lightgreen = '#139e13'
+-const blue = '#1976d2'
+-const darkgrey = '#868686'
+-const darkgreen = '#0e770e'
+-const darkblue = '#1667b8'
++const grey = 'var(--clr-world-locked)'
++const lightgrey = 'var(--clr-level-locked)'
++const green = 'var(--clr-world-completed)' // 118a11?
++const lightgreen = 'var(--clr-level-completed)'
++const blue = 'var(--clr-world-unlocked)'
++const darkgrey = 'var(--clr-world-label-locked)'
++const darkgreen = 'var(--clr-world-label-completed)'
++const darkblue = 'var(--clr-world-label-unlocked)'
+ 
+ 
+ /** svg object for a level in the game tree */
+@@ -99,7 +100,7 @@ export function LevelIcon({ world, level, position }:
+   return (
+     <a onClick={() => {if (!levelDisabled) navigateAcrossWorlds(world, targetLevel)}}
+         className={`level${levelDisabled ? ' disabled' : ''}`}>
+-      <circle fill={completed ? lightgreen : unlocked? blue : lightgrey} cx={x} cy={y} r={r} />
++      <circle style={{fill: completed ? lightgreen : unlocked? blue : lightgrey}} cx={x} cy={y} r={r} />
+       <foreignObject className="level-title-wrapper" x={x} y={y}
+           width={1.42*r} height={1.42*r} transform={"translate("+ -.71*r +","+ -.71*r +")"}>
+         <div>
+@@ -142,7 +143,7 @@ export function WorldIcon({world, title, position}:
+       onClick={() => {if (!worldDisabled) navigateAcrossWorlds(world, firstUncompleted)}}
+       className={`world${worldDisabled ? ' disabled' : ''}`}>
+     <circle className="world-circle" cx={s*position.x} cy={s*position.y} r={R}
+-        fill={completed ? green : unlocked ? blue : grey}/>
++        style={{fill: completed ? green : unlocked ? blue : grey}}/>
+     { false ? // fontSize >= MINFONT ?
+       // NOTE: This code would display the world names inside the bubble, but currently
+       //       it isn't used.
+@@ -174,7 +175,7 @@ export function WorldPath({source, target, sourceWorld} : {source: any, target:
+   const [ sourceCompleted ] = useAtom(worldCompletedAtom(sourceWorld))
+   return <line x1={s*source.position.x} y1={s*source.position.y}
+           x2={s*target.position.x} y2={s*target.position.y}
+-          stroke={sourceCompleted ? green : grey} strokeWidth={lineWidth} />
++          style={{stroke: sourceCompleted ? green : grey}} strokeWidth={lineWidth} />
+ }
+ 
+ /** Download a file containing `data` */
+@@ -218,7 +219,7 @@ export function WorldSelectionMenu() {
+           className='helpButton' />
+       </span>
+       <Slider
+-        orientation="vertical"
++        orientation={mobile ? "horizontal" : "vertical"}
+         title={t("Game Rules")}
+         min={0} max={2}
+         aria-label={t("Game Rules")}
+@@ -276,6 +277,7 @@ export function computeWorldLayout(worlds: {nodes: {[id:string]: {id: string, ti
+ 
+ export function WorldTreePanel() {
+   const [gameId] = useAtom(gameIdAtom)
++  const [mobile] = useAtom(mobileAtom)
+   const [{ data: gameInfo }] = useAtom(gameInfoAtom)
+ 
+   const worlds = gameInfo?.worlds
+@@ -292,7 +294,17 @@ export function WorldTreePanel() {
+       // of these positions to scroll to.
+       let elem = elems[0]
+       console.debug(`scrolling to ${elem.textContent}`)
+-      elem.scrollIntoView({block: "center"})
++      // Scroll only the tree: `scrollIntoView` would also scroll the surrounding panel
++      // sideways when the tree is wider than the screen.
++      const tree = elem.closest(".world-tree")
++      if (tree) {
++        const e = elem.getBoundingClientRect()
++        const t = tree.getBoundingClientRect()
++        tree.scrollTo({
++          left: tree.scrollLeft + e.left - t.left - (t.width - e.width) / 2,
++          top: tree.scrollTop + e.top - t.top - (t.height - e.height) / 2,
++        })
++      }
+     }
+   }, [worlds, worldSize])
+ 
+@@ -343,9 +355,9 @@ export function WorldTreePanel() {
+   return (
+     <div className="panel">
+       <WorldSelectionMenu />
+-      <div className="world-tree">
++      <div className={`world-tree${mobile ? ' mobile' : ''}`}>
+         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+-            width={bounds ? `${ds * dx}` : ''}
++            width={bounds ? `${(mobile ? dsMobile : ds) * dx}` : ''}
+             viewBox={bounds ? `${s*bounds.x1 - padding} ${s*bounds.y1 - padding} ${dx} ${s*(bounds.y2 - bounds.y1) + 2 * padding}` : ''}
+             className="world-selection" >
+           {svgElements}
+diff --git a/client/src/css/app.css b/client/src/css/app.css
+index a3480d9..7d0bbed 100644
+--- a/client/src/css/app.css
++++ b/client/src/css/app.css
+@@ -13,17 +13,198 @@ html {
+   --ff-primary: Roboto;
+ }
+ 
++/* Colour tokens. Every colour in the CSS (and the world map) goes through one of these.
++   The values here are the light theme; the dark palette below overrides them. */
++:root {
++  color-scheme: light;
++
++  /* brand */
++  --clr-on-primary: #fff;
++  --clr-link: #1976d2;
++  --clr-link-hover: #104a83;
++  --clr-text-accent: #5191d1;
++
++  /* surfaces, from back to front */
++  --clr-background: #fff;
++  --clr-surface: #fff;
++  --clr-surface-muted: #fafafa;
++  --clr-surface-subtle: #f0f0f0;
++  --clr-surface-sunken: #eee;
++  --clr-surface-disabled: #ddd;
++  --clr-surface-strong: #bbb;
++
++  /* text */
++  --clr-text: #000;
++  --clr-text-secondary: #555;
++  --clr-text-muted: #777;
++  --clr-text-subtle: #888;
++  --clr-text-disabled: #aaa;
++  --clr-text-faint: #ccc;
++  --clr-code-text: rgba(0, 32, 90, 0.87);
++  --clr-code-bg: rgba(223, 227, 234);
++
++  /* lines */
++  --clr-border: #aaa;
++  --clr-border-strong: #999;
++  --clr-border-light: rgb(200, 200, 200);
++  --clr-divider: rgba(0, 0, 0, 0.12);
++  --clr-divider-subtle: rgba(0, 0, 0, 0.1);
++  --clr-card-border: rgb(140, 140, 140);
++  --clr-infoview-border: green;
++
++  /* elevation */
++  --clr-shadow: rgba(0, 0, 0, 0.5);
++  --clr-shadow-soft: rgba(0, 0, 0, 0.1);
++  --clr-card-shadow: rgb(140, 140, 140);
++  --clr-backdrop: rgba(0, 0, 0, 0.25);
++
++  /* status */
++  --clr-info-bg: #DDF6FF;
++  --clr-info-text: #000;
++  --clr-warning-bg: #FEEFB3;
++  --clr-warning-text: #9F6000;
++  --clr-error-bg: #FFBABA;
++  --clr-error-text: #D8000C;
++  --clr-error-border: #D8000C;
++  --clr-danger-text: #d92c2c;
++  --clr-form-error: #a00;
++  --clr-new: rgb(255, 242, 190);
++  --clr-recent: rgb(242, 190, 255);
++  --clr-recent-glow: #8cbbe9;
++  --clr-processing: rgba(255, 165, 0, 1);
++  --clr-gutter-error: rgba(255, 0, 0, 1);
++
++  /* proof history, fading out from the newest (1) to the oldest (5) line */
++  --clr-history-1: #000;
++  --clr-history-2: #333;
++  --clr-history-3: #666;
++  --clr-history-4: #999;
++  --clr-history-5: #ccc;
++
++  /* world map */
++  --clr-world-completed: green;
++  --clr-world-unlocked: #1976d2;
++  --clr-world-locked: #999;
++  --clr-level-completed: #139e13;
++  --clr-level-locked: #bbb;
++  --clr-world-label-completed: #0e770e;
++  --clr-world-label-unlocked: #1667b8;
++  --clr-world-label-locked: #868686;
++  --clr-world-text: #fff;
++
++  /* landing page */
++  --clr-hero-fallback: rgb(29,0,36);
++  --clr-hero-start: rgba(97,9,121,1);
++  --clr-hero-end: rgba(0,212,255,1);
++  --clr-hero-text: rgb(255, 255, 255);
++  --clr-hero-text-hover: rgb(218, 218, 218);
++  --clr-landing-nav: rgba(0, 133, 162, .7);
++  --clr-landing-footer: rgba(0, 133, 162, 1);
++  --clr-landing-section: rgb(255, 255, 255);
++  --clr-landing-section-alt: rgb(248, 249, 250);
++}
++
++/* Dark palette. `data-theme` on <html> is set from the "Appearance" preference
++   (system / light / dark). Text on its background is at least WCAG AA (4.5:1). */
++:root[data-theme="dark"] {
++  color-scheme: dark;
++
++  --clr-primary: #1976d2;
++  --clr-primary-dark: #a5cdf8;
++  --clr-light-gray: #3a3e46;
++  --clr-dark-gray: #4a4f58;
++  --clr-darker-gray: #b4bac2;
++
++  --clr-on-primary: #fff;
++  --clr-link: #6fb1f5;
++  --clr-link-hover: #a5cdf8;
++  --clr-text-accent: #7fb0e6;
++
++  --clr-background: #1e2127;
++  --clr-surface: #252830;
++  --clr-surface-muted: #22252b;
++  --clr-surface-subtle: #2a2d35;
++  --clr-surface-sunken: #16181c;
++  --clr-surface-disabled: #3a3e46;
++  --clr-surface-strong: #3a3e46;
++
++  --clr-text: #e6e8ec;
++  --clr-text-secondary: #b4bac2;
++  --clr-text-muted: #a0a6ae;
++  --clr-text-subtle: #a0a6ae;
++  --clr-text-disabled: #80868f;
++  --clr-text-faint: #646a73;
++  --clr-code-text: #c9d6ec;
++  --clr-code-bg: #2f3440;
++
++  --clr-border: #4a4f58;
++  --clr-border-strong: #80868f;
++  --clr-border-light: #3a3e46;
++  --clr-divider: rgba(255, 255, 255, 0.12);
++  --clr-divider-subtle: rgba(255, 255, 255, 0.1);
++  --clr-card-border: #4a4f58;
++  --clr-infoview-border: #2e7d32;
++
++  --clr-shadow: rgba(0, 0, 0, 0.7);
++  --clr-shadow-soft: rgba(0, 0, 0, 0.4);
++  --clr-card-shadow: rgba(0, 0, 0, 0.5);
++  --clr-backdrop: rgba(0, 0, 0, 0.6);
++
++  --clr-info-bg: #1b3346;
++  --clr-info-text: #e3eef7;
++  --clr-warning-bg: #3d3115;
++  --clr-warning-text: #ffd27a;
++  --clr-error-bg: #4a1c1f;
++  --clr-error-text: #ffb3b3;
++  --clr-error-border: #e5534b;
++  --clr-danger-text: #ff8a8a;
++  --clr-form-error: #ff8a8a;
++  --clr-new: #4a3f14;
++  --clr-recent: #43234d;
++  --clr-recent-glow: #3d6a99;
++  --clr-processing: rgba(255, 165, 0, 1);
++  --clr-gutter-error: rgba(255, 80, 80, 1);
++
++  --clr-history-1: #e6e8ec;
++  --clr-history-2: #b4bac2;
++  --clr-history-3: #8a9099;
++  --clr-history-4: #646a73;
++  --clr-history-5: #4a4f58;
++
++  --clr-world-completed: #1f8a1f;
++  --clr-world-unlocked: #1976d2;
++  --clr-world-locked: #5c626b;
++  --clr-level-completed: #139e13;
++  --clr-level-locked: #4a4f58;
++  --clr-world-label-completed: #0e770e;
++  --clr-world-label-unlocked: #1667b8;
++  --clr-world-label-locked: #5c626b;
++  --clr-world-text: #fff;
++
++  --clr-hero-fallback: rgb(29,0,36);
++  --clr-hero-start: rgba(97,9,121,1);
++  --clr-hero-end: rgba(0,212,255,1);
++  --clr-hero-text: #fff;
++  --clr-hero-text-hover: rgb(218, 218, 218);
++  --clr-landing-nav: rgba(0, 133, 162, .7);
++  --clr-landing-footer: #00687f;
++  --clr-landing-section: #1e2127;
++  --clr-landing-section-alt: #22252b;
++}
++
+ /* General styling */
+ 
+ body {
++  background: var(--clr-background);
++  color: var(--clr-text);
+   font-family: var(--ff-primary);
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+ }
+ 
+ .markdown code {
+-  color: rgba(0, 32, 90, 0.87);
+-  background-color: rgba(223, 227, 234);
++  color: var(--clr-code-text);
++  background-color: var(--clr-code-bg);
+   font-size: 85%;
+   border-radius: .3em;
+   padding-left: .3em;
+@@ -40,8 +221,8 @@ body {
+   padding-left: .3em;
+   overflow: auto;
+   line-height: 1.45;
+-  color: rgba(0, 32, 90, 0.87);
+-  background-color: rgba(223, 227, 234);
++  color: var(--clr-code-text);
++  background-color: var(--clr-code-bg);
+   border-radius: .3em;
+ }
+ 
+@@ -56,7 +237,7 @@ body {
+   line-height: inherit;
+   text-decoration: none;
+   background: var(--clr-primary);
+-  color: white;
++  color: var(--clr-on-primary);
+   display: inline-block;
+   border-radius: 0.2em;
+   padding: 0.2rem .6em;
+@@ -67,22 +248,22 @@ body {
+ }
+ 
+ .btn-inverted {
+-  color: var(--clr-primary);
+-  background: white;
++  color: var(--clr-link);
++  background: var(--clr-surface);
+ }
+ 
+ .btn-inverted:hover {
+-  color: var(--clr-primary-dark);
++  color: var(--clr-link-hover);
+ }
+ 
+ .btn-disabled, .btn[disabled] {
+-  color: var(--clr-dark-gray);
+-  background: var(--clr-light-gray);
++  color: var(--clr-text-disabled);
++  background: var(--clr-surface-disabled);
+ }
+ 
+ .btn-inverted.btn-disabled, .btn-inverted.btn[disabled] {
+-  color: var(--clr-dark-gray);
+-  background: white;
++  color: var(--clr-text-disabled);
++  background: var(--clr-surface);
+ }
+ 
+ em {
+@@ -96,7 +277,7 @@ em {
+   justify-content: space-between;
+   align-items: center;
+   padding: 1.1em;
+-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
++  filter: drop-shadow(0 0 5px var(--clr-shadow));
+   z-index: 20;
+ }
+ 
+@@ -107,7 +288,7 @@ em {
+ }
+ 
+ .app-bar-title, .app-bar-subtitle {
+-  color: white;
++  color: var(--clr-on-primary);
+   font-weight: 500;
+   font-size: 1.3rem;
+   display: inline-block;
+@@ -115,6 +296,53 @@ em {
+   /* margin: 0 1em; */
+ }
+ 
++/* Keep the app bar within the screen: long titles are cut off, the buttons stay. */
++.app-bar > div {
++  min-width: 0;
++}
++
++.app-bar-title {
++  max-width: 100%;
++  overflow: hidden;
++  text-overflow: ellipsis;
++  white-space: nowrap;
++  /* with `overflow: hidden` the baseline would move to the bottom edge */
++  vertical-align: top;
++}
++
++.app-bar .nav-btns {
++  flex-shrink: 0;
++  white-space: nowrap;
++}
++
++/* Mobile: a lower app bar, the title may use two lines, touch-sized buttons. */
++.app-bar.mobile {
++  padding: .5rem .75rem;
++  gap: .5rem;
++}
++
++.app-bar.mobile .app-bar-title {
++  font-size: 1.1rem;
++  white-space: normal;
++  display: -webkit-box;
++  -webkit-line-clamp: 2;
++  -webkit-box-orient: vertical;
++}
++
++.app-bar.mobile .nav-btns {
++  display: flex;
++  align-items: center;
++  height: auto;
++}
++
++.app-bar.mobile .nav-btns .btn {
++  min-width: 40px;
++  min-height: 40px;
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++}
++
+ .markdown li ul, .markdown li ol {
+ 	margin:0 1.5em;
+ }
+diff --git a/client/src/css/error_page.css b/client/src/css/error_page.css
+index 6650e9e..8e9d8d1 100644
+--- a/client/src/css/error_page.css
++++ b/client/src/css/error_page.css
+@@ -8,8 +8,8 @@
+ 
+ /* these colours are matching the ones of `.messages.error` */
+ .error-message{
+-  border: 2px solid #D8000C;
+-  background-color: #FFBABA;
++  border: 2px solid var(--clr-error-border);
++  background-color: var(--clr-error-bg);
+   border-radius: 1rem;
+   display: inline-block;
+   margin: 3rem;
+@@ -21,8 +21,8 @@
+ 
+ 
+ .thought-bubble {
+-  border: 2px solid #D8000C;
+-  background-color: #FFBABA;
++  border: 2px solid var(--clr-error-border);
++  background-color: var(--clr-error-bg);
+   position: absolute;
+   display: block;
+ }
+diff --git a/client/src/css/infoview.css b/client/src/css/infoview.css
+index 7044d31..8734eb2 100644
+--- a/client/src/css/infoview.css
++++ b/client/src/css/infoview.css
+@@ -6,22 +6,28 @@
+ }
+ .message.information, .message.info {
+   /* color: #059; */
+-  color: #000;
+-  background-color: #DDF6FF;
++  color: var(--clr-info-text);
++  background-color: var(--clr-info-bg);
+ }
+ .message.warning {
+-  color: #9F6000;
+-  background-color: #FEEFB3;
++  color: var(--clr-warning-text);
++  background-color: var(--clr-warning-bg);
+ }
+ .message.error {
+-  color: #D8000C;
+-  background-color: #FFBABA;
++  color: var(--clr-error-text);
++  background-color: var(--clr-error-bg);
++}
++
++/* Mobile: wrap long error lines instead of cutting them off at the screen edge. */
++.level-mobile .message pre {
++  white-space: pre-wrap;
++  overflow-wrap: anywhere;
+ }
+ 
+ .message.deleted-hint {
+-  background-color: #eee;
+-  color: #777;
+-  box-shadow: .0em .0em .5em .2em #eee;
++  background-color: var(--clr-surface-sunken);
++  color: var(--clr-text-muted);
++  box-shadow: .0em .0em .5em .2em var(--clr-surface-sunken);
+  }
+ 
+ .hyp-group {
+@@ -30,7 +36,7 @@
+ 
+ /* Display hyp names as clickable buttons */
+ .hyp-group .hyp-name, .insert-button {
+-  border: 1px solid var(--clr-dark-gray);
++  border: 1px solid var(--clr-border);
+   border-radius: 4px;
+   display: inline-block;
+   padding-left: 4px;
+@@ -61,7 +67,7 @@
+   padding-top: .2em;
+   padding-bottom: .2em;
+   border-radius: .5em;
+-  background-color: #eee;
++  background-color: var(--clr-surface-sunken);
+ 
+ }
+ 
+@@ -74,19 +80,19 @@
+ }
+ 
+ .typewriter.disabled{
+-  background: #bbb;
++  background: var(--clr-surface-strong);
+ }
+ 
+ .typewriter.disabled .btn-inverted,
+ .typewriter.disabled .mtk1 {
+-  color: #777;
++  color: var(--clr-text-muted);
+ }
+ 
+ .typewriter.disabled .typewriter-input-wrapper,
+ .typewriter.disabled .monaco-editor,
+ .typewriter.disabled .monaco-editor-background,
+ .typewriter.disabled .btn-inverted {
+-  background-color: #eee;
++  background-color: var(--clr-surface-sunken);
+ }
+ 
+ .typewriter form {
+@@ -109,7 +115,7 @@
+   flex: 1;
+   padding: 0.2em .6em;
+   font-size: 1rem;
+-  background: white;
++  background: var(--clr-surface);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+@@ -144,7 +150,7 @@
+ }
+ 
+ .other-goals .goals-section-title, .other-goals summary, .other-goals summary .font-code {
+-  color: #5191d1;
++  color: var(--clr-text-accent);
+ }
+ 
+ .goals-section {
+@@ -169,29 +175,29 @@
+   overflow-y: auto;
+   overscroll-behavior-y: contain;
+   scroll-snap-type: y proximity;
+-  color: #ccc;
++  color: var(--clr-history-5);
+ 
+ }
+ 
+ .proof-display div:nth-last-child(4) {
+-  color: #999;
++  color: var(--clr-history-4);
+ }
+ 
+ .proof-display div:nth-last-child(3) {
+-  color: #666;
++  color: var(--clr-history-3);
+ }
+ 
+ .proof-display div:nth-last-child(2) {
+-  color: #333;
++  color: var(--clr-history-2);
+ }
+ 
+ .proof-display div:nth-last-child(1) {
+-  color: #000;
++  color: var(--clr-history-1);
+   scroll-snap-align: end;
+ }
+ 
+ .proof-display-wrapper {
+-  background-color: #f0f0f0;
++  background-color: var(--clr-surface-subtle);
+   border-radius: 1em;
+   padding: 0.6em;
+ }
+@@ -210,7 +216,7 @@
+ }
+ 
+ .exercise .command {
+-  background-color: #bbb;
++  background-color: var(--clr-surface-strong);
+   padding: .5em;
+   border-radius: .2em;
+   /* TODO: It seems my browsers merge the margings of the proof steps,
+@@ -223,7 +229,7 @@
+ }
+ 
+ .exercise .failed-command {
+-  background-color: #eee;
++  background-color: var(--clr-surface-sunken);
+   padding: .5em;
+   border-radius: .2em;
+   /* TODO: It seems my browsers merge the margings of the proof steps,
+@@ -236,18 +242,18 @@
+ 
+ .exercise .command-text {
+   flex: 1;
+-  background-color: #fff;
++  background-color: var(--clr-surface);
+   font-size: 14px;
+   padding: 0.4em .6em 0;
+ }
+ 
+ .undo-button {
+-  color: #888;
+-  background-color: white;
++  color: var(--clr-text-subtle);
++  background-color: var(--clr-surface);
+ }
+ 
+ .crashed_message {
+-  color: #D8000C;
++  color: var(--clr-error-text);
+   font-weight: bold;
+   padding-left: .5em;
+   padding-right: .5em;
+@@ -286,7 +292,7 @@
+ }
+ 
+ .goal-sign line {
+-  stroke: var(--clr-dark-gray);
++  stroke: var(--clr-border);
+   stroke-width: 2;
+ }
+ 
+diff --git a/client/src/css/inventory.css b/client/src/css/inventory.css
+index 34b2006..e531324 100644
+--- a/client/src/css/inventory.css
++++ b/client/src/css/inventory.css
+@@ -7,10 +7,33 @@
+   top: 0;
+   left: 0;
+   z-index: 10;
+-  background-color: white;
++  background-color: var(--clr-surface);
+   padding: 1em;
+ }
+ 
++/* Long docs scroll; long statements wrap instead of widening the page. */
++.inventory-panel .documentation {
++  overflow-y: auto;
++}
++
++.inventory-panel .documentation code {
++  overflow-wrap: anywhere;
++}
++
++/* Mobile: taller inventory rows, easier to tap; one column that scrolls. */
++.level-mobile .inventory-list, .welcome.mobile .inventory-list {
++  flex-wrap: nowrap;
++}
++
++.level-mobile .inventory .item, .welcome.mobile .inventory .item {
++  padding-top: .5rem;
++  padding-bottom: .5rem;
++}
++
++.level-mobile .inventory .item .insert-button, .welcome.mobile .inventory .item .insert-button {
++  top: .375rem;
++}
++
+ .documentation .nav-button {
+   float: right;
+   font-size: 1.5rem;
+@@ -56,9 +79,9 @@
+ 
+ 
+ .inventory .item {
+-  background: #fff;
++  background: var(--clr-surface);
+   /* border: solid 1px #777; */
+-  border-bottom: solid 1px var(--clr-dark-gray);
++  border-bottom: solid 1px var(--clr-border);
+   padding-left: 1.5rem;
+   padding-right: 2rem;
+   padding-top: .125rem;
+@@ -68,26 +91,26 @@
+ 
+ .inventory .item.locked:not(.enabled) {
+   /* border: solid 1px #ccc; */
+-  color: #ccc;
++  color: var(--clr-text-faint);
+ }
+ 
+ .inventory .item.disabled {
+-  color: #d92c2c;
++  color: var(--clr-danger-text);
+ }
+ 
+ .inventory .item.new {
+-  background-color: rgb(255, 242, 190);
++  background-color: var(--clr-new);
+ }
+ 
+ .inventory .item.recent {
+-  background-color: rgb(242, 190, 255);
++  background-color: var(--clr-recent);
+ }
+ .inventory .item, .inventory .item.enabled {
+   cursor: pointer;
+ }
+ 
+ .inventory .item .insert-button {
+-  color: #ccc;
++  color: var(--clr-text-faint);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+@@ -99,5 +122,5 @@
+ }
+ 
+ .inventory .item .insert-button {
+-  color: #ccc;
++  color: var(--clr-text-faint);
+ }
+diff --git a/client/src/css/landing_page.css b/client/src/css/landing_page.css
+index 5e18221..6400b45 100644
+--- a/client/src/css/landing_page.css
++++ b/client/src/css/landing_page.css
+@@ -56,9 +56,9 @@ a {
+ }
+ .game {
+   cursor: pointer;
+-  border: 1px solid rgb(140, 140, 140);
++  border: 1px solid var(--clr-card-border);
+   border-radius: 20px;
+-  box-shadow: 5px 5px 8px rgb(140, 140, 140);
++  box-shadow: 5px 5px 8px var(--clr-card-shadow);
+   width: 100%;
+   max-width: 500px;
+   display: flex;
+@@ -76,8 +76,8 @@ a {
+ }
+ 
+ div.image {
+-  background: rgb(29,0,36);
+-  background: linear-gradient(137deg, rgba(97,9,121,1) 0%, rgba(0,212,255,1) 100%);
++  background: var(--clr-hero-fallback);
++  background: linear-gradient(137deg, var(--clr-hero-start) 0%, var(--clr-hero-end) 100%);
+ }
+ 
+ .game .wrapper > :not(.image), .game .info {
+@@ -108,8 +108,8 @@ div.image {
+ }
+ 
+ .info tr {
+-  border-top: 1px solid rgb(200, 200, 200);
+-  border-bottom: 1px solid rgb(200, 200, 200);
++  border-top: 1px solid var(--clr-border-light);
++  border-bottom: 1px solid var(--clr-border-light);
+ }
+ 
+ .info td {
+@@ -143,13 +143,13 @@ header {
+ 
+ #main-title h1 {
+   font-weight: bolder;
+-  color: rgb(255, 255, 255);
++  color: var(--clr-hero-text);
+   font-size: calc(1.425rem + 2.1vw);
+   text-align: center;
+ }
+ 
+ #main-title p {
+-  color: rgb(255, 255, 255);
++  color: var(--clr-hero-text);
+   font-weight: bold;
+   text-align: center;
+   max-width: 600px;
+@@ -157,12 +157,12 @@ header {
+ }
+ 
+ #main-title a {
+-  color: rgb(255, 255, 255);
++  color: var(--clr-hero-text);
+   text-decoration: underline dotted;
+ }
+ 
+ #main-title a:hover {
+-  color: rgb(218, 218, 218);
++  color: var(--clr-hero-text-hover);
+ }
+ 
+ #main-title i {
+@@ -173,11 +173,11 @@ header nav {
+   display: flex;
+   justify-content: flex-end;
+   padding: 8px;
+-  background-color: rgba(0, 133, 162, .7);
++  background-color: var(--clr-landing-nav);
+ }
+ 
+ footer {
+-  background-color: rgba(0, 133, 162, 1);
++  background-color: var(--clr-landing-footer);
+   /* display: flex;
+   flex-direction: row;
+   justify-content: flex-end; */
+@@ -185,7 +185,7 @@ footer {
+ }
+ 
+ footer .link {
+-  color: white;
++  color: var(--clr-hero-text);
+   cursor: pointer;
+   margin-left: 40px;
+   margin-right: 40px;
+@@ -212,11 +212,11 @@ footer .link {
+ }
+ 
+ .landing-page > section:nth-of-type(odd) {
+-  background-color: rgb(248, 249, 250)
++  background-color: var(--clr-landing-section-alt)
+ }
+ 
+ .landing-page > section:nth-of-type(even) {
+-  background-color: rgb(255, 255, 255)
++  background-color: var(--clr-landing-section)
+ }
+ 
+ @media screen and (min-width: 1300px) {
+@@ -243,7 +243,7 @@ footer .link {
+ .announcement + .announcement {
+   margin-top: 24px;
+   padding-top: 24px;
+-  border-top: 1px solid rgb(200, 200, 200);
++  border-top: 1px solid var(--clr-border-light);
+ }
+ 
+ .announcement h2 {
+diff --git a/client/src/css/layout.css b/client/src/css/layout.css
+index cd1f7c4..d20f932 100644
+--- a/client/src/css/layout.css
++++ b/client/src/css/layout.css
+@@ -11,6 +11,11 @@ html, body {
+   flex-direction: column;
+ }
+ 
++/* The visible height, kept up to date in `utils/viewport.ts` (URL bar, on-screen keyboard). */
++#root {
++  height: var(--app-height, 100vh);
++}
++
+ .app-bar {
+   flex-shrink: 0;
+   background: var(--clr-primary);
+@@ -20,7 +25,7 @@ html, body {
+   justify-content: space-between;
+   align-items: center;
+   padding: 1.1em;
+-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
++  filter: drop-shadow(0 0 5px var(--clr-shadow));
+   z-index: 20;
+ }
+ 
+@@ -43,6 +48,21 @@ html, body {
+   overflow-y: hidden;
+ }
+ 
++/* `.hidden` alone loses against the `display: flex` above. */
++.inventory-panel.hidden, .exercise-panel.hidden, .chat-panel.hidden {
++  display: none;
++}
++
++/* Mobile level: the one visible panel fills the space below the app bar. */
++.level-mobile:not(.hidden) {
++  display: flex;
++  flex-direction: column;
++}
++
++.level-mobile > .exercise-panel, .level-mobile > .inventory-panel {
++  flex: 1;
++}
++
+ /* World Tree Panel */
+ 
+ .world-tree {
+@@ -57,6 +77,15 @@ html, body {
+   margin: auto;
+ }
+ 
++/* Mobile: keep the level icons large enough to tap and scroll the tree instead. */
++.world-tree.mobile {
++  overflow: auto;
++}
++
++.world-tree.mobile .world-selection {
++  max-width: none;
++}
++
+ /* Exercise Panel */
+ .exercise {
+   gap: 8px;
+@@ -69,7 +98,7 @@ html, body {
+ .infoview {
+   flex: 1;
+   display: flex;
+-  border: 1px solid green;
++  border: 1px solid var(--clr-infoview-border);
+   padding-top: 1em;
+   padding-bottom: 0;
+   padding-top: 0em;
+diff --git a/client/src/css/level.css b/client/src/css/level.css
+index 6e19703..0085e61 100644
+--- a/client/src/css/level.css
++++ b/client/src/css/level.css
+@@ -9,7 +9,7 @@
+ }
+ 
+ .gutter {
+-  background-color: #eee;
++  background-color: var(--clr-surface-sunken);
+ 
+   background-repeat: no-repeat;
+   background-position: 50%;
+@@ -24,7 +24,7 @@
+ }
+ 
+ .exercise-statement .lean-code {
+-  color: rgba(0, 32, 90, 0.87);
++  color: var(--clr-code-text);
+   font-size: 12px; /* TODO: is the monaco font-size hardcoded? */
+ }
+ 
+@@ -46,15 +46,15 @@
+ }
+ 
+ .doc-panel {
+-  background: #fafafa;
++  background: var(--clr-surface-muted);
+ }
+ 
+ .doc-panel li {
+-  border-bottom: 1px solid rgba(0, 0, 0, 0.12); /* This should be teh same colour as `divider` in Inventory.tsx */
++  border-bottom: 1px solid var(--clr-divider); /* This should be teh same colour as `divider` in Inventory.tsx */
+ }
+ 
+ .doc-panel li:first-of-type {
+-  border-top: 1px solid rgb(0, 0, 0, 0.12); /* This should be teh same colour as `divider` in Inventory.tsx */
++  border-top: 1px solid var(--clr-divider); /* This should be teh same colour as `divider` in Inventory.tsx */
+ }
+ 
+ /* fix as Mui seems to set this to `nowrap`. */
+@@ -104,8 +104,8 @@ td code  {
+ .processing {
+   background: linear-gradient(
+     to right,
+-    rgba(255, 165, 0, 1) 0%,
+-    rgba(255, 165, 0, 1) 30%,
++    var(--clr-processing) 0%,
++    var(--clr-processing) 30%,
+     transparent 30%,
+     transparent  100%
+   );
+@@ -113,7 +113,7 @@ td code  {
+ 
+ /* Styling in the left margin of the editor on error */
+ .glyph-margin-error {
+-  background: rgba(255, 0, 0, 1);
++  background: var(--clr-gutter-error);
+ }
+ 
+ /***************************************/
+@@ -171,7 +171,7 @@ td code  {
+   margin-left: .5em;
+   margin-right: .5em;
+   min-height: 2.5em;
+-  border-top:  0.1em solid #aaa;
++  border-top:  0.1em solid var(--clr-border);
+   flex-shrink: 0;
+ }
+ 
+@@ -201,6 +201,48 @@ td code  {
+   text-align: center;
+ }
+ 
++/* Mobile level: hints button, completion message and Next below the proof steps */
++.mobile-level-footer .button-row.mobile {
++  display: flex;
++  flex-direction: column;
++  gap: .5rem;
++}
++
++.mobile-level-footer .button-row.mobile:empty {
++  display: none;
++}
++
++.mobile-level-footer .message {
++  margin: .5rem;
++}
++
++/* Mobile level: segmented control switching between proof and inventory */
++.mobile-page-switch {
++  flex-shrink: 0;
++  display: flex;
++  margin: .5rem;
++  border: 1px solid var(--clr-primary);
++  border-radius: .3rem;
++  overflow: hidden;
++}
++
++.mobile-page-switch button {
++  flex: 1;
++  min-height: 36px;
++  border: 0;
++  margin: 0;
++  background: var(--clr-surface);
++  color: var(--clr-link);
++  font: inherit;
++  font-weight: 500;
++  cursor: pointer;
++}
++
++.mobile-page-switch button.active {
++  background: var(--clr-primary);
++  color: var(--clr-on-primary);
++}
++
+ 
+ .typewriter-interface {
+   display: flex;
+@@ -238,7 +280,7 @@ td code  {
+ }
+ 
+ .chat .recent {
+-  box-shadow: .0em .0em .4em .1em #8cbbe9;
++  box-shadow: .0em .0em .4em .1em var(--clr-recent-glow);
+ }
+ 
+ .exercise .step.selected .goal-tabs, .chat .selected {
+@@ -254,7 +296,7 @@ td code  {
+ }
+ 
+ .impressum {
+-  background-color: #fff;
++  background-color: var(--clr-background);
+   width: 100%;
+   height: 100%;
+   position: absolute;
+@@ -269,10 +311,10 @@ td code  {
+   flex-direction: column;
+   right: 0;
+   top: 100%;
+-  background-color: #fff;
+-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+-  box-shadow: -.1rem .3rem .3rem 0 rgba(0, 0, 0, 0.1);
++  background-color: var(--clr-surface);
++  border-top: 1px solid var(--clr-divider-subtle);
++  border-bottom: 1px solid var(--clr-divider-subtle);
++  box-shadow: -.1rem .3rem .3rem 0 var(--clr-shadow-soft);
+ }
+ 
+ .menu.dropdown.hidden {
+@@ -315,6 +357,6 @@ td code  {
+ }
+ 
+ .nav-btns .language-btn {
+-  background: #DDF6FF;
++  background: var(--clr-info-bg);
+   text-align: center;
+ }
+diff --git a/client/src/css/modern.css b/client/src/css/modern.css
+new file mode 100644
+index 0000000..c51bfae
+--- /dev/null
++++ b/client/src/css/modern.css
+@@ -0,0 +1,145 @@
++/* A lighter, more modern look on top of the other stylesheets: typography, rounded cards and
++   buttons, softer shadows, focus rings. Loaded last. All colours still come from the tokens in
++   `app.css`, so the light and the dark theme both follow. */
++
++:root {
++  --ff-primary: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
++  --radius-sm: 6px;
++  --radius: 10px;
++  --radius-lg: 14px;
++  --shadow-sm: 0 1px 2px var(--clr-shadow-soft);
++  --shadow: 0 2px 10px var(--clr-shadow-soft);
++  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--clr-primary) 45%, transparent);
++}
++
++/* Text in hints, conclusions, intros and docs (rendered Markdown, inside `.markdown` or a
++   `.message`). `reset.css` sets `font: inherit` on everything, so restore what Markdown needs. */
++:is(.markdown, .message) :is(strong, b) {
++  font-weight: 650;
++}
++
++:is(.markdown, .message) h1, :is(.markdown, .message) h2, :is(.markdown, .message) h3, :is(.markdown, .message) h4 {
++  font-weight: 650;
++  line-height: 1.25;
++  margin: .9em 0 .4em;
++}
++:is(.markdown, .message) h1 { font-size: 1.35em; }
++:is(.markdown, .message) h2 { font-size: 1.2em; }
++:is(.markdown, .message) h3 { font-size: 1.08em; }
++:is(.markdown, .message) h4 { font-size: 1em; color: var(--clr-text-secondary); }
++:is(.markdown, .message) > :first-child { margin-top: 0; }
++
++:is(.markdown, .message) p + p, :is(.markdown, .message) p + ul, :is(.markdown, .message) ul + p, :is(.markdown, .message) p + ol, :is(.markdown, .message) ol + p,
++:is(.markdown, .message) blockquote + p, :is(.markdown, .message) p + blockquote {
++  margin-top: .6em;
++}
++
++:is(.markdown, .message) ul, :is(.markdown, .message) ol {
++  padding-left: 1.4em;
++}
++:is(.markdown, .message) li + li {
++  margin-top: .25em;
++}
++
++/* Used for the "written out" proofs in conclusions. */
++:is(.markdown, .message) blockquote {
++  margin: .6em 0;
++  padding: .5em .9em;
++  border-left: 3px solid var(--clr-primary);
++  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
++  background: color-mix(in srgb, var(--clr-surface) 70%, transparent);
++  color: var(--clr-text);
++}
++:is(.markdown, .message) blockquote p + p {
++  margin-top: .5em;
++}
++
++/* Buttons */
++.btn {
++  border-radius: var(--radius-sm);
++  padding: .3rem .8em;
++  font-weight: 500;
++  transition: filter .15s, background-color .15s, color .15s, box-shadow .15s;
++}
++.btn:hover:not([disabled]):not(.btn-disabled) {
++  filter: brightness(1.08);
++}
++.btn-inverted:hover:not([disabled]):not(.btn-disabled) {
++  filter: none;
++  background: var(--clr-surface-subtle);
++}
++.btn:focus-visible, .tab:focus-visible, .inventory .item:focus-visible {
++  outline: none;
++  box-shadow: var(--focus-ring);
++}
++
++/* App bar: a flat bar with a soft shadow instead of a dark glow. */
++.app-bar {
++  filter: none;
++  box-shadow: 0 1px 0 var(--clr-divider), 0 2px 8px var(--clr-shadow-soft);
++}
++
++/* Hints, conclusions and Lean messages as soft cards. */
++.message {
++  border-radius: var(--radius);
++  padding: .7em 1em;
++  line-height: 1.55;
++}
++.chat .message {
++  margin-top: .75em;
++  margin-bottom: .75em;
++}
++
++/* The proof: the statement, the entered commands and the command line. */
++.typewriter-info .proof {
++  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
++  box-shadow: var(--shadow-sm);
++}
++.exercise .command, .exercise .failed-command {
++  border-radius: var(--radius);
++  padding: .4em;
++}
++.exercise .command-text {
++  border-radius: var(--radius-sm);
++}
++.undo-button {
++  border-radius: var(--radius-sm);
++}
++.typewriter {
++  border-radius: var(--radius);
++}
++.typewriter .typewriter-input-wrapper {
++  border-radius: var(--radius-sm);
++}
++
++/* Tabs and inventory */
++.tab {
++  transition: color .15s, border-color .15s;
++}
++.tab:hover {
++  color: var(--clr-text);
++}
++.inventory .item {
++  transition: background-color .15s;
++}
++.inventory .item:hover {
++  background: var(--clr-surface-subtle);
++}
++
++/* Popups */
++.modal {
++  border-radius: var(--radius-lg);
++  box-shadow: 0 10px 40px var(--clr-shadow-soft);
++  overflow: auto;
++}
++
++/* Thin scrollbars where the browser supports them. */
++.typewriter-info, .chat, .inventory, .modal {
++  scrollbar-width: thin;
++}
++
++/* The world images (e.g. the Venn diagrams) are drawn for a white page. In dark mode, invert
++   their lightness but keep their hues, so they don't show as bright white cards. */
++:root[data-theme="dark"] .world-image {
++  filter: invert(.9) hue-rotate(180deg);
++}
+diff --git a/client/src/css/popup.css b/client/src/css/popup.css
+index f5a8829..8a0a2df 100644
+--- a/client/src/css/popup.css
++++ b/client/src/css/popup.css
+@@ -14,7 +14,7 @@
+   right: 0;
+   bottom: 0;
+   left: 0;
+-  background: rgba(0, 0, 0, 0.25);
++  background: var(--clr-backdrop);
+   z-index: 2;
+ }
+ 
+@@ -31,7 +31,7 @@
+   max-width: 60ch;
+   max-height: 80%;
+   overflow: scroll;
+-  background: #fff;
++  background: var(--clr-surface);
+   z-index: 3;
+   padding: 2em;
+   border-radius: 1em;
+@@ -39,12 +39,44 @@
+   color: var(--vscode-breadcrumb-foreground);
+ }
+ 
++/* Small screens: use (almost) the full screen, less padding, scrollbar only when needed. */
++@media (max-width: 600px) {
++  .modal {
++    box-sizing: border-box;
++    min-width: 0;
++    width: calc(100% - 1.5rem);
++    max-height: calc(100% - 1.5rem);
++    padding: 1.25em;
++    overflow: auto;
++  }
++
++  .modal table {
++    display: block;
++    overflow-x: auto;
++  }
++
++  /* Preferences: the layout slider has a fixed width of 300px */
++  .modal .preferences-item.leave-left-gap {
++    margin-left: 1.5em;
++    margin-right: 1.5em;
++  }
++
++  .modal .preferences-item.leave-left-gap .MuiFormControlLabel-root {
++    display: flex;
++    margin: 0;
++  }
++
++  .modal .preferences-item.leave-left-gap .MuiBox-root {
++    max-width: 100%;
++  }
++}
++
+ .modal input[type="text"] {
+   width: 100%;
+ }
+ 
+ .modal .form-error {
+-  color: #a00;
++  color: var(--clr-form-error);
+   font-weight: bold;
+ }
+ 
+diff --git a/client/src/css/reset.css b/client/src/css/reset.css
+index cbaa69c..373b7fb 100644
+--- a/client/src/css/reset.css
++++ b/client/src/css/reset.css
+@@ -32,7 +32,7 @@ body {
+ a:not([class]) {
+     text-decoration-skip-ink: auto;
+     text-decoration-style: dotted;
+-    color: var(--clr-primary);
++    color: var(--clr-link);
+ }
+ 
+ /* Make images easier to work with */
+diff --git a/client/src/css/tab_bar.css b/client/src/css/tab_bar.css
+index 609c160..df363e8 100644
+--- a/client/src/css/tab_bar.css
++++ b/client/src/css/tab_bar.css
+@@ -1,10 +1,10 @@
+ 
+ .tab-bar {
+-  border-bottom: 0.1em solid var(--clr-dark-gray);
++  border-bottom: 0.1em solid var(--clr-border);
+ }
+ 
+ .tab {
+-  color: var(--clr-darker-gray);
++  color: var(--clr-text-secondary);
+   line-height: inherit;
+   text-decoration: none;
+   padding: 0.2rem 1rem;
+@@ -31,27 +31,27 @@
+ }
+ 
+ .tab-bar.current .tab.active {
+-  color: black;
++  color: var(--clr-text);
+   border-bottom: 0.3em solid var(--clr-primary);
+ }
+ 
+ .tab.recent {
+-  background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgb(242, 190, 255));
++  background-image: linear-gradient(to bottom, transparent, var(--clr-recent));
+ }
+ 
+ .tab.recent:not(.active) {
+-  border-bottom: 0.3em solid rgb(242, 190, 255);
++  border-bottom: 0.3em solid var(--clr-recent);
+ }
+ 
+ .tab.new {
+-  background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgb(255, 242, 190));
++  background-image: linear-gradient(to bottom, transparent, var(--clr-new));
+ }
+ 
+ .tab.new:not(.active) {
+-  border-bottom: 0.3em solid rgb(255, 242, 190);
++  border-bottom: 0.3em solid var(--clr-new);
+ }
+ 
+ .tab.active {
+-  color: black;
+-  border-bottom: 0.3em solid #999;
++  color: var(--clr-text);
++  border-bottom: 0.3em solid var(--clr-border-strong);
+ }
+diff --git a/client/src/css/typewriter.css b/client/src/css/typewriter.css
+index 5940047..d8d075d 100644
+--- a/client/src/css/typewriter.css
++++ b/client/src/css/typewriter.css
+@@ -3,6 +3,17 @@
+   justify-content: center;
+   width: 100%;
+   margin-top: -1.5rem;
++  /* The rotating spinner's bounding box changes size; don't let it change the scroll height. */
++  overflow: hidden;
++}
++
++.proof-state-error {
++  padding: 1rem;
++  text-align: center;
++}
++
++.proof-state-error .btn {
++  margin: 0 0.5rem;
+ }
+ 
+ .typewriter-canvas {
+@@ -11,7 +22,7 @@
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+-  background-color: white;
++  background-color: var(--clr-background);
+ }
+ 
+ .typewriter-info {
+@@ -21,6 +32,9 @@
+   min-height: 0;
+   position: relative;
+   overflow-y: auto;
++  /* Always reserve the scrollbar's space. Otherwise a scrollbar appearing narrows the world
++     image, which changes the content height, which can make the scrollbar disappear again. */
++  scrollbar-gutter: stable;
+ }
+ 
+ .typewriter-input {
+@@ -30,6 +44,14 @@
+   margin-top: 0;
+ }
+ 
++/* iOS zooms into inputs with a font smaller than 16px when they get focus. Monaco's hidden
++   textarea is what gets focus, so enlarging it doesn't change what is shown. */
++@media (pointer: coarse) {
++  .typewriter-input textarea, .codeview textarea {
++    font-size: 16px !important;
++  }
++}
++
+ .pusher {
+   flex: 1;
+   min-height: 0;
+@@ -37,7 +59,7 @@
+ }
+ 
+ .typewriter-canvas .typewriter-info {
+-  background-color: #eee;
++  background-color: var(--clr-surface-sunken);
+ }
+ 
+ .world-image {
+@@ -46,7 +68,13 @@
+   width: 100%;
+ }
+ 
++/* Part of the layout rather than a backdrop: a diagram is content, so the proof scrolls
++   past it instead of covering it. */
+ .world-image.contain {
++  position: static;
++  display: block;
++  flex-shrink: 0;
++  max-height: 45vh;
+   object-fit: contain;
+ }
+ 
+@@ -56,7 +84,7 @@
+ }
+ 
+ .typewriter-info .proof {
+-  background-color: #fff;
++  background-color: var(--clr-surface);
+   border-radius: 8px 8px 0 0;
+ }
+ 
+diff --git a/client/src/css/welcome.css b/client/src/css/welcome.css
+index 056adc0..ec46b71 100644
+--- a/client/src/css/welcome.css
++++ b/client/src/css/welcome.css
+@@ -55,14 +55,14 @@ h5, h6 {
+   display: flex;
+   align-items:center;
+   justify-content:center;
+-  color: #aaa;
+-  background-color: #eee;
++  color: var(--clr-text-disabled);
++  background-color: var(--clr-surface-sunken);
+   cursor: pointer;
+ }
+ 
+ .privacy p {
+   position: absolute;
+-  color: #888;
++  color: var(--clr-text-subtle);
+   bottom: 1.5px;
+   font-size: 6px;
+ }
+diff --git a/client/src/css/world_tree.css b/client/src/css/world_tree.css
+index 831d384..9d8aebb 100644
+--- a/client/src/css/world_tree.css
++++ b/client/src/css/world_tree.css
+@@ -16,7 +16,7 @@ svg .world-title-wrapper div, svg .level-title-wrapper div {
+ }
+ 
+ svg .world-title, svg .level-title {
+-  color: white;
++  color: var(--clr-world-text);
+   margin: 0;
+   padding: 0;
+   text-align: center;
+@@ -50,9 +50,9 @@ svg .disabled {
+   /* margin: 1em; */
+   /* border: 1px solid var(--clr-primary); */
+   border: 1px solid var(--clr-primary);
+-  background-color: #fff;
++  background-color: var(--clr-surface);
+   border-radius: .5em;
+-  filter: drop-shadow(4px 4px 5px rgba(0,0,0,0.5));
++  filter: drop-shadow(4px 4px 5px var(--clr-shadow));
+ }
+ 
+ .world-selection-menu.desktop {
+@@ -83,6 +83,25 @@ svg .disabled {
+   padding-bottom: 1.2em;
+ }
+ 
++/* Mobile: a compact, horizontal rules slider above the tree, so the tree gets the space. */
++.world-selection-menu:not(.desktop) {
++  flex-shrink: 0;
++  position: relative;
++  top: auto;
++  right: auto;
++  margin: .5rem;
++}
++
++.world-selection-menu:not(.desktop) .slider-wrap {
++  height: auto;
++  min-width: 0;
++  padding: .5em 2.5em 1.2em 1.5em;
++}
++
++.world-selection-menu:not(.desktop) .difficulty-label {
++  padding-bottom: 0;
++}
++
+ /* Test for mobile `title`s */
+ /* @media (pointer: coarse), (hover: none) {
+   [title] {
+@@ -113,6 +132,6 @@ svg .disabled {
+   position: absolute;
+   right: .5em;
+   top: .5em;
+-  color: var(--clr-primary);
++  color: var(--clr-link);
+   cursor: pointer;
+ }
+diff --git a/client/src/index.tsx b/client/src/index.tsx
+index 4927c00..d97e086 100644
+--- a/client/src/index.tsx
++++ b/client/src/index.tsx
+@@ -11,6 +11,7 @@ import { useAtom } from 'jotai'
+ import { gameIdAtom, hashSegmentsAtom, levelIdAtom, pathSegmentsAtom, redirectAtom, worldIdAtom } from './store/location-atoms'
+ import { ErrorBoundary } from './error/ErrorBoundary'
+ import { NotFound } from './error/NotFound'
++import { trackAppHeight } from './utils/viewport'
+ 
+ function Router() {
+   const [gameId] = useAtom(gameIdAtom)
+@@ -51,6 +52,8 @@ function Router() {
+ 
+ 
+ 
++trackAppHeight()
++
+ const container = document.getElementById('root');
+ const root = createRoot(container!);
+ root.render(
+diff --git a/client/src/store/editor-atoms.ts b/client/src/store/editor-atoms.ts
+index 954a802..42c88d1 100644
+--- a/client/src/store/editor-atoms.ts
++++ b/client/src/store/editor-atoms.ts
+@@ -38,6 +38,17 @@ export const uriAtom = atom(get => get(modelAtom)?.uri)
+ /** The currently used RPC session */
+ export const rpcSessionAtom = atom<RpcSessionAtPos>()
+ 
++/** The URI of the current level's document (each level has its own, see `PlayableLevel`). */
++export const levelUriAtom = atom(get => `file:///${get(worldIdAtom)}/${get(levelIdAtom)}.lean`)
++
++/** The version of the current level's text in the editor. */
++export const modelVersionAtom = atom<number | undefined>(undefined)
++
++/** The latest version of the current level's text that has been sent to Lean. The proof state
++ * is only requested once this equals `modelVersionAtom`: Lean answers a request with the latest
++ * version it has, so a request sent before the new text would be answered for the old one. */
++export const syncedVersionAtom = atom<number | undefined>(undefined)
++
+ /** The code of the current level as stored in local storage.
+  *
+  * The setter must not be used directly, expect inside the
+@@ -70,63 +81,100 @@ export const codeAtom = atom(
+   (get, set, val: string) => {
+     const model = get(modelAtom)
+     model?.setValue(val)
+-
+-    // FIXME: This is hacky. Changes to `codeAtom)` already retriggers this query, but too fast so
+-    // the Lean server answers with the old file. The old version used
+-    // `useServerNotificationEffect('textDocument/publishDiagnostics' ...)`
+-    // to wait until the server publishes diagnostics, then ask for the proof, but I
+-    // didn't get that to work yet...
+-    setTimeout( () => { get(proofQueryAtom).refetch() }, 1000 );
+   }
+ )
+ 
+-/** Appends a new line of code at the end of the current code */
++/** Appends a new line of code at the end of the current code.
++ *
++ * If the last command failed, it is replaced instead: otherwise Lean's error recovery
++ * counts the failed command as having closed the goal, and the new command would then
++ * fail with "no goals".
++*/
+ export const appendCodeLineAtom = atom(null, (get, set, line: string) => {
+   const code = get(codeAtom)
+ 
+-  const oldCode = code?.trimEnd() ?? ''
++  let lines = (code?.trimEnd() ?? '').split('\n')
++  const failedCommand = get(lastProofStepErrorCommandAtom)
++  if (failedCommand != null && lines[lines.length - 1].trim() == failedCommand.trim()) {
++    lines.pop()
++  }
++  const oldCode = lines.join('\n').trimEnd()
+   const newCode = oldCode.length > 0 ? `${oldCode}\n${line}\n` : `${line}\n`
+   set(codeAtom, newCode)
+ })
+ 
+-/** Delete all code starting at line `line` */
+-export const deleteCodeFromLineAtom = atom(null, (get, set, line: number) => {
++/** Delete the proof from step `step` on. Step 0 is the start of the proof (before any
++ * command), and step `i` is the result of the code's line `i - 1`. */
++export const deleteProofFromStepAtom = atom(null, (get, set, step: number) => {
+   const code = get(codeAtom)
+   if (code == undefined) return
+ 
+   set(selectedStepAtom, undefined)
++  get(oneLineEditorAtom)?.setValue('')
+   set(typewriterContentAtom, "")
+ 
++  // Show the hints of the deleted steps as deleted hints.
+   const help = get(helpAtom)
+   const proof = get(proofAtom)
+   if (proof) {
+-    const newDeletedChat = proof.steps.slice(line).flatMap((step, i) => {
+-      let filteredHints = filterHints(step.goals[0]?.hints, proof.steps[i-1]?.goals[0]?.hints)
+-      return filteredHints.filter(hint => (!hint.hidden || help.has(line + i)))
++    const newDeletedChat = proof.steps.slice(step).flatMap((s, j) => {
++      const filteredHints = filterHints(s.goals[0]?.hints, proof.steps[step + j - 1]?.goals[0]?.hints)
++      return filteredHints.filter(hint => (!hint.hidden || help.has(step + j)))
+     })
+     set(deletedChatAtom, newDeletedChat)
+   }
+ 
+-  // delete the info about displayed help where the lines were deleted
+-  const newHelp = new Set(Array.from(help).filter(i => i < line - 1))
+-  set(helpAtom, newHelp)
++  // Forget which hidden hints were shown for the deleted steps.
++  set(helpAtom, new Set(Array.from(help).filter(i => i < step)))
+ 
+-  const lines = code.split("\n")
+-  const newCode = lines.slice(0, line).join("\n")
+-  set(codeAtom, newCode)
++  set(codeAtom, code.split("\n").slice(0, Math.max(0, step - 1)).join("\n"))
+ })
+ 
++/** Lean's error code for an RPC session that the server no longer knows (`RpcNeedsReconnect`),
++ * e.g. after the server restarted the file worker. The session has to be reconnected. */
++export const RPC_NEEDS_RECONNECT = -32900
++
++/** LSP's `ContentModified`: the document isn't (or no longer) the one Lean has open, e.g. a
++ * request from before switching levels. Also handled by reconnecting. */
++export const CONTENT_MODIFIED = -32801
++
++/** Whether a proof state request failed in a way that a new RPC session fixes. */
++export const needsReconnect = (error: any) =>
++  error?.code === RPC_NEEDS_RECONNECT || error?.code === CONTENT_MODIFIED
++
++/** How long to wait for the proof state before reporting that the Lean server didn't respond. */
++const PROOF_STATE_TIMEOUT_MS = 90_000
++
+ /** The analysed proof, received over RPC  */
+-export const proofQueryAtom = atomWithQuery<ProofState>((get) => {
++export const proofQueryAtom = atomWithQuery<ProofState | null>((get) => {
+   const worldId = get(worldIdAtom)
+   const levelId = get(levelIdAtom)
+-  const code = get(codeAtom)
+   const rpcSess = get(rpcSessionAtom)
++  const levelUri = get(levelUriAtom)
++  const version = get(modelVersionAtom)
++  const synced = get(syncedVersionAtom)
++  // Only ask once Lean has the current text, and only with this level's session.
++  const ready = rpcSess?.sessionId != undefined && rpcSess.uri == levelUri &&
++    version != undefined && synced === version && worldId != undefined && levelId != undefined
+   return {
+-    queryKey: ['proof', worldId, levelId, rpcSess?.sessionId, code],
++    queryKey: ['proof', worldId, levelId, rpcSess?.sessionId, version],
++    // While the next version is checked, keep showing this level's last proof state rather
++    // than a spinner (`isPlaceholderData` tells them apart).
++    placeholderData: (prev, prevQuery) =>
++      prevQuery?.queryKey[1] === worldId && prevQuery?.queryKey[2] === levelId &&
++      prevQuery?.queryKey[3] === rpcSess?.sessionId ? prev : undefined,
++    // Errors are thrown rather than swallowed, so that the level can reconnect an outdated
++    // session or tell the player, instead of showing a loading spinner forever.
++    retry: (failureCount, error: any) => !needsReconnect(error) && failureCount < 2,
+     queryFn: async () => {
+-      if (!rpcSess) return undefined
+-      const res = await rpcSess.client.sendRequest(
++      // `refetch` runs even when the query isn't enabled.
++      if (!ready) return null
++      let timer: ReturnType<typeof setTimeout> | undefined
++      const timeout = new Promise<never>((_, reject) => {
++        timer = setTimeout(() => reject(new Error('Timed out waiting for the Lean server')),
++          PROOF_STATE_TIMEOUT_MS)
++      })
++      const request = rpcSess.client.sendRequest(
+         '$/lean/rpc/call',
+         {
+           method: "Game.getProofState",
+@@ -140,13 +188,17 @@ export const proofQueryAtom = atomWithQuery<ProofState>((get) => {
+           position: {line: 0, character: 0},
+           sessionId: rpcSess.sessionId
+         }
+-      ).catch((err) => {
++      )
++      try {
++        return await Promise.race([request, timeout])
++      } catch (err) {
+         console.warn(err)
+-        return null
+-      })
+-      return res
++        throw err
++      } finally {
++        clearTimeout(timer)
++      }
+     },
+-    enabled: rpcSess?.sessionId != undefined && code != undefined && worldId != undefined && levelId != undefined
++    enabled: ready
+   }
+ })
+ 
+@@ -156,7 +208,17 @@ export const proofQueryAtom = atomWithQuery<ProofState>((get) => {
+  *
+  * Note that the first step will always have "" as command
+  */
+-export const proofAtom = atom(get => get(proofQueryAtom).data)
++export const proofAtom = atom(get => get(proofQueryAtom).data ?? undefined)
++
++/** The proof state for the current text, or `undefined` while that is still being checked
++ * (when `proofAtom` may still show the previous version's). */
++export const currentProofAtom = atom(get => {
++  const query = get(proofQueryAtom)
++  return query.isPlaceholderData ? undefined : query.data ?? undefined
++})
++
++/** Whether the current text has not been checked yet. */
++export const proofPendingAtom = atom(get => get(currentProofAtom) === undefined)
+ 
+ 
+ 
+diff --git a/client/src/store/inventory-atoms.ts b/client/src/store/inventory-atoms.ts
+index ba4c292..e325f52 100644
+--- a/client/src/store/inventory-atoms.ts
++++ b/client/src/store/inventory-atoms.ts
+@@ -24,6 +24,10 @@ export const inventoryOverviewAtom = atomWithQuery<InventoryOverview>((get) => {
+   }
+ })
+ 
++/** Doc atoms are looked up with a new `[type, name]` array on every render: compare by value,
++ * or each render would create (and subscribe to) a new query, which re-renders, and so on. */
++const sameDocKey = (a: [InventoryTab, string], b: [InventoryTab, string]) => a[0] === b[0] && a[1] === b[1]
++
+ export const docAtomFamily = atomFamily((key: [InventoryTab, string]) => atomWithQuery<Doc>((get) => {
+   const gameId = get(gameIdAtom)
+   const type = key[0]
+@@ -35,7 +39,7 @@ export const docAtomFamily = atomFamily((key: [InventoryTab, string]) => atomWit
+       return res.json()
+     },
+   }
+-}))
++}), sameDocKey)
+ 
+ export const docAtomLegacyFamily = atomFamily((key: [InventoryTab, string]) => atomWithQuery<Doc>((get) => {
+   const gameId = get(gameIdAtom)
+@@ -50,7 +54,7 @@ export const docAtomLegacyFamily = atomFamily((key: [InventoryTab, string]) => a
+       return res.json()
+     },
+   }
+-}))
++}), sameDocKey)
+ 
+ function capitalizeFirstLetter(val: InventoryTab) {
+   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+diff --git a/client/src/store/location-atoms.ts b/client/src/store/location-atoms.ts
+index 94c7df2..6e38fc8 100644
+--- a/client/src/store/location-atoms.ts
++++ b/client/src/store/location-atoms.ts
+@@ -28,6 +28,8 @@ export const pathSegmentsAtom = atom((get) => {
+   return pathname?.split("/").filter(Boolean) ?? []
+ })
+ 
++// Navigating to a game, world or level adds a history entry, so that the browser's back and
++// forward buttons work; redirects (`redirectAtom`) replace the current entry instead.
+ export const gameIdAtom = atom((get) => {
+   const segments = get(pathSegmentsAtom)
+   if (segments.length >= 2) {
+@@ -40,7 +42,7 @@ export const gameIdAtom = atom((get) => {
+   }
+ }, (get, set, gameId: string) => {
+   const location = get(locationAtom)
+-  set(locationAtom, { ...location, hash: `#/${gameId}`, pathname: "" }, { replace: true })
++  set(locationAtom, { ...location, hash: `#/${gameId}`, pathname: "" })
+ })
+ 
+ export const worldIdAtom = atom((get) => {
+@@ -56,7 +58,7 @@ export const worldIdAtom = atom((get) => {
+ }, (get, set, worldId: string) => {
+   const gameId = get(gameIdAtom)
+   const location = get(locationAtom)
+-  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}`, pathname: "" }, { replace: true })
++  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}`, pathname: "" })
+ })
+ 
+ export const levelIdAtom = atom((get) => {
+@@ -75,13 +77,13 @@ export const levelIdAtom = atom((get) => {
+   const gameId = get(gameIdAtom)
+   const worldId = get(worldIdAtom)
+   const location = get(locationAtom)
+-  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}/level/${Math.max(levelId, 0)}`, pathname: "" }, { replace: true })}
++  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}/level/${Math.max(levelId, 0)}`, pathname: "" })}
+ )
+ 
+ export const navigateAcrossWorldsAtom = atom(null, (get, set, worldId: string, levelId: number) => {
+   const gameId = get(gameIdAtom)
+   const location = get(locationAtom)
+-  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}/level/${Math.max(levelId, 0)}`, pathname: "" }, { replace: true })
++  set(locationAtom, { ...location, hash: `#/${gameId}/world/${worldId}/level/${Math.max(levelId, 0)}`, pathname: "" })
+ })
+ 
+ export const redirectAtom = atom(null, (get, set, hash: string) => {
+diff --git a/client/src/store/preferences-atoms.ts b/client/src/store/preferences-atoms.ts
+index e8a3348..eca769c 100644
+--- a/client/src/store/preferences-atoms.ts
++++ b/client/src/store/preferences-atoms.ts
+@@ -8,6 +8,7 @@ export interface Preferences {
+   isSuggestionsMobileMode: boolean // TODO: remove me
+   useFlags: boolean
+   showLockedInventory: boolean
++  theme: "light" | "dark" | "system"
+ }
+ 
+ export function getWindowDimensions() {
+@@ -15,7 +16,8 @@ export function getWindowDimensions() {
+   return {width, height}
+ }
+ 
+-export const AUTO_SWITCH_THRESHOLD = 800
++/** In "auto" layout, windows narrower than this (in px) get the single-panel mobile layout. */
++export const AUTO_SWITCH_THRESHOLD = 1024
+ 
+ const defaultPreferences: Preferences = {
+   layout: "auto",
+@@ -24,6 +26,7 @@ const defaultPreferences: Preferences = {
+   isSuggestionsMobileMode: true,
+   useFlags: false,
+   showLockedInventory: true,
++  theme: "system",
+ };
+ 
+ const storage = createJSONStorage<Preferences>(() => localStorage)
+@@ -51,7 +54,7 @@ export const preferencesAtom = atomWithStorage<Preferences>(
+ 
+ const widthBelowThresholdAtom = atom(false)
+ widthBelowThresholdAtom.onMount = set => {
+-  const mq = window.matchMedia(`(max-width: ${AUTO_SWITCH_THRESHOLD}px)`)
++  const mq = window.matchMedia(`(max-width: ${AUTO_SWITCH_THRESHOLD - 1}px)`)
+   const update = () => set(mq.matches)
+ 
+   update()
+@@ -69,3 +72,27 @@ export const mobileAtom = atom(get => {
+     case "auto": return widthBelowThreshold
+   }
+ })
++
++const DARK_QUERY = "(prefers-color-scheme: dark)"
++
++/** Whether the operating system / browser prefers a dark colour scheme */
++const systemDarkAtom = atom(window.matchMedia?.(DARK_QUERY).matches ?? false)
++systemDarkAtom.onMount = set => {
++  const mq = window.matchMedia(DARK_QUERY)
++  const update = () => set(mq.matches)
++
++  update()
++  mq.addEventListener("change", update)
++
++  return () => mq.removeEventListener("change", update)
++}
++
++/** Whether the UI is shown in dark mode: the "theme" preference, resolved against the system setting */
++export const darkModeAtom = atom(get => {
++  // `theme` is missing from preferences saved by older versions
++  switch (get(preferencesAtom).theme ?? "system") {
++    case "dark": return true
++    case "light": return false
++    case "system": return get(systemDarkAtom)
++  }
++})
+diff --git a/client/src/store/world-tree-atoms.ts b/client/src/store/world-tree-atoms.ts
+index 4f29144..1be25bb 100644
+--- a/client/src/store/world-tree-atoms.ts
++++ b/client/src/store/world-tree-atoms.ts
+@@ -33,7 +33,8 @@ export const levelCompletedAtomFamily = atomFamily((key: string) => atom<boolean
+ export const levelsCompletedAtomFamily = atomFamily((worldId: string) => atom<boolean[]>(get => {
+   const { data: gameInfo } = get(gameInfoAtom)
+   const worldSize = gameInfo?.worldSize?.[worldId]
+-  return Array.from(Array(worldSize).keys()).map(i => (get(levelCompletedAtomFamily(`${worldId}: ${i}`))))
++  // Levels are numbered 1 to `worldSize`; index 0 is the world's introduction (always "completed").
++  return Array.from(Array((worldSize ?? 0) + 1).keys()).map(i => (get(levelCompletedAtomFamily(`${worldId}:${i}`))))
+ }))
+ 
+ /** A world is completed if all its levels are */
+@@ -57,7 +58,7 @@ export const firstIncompleteLevelAtomFamily = atomFamily((worldId: string) => at
+ export const worldDependenciesCompletedAtomFamily = atomFamily((worldId: string) => atom<boolean>(get => {
+   const { data: gameInfo } = get(gameInfoAtom)
+   const prerequisitesCompleted: boolean[] = gameInfo?.worlds?.edges.filter(it => it[1] == worldId)?.map(it => {
+-    return get(worldCompletedAtom(worldId)) ?? false
++    return get(worldCompletedAtom(it[0])) ?? false
+   }) ?? []
+   return prerequisitesCompleted.every(it => it)
+ }))
+diff --git a/client/src/utils/viewport.ts b/client/src/utils/viewport.ts
+new file mode 100644
+index 0000000..28d5616
+--- /dev/null
++++ b/client/src/utils/viewport.ts
+@@ -0,0 +1,20 @@
++/**
++ * Keep the CSS variable `--app-height` on `<html>` equal to the visible height of the
++ * window. On phones, `100vh` includes the area behind the browser's URL bar and ignores
++ * the on-screen keyboard, which would hide the command line at the bottom of the page.
++ */
++export function trackAppHeight() {
++  const vv = window.visualViewport
++  const update = () => {
++    // Multiply by `scale` so that pinch-zooming doesn't shrink the layout.
++    const height = vv ? vv.height * vv.scale : window.innerHeight
++    document.documentElement.style.setProperty('--app-height', `${Math.round(height)}px`)
++    // iOS scrolls the page up when the keyboard opens; the layout already fits, so undo that.
++    if (vv && vv.scale === 1 && window.scrollY !== 0) {
++      window.scrollTo(0, 0)
++    }
++  }
++  update()
++  vv?.addEventListener('resize', update)
++  window.addEventListener('resize', update)
++}
+diff --git a/cypress/e2e/01-basic-interface.cy.ts b/cypress/e2e/01-basic-interface.cy.ts
+index af59714..d500d2e 100644
+--- a/cypress/e2e/01-basic-interface.cy.ts
++++ b/cypress/e2e/01-basic-interface.cy.ts
+@@ -35,11 +35,8 @@ describe('Basic Lean4game Interface', () => {
+       it('landing page footer', () => {
+         cy.visit('/#/')
+         cy.get('footer').contains('a', 'Impressum').should('be.visible').click()
+-        cy.contains('a', 'Contact Details').should('have.attr', 'target', '_blank')
+-        .then($a => {
+-          const href = $a.prop('href')
+-          cy.request(href).its('status').should('eq', 200)
+-        })
++        // The site operator's own text (`client/public/legal/impressum.md`).
++        cy.contains('h2', 'Impressum').should('be.visible')
+       })
+     })
+     describe('Info', () => {
+diff --git a/relay/src/index.ts b/relay/src/index.ts
+index bce4a9a..211e125 100644
+--- a/relay/src/index.ts
++++ b/relay/src/index.ts
+@@ -98,7 +98,6 @@ const server = app
+     const repo = req.params.repo
+     const filename = req.params.path.join('/');
+     req.url = filename;
+-    console.debug(gameManager.getGameDir(owner,repo))
+     const staticHandler = express.static(
+       path.join(gameManager.getGameDir(owner,repo),".lake","gamedata"),
+       { fallthrough: true }
+diff --git a/relay/src/serverProcess.ts b/relay/src/serverProcess.ts
+index 76ebc43..61e50f4 100644
+--- a/relay/src/serverProcess.ts
++++ b/relay/src/serverProcess.ts
+@@ -239,76 +239,165 @@ export class GameManager {
+ 
+     const metadataUri = pathToFileURL(path.join(gameDir, 'Game', 'Metadata.lean')).href
+ 
+-    /** Sending messages from the client to the server */
+-    socketConnection.forward(serverConnection, (message: any) => {
+-      if (message?.error) {
+-        console.error(`[${new Date()}] CLIENT->SERVER error payload: ${JSON.stringify(message.error)}`)
++    /* The client has one document per level (`file:///<world>/<level>.lean`, see `level.tsx`),
++       and keeps the ones it has visited open. Lean gets a single document, `Metadata.lean`
++       with the level's header in front of the proof, so only one level is open in Lean at a
++       time. We keep the text of every level the client has open; when the client works on
++       another level, we close the current one in Lean and open the other one in full. */
++    const clientDocs = new Map<string, { text: string, version: number }>()
++    /** The client URI of the level that is open in Lean. */
++    let activeUri: string | undefined
++    /** The client URI that messages from Lean are about (the last level opened in Lean). */
++    let serverDocUri: string | undefined
++
++    /** Apply LSP content changes (positions in UTF-16 code units, like JS strings) to `text`. */
++    const applyChanges = (text: string, changes: any[]) => {
++      for (const change of changes) {
++        if (!change.range) { text = change.text; continue }
++        const offset = (pos: { line: number, character: number }) => {
++          let i = 0
++          for (let l = 0; l < pos.line; l++) {
++            const nl = text.indexOf('\n', i)
++            if (nl < 0) return text.length
++            i = nl + 1
++          }
++          return Math.min(i + pos.character, text.length)
++        }
++        text = text.slice(0, offset(change.range.start)) + change.text + text.slice(offset(change.range.end))
+       }
++      return text
++    }
+ 
+-      // backwards compatibility for versions ≤ v4.7.0
+-      if (usesCustomLeanServer) {
+-        if (isDevelopment) { console.log(`CLIENT: ${JSON.stringify(message)}`); }
+-        if (message.method === "textDocument/didOpen") onLevelOpened?.()
+-        return message
++    /** The `didOpen` that opens the client's level `uri` in Lean, or `undefined` if the level doesn't exist. */
++    const openInServer = (uri: string): object | undefined => {
++      const doc = clientDocs.get(uri)!
++      const pathParts = path.parse(new URL(uri).pathname)
++      worldId = path.basename(pathParts.dir)
++      levelId = pathParts.name
++      const levelDataPath = path.join(gameDir, '.lake', 'gamedata', `level__${worldId}__${levelId}.json`)
++      if (!fs.existsSync(levelDataPath)) {
++        console.error(`[${new Date()}] Missing level data: ${levelDataPath}`)
++        return undefined
+       }
++      const levelData = JSON.parse(fs.readFileSync(levelDataPath, 'utf8'))
++      onLevelOpened?.()
++
++      if (difficulty === undefined || inventory === undefined) {
++        console.error("Did not receive difficulty/inventory from client!")
++        difficulty = 1
++        inventory = []
++      }
++      // Note: `LevelScope` and `Runner` have to stay on the same line as each other so that
++      // the proof still starts on line `PROOF_START_LINE`.
++      const levelIdArgs =
++        `${JSON.stringify(gameData.name)} ${JSON.stringify(worldId)} ${levelId} `
++      const text =
++        `import ${levelData.module} import GameServer.Runner \n` +
++        (usesLevelScope ? `LevelScope ${levelIdArgs}` : ``) +
++        `Runner ` + levelIdArgs +
++        `(difficulty := ${difficulty}) ` +
++        `(inventory := [${inventory.map(s => JSON.stringify(s)).join(',')}]) ` +
++        `:= by\n${doc.text}\n`
++      serverDocUri = uri
++      return { jsonrpc: "2.0", method: "textDocument/didOpen",
++        params: { textDocument: { uri: metadataUri, languageId: "lean4", version: doc.version, text } } }
++    }
++
++    /** Make `uri` the level that is open in Lean; returns the messages Lean needs for that. */
++    const activate = (uri: string): object[] => {
++      const out: object[] = []
++      if (activeUri !== undefined) {
++        out.push({ jsonrpc: "2.0", method: "textDocument/didClose", params: { textDocument: { uri: metadataUri } } })
++        activeUri = undefined
++      }
++      const open = openInServer(uri)
++      if (open) {
++        out.push(open)
++        activeUri = uri
++        console.info(`[${new Date()}] opened level in Lean: ${uri}`)
++      }
++      return out
++    }
++
++    /** Answer a request from the client ourselves instead of forwarding it. */
++    const replyError = (message: any, code: number, text: string) => {
++      if (message.id === undefined) return  // a notification: just drop it
++      socketConnection.writer.write({ jsonrpc: "2.0", id: message.id, error: { code, message: text } } as any)
++    }
+ 
++    /** Translate one message from the client into the messages to send to Lean. */
++    const fromClient = (message: any): object[] => {
+       if (message.method === "initialize") {
+         difficulty = message.params.initializationOptions.difficulty
+         inventory = message.params.initializationOptions.inventory
+         // We abuse the rootUri field to pass the game name to the server
+         message.params.rootUri = gameData.name
++        return [message]
+       }
+ 
+-      if (message.method === "textDocument/semanticTokens/full") {
+-        semanticTokenRequestIds.add(message.id)
+-      }
++      const params = message.params ?? {}
++      const uri: string | undefined = params.textDocument?.uri ?? params.uri
+ 
+       if (message.method === "textDocument/didOpen") {
+-        console.info(`[${new Date()}] didOpen: ${message.params?.textDocument?.uri}`)
+-        // Parse the URI to get world and level
+-        const uri = new URL(message.params.textDocument.uri)
+-        const pathParts = path.parse(uri.pathname)
+-        worldId = path.basename(pathParts.dir)
+-        levelId = pathParts.name
+-
+-        replaceUri(message, metadataUri)
+-
+-        // Read level data from JSON file
+-        const levelDataPath = path.join(gameDir, '.lake', 'gamedata', `level__${worldId}__${levelId}.json`)
+-        if (!fs.existsSync(levelDataPath)) {
+-          console.error(`[${new Date()}] Missing level data: ${levelDataPath}`)
+-        }
+-        const levelData = JSON.parse(fs.readFileSync(levelDataPath, 'utf8'))
+-        onLevelOpened?.()
+-
+-        if (difficulty === undefined || inventory === undefined) {
+-          console.error("Did not receive difficulty/inventory from client!")
+-          difficulty = 1
+-          inventory = []
++        console.info(`[${new Date()}] didOpen: ${uri}`)
++        clientDocs.set(uri!, { text: params.textDocument.text, version: params.textDocument.version })
++        return activate(uri!)
++      }
++      if (message.method === "textDocument/didChange") {
++        const doc = clientDocs.get(uri!)
++        if (!doc) return []
++        doc.text = applyChanges(doc.text, params.contentChanges)
++        doc.version = params.textDocument.version
++        if (uri !== activeUri) return activate(uri!)  // sends the whole new text
++      } else if (message.method === "textDocument/didClose") {
++        clientDocs.delete(uri!)
++        if (uri !== activeUri) return []
++        activeUri = undefined
++      } else if (message.method === "$/lean/rpc/connect" && uri !== undefined && uri !== activeUri) {
++        // The client starts working on a level it opened before, without changing it.
++        if (!clientDocs.has(uri)) { replyError(message, -32801, `Unknown document ${uri}`); return [] }
++        const out = activate(uri)
++        if (uri !== activeUri) { replyError(message, -32801, `Cannot open level ${uri}`); return [] }
++        return [...out, message]
++      } else if (uri !== undefined && uri !== activeUri) {
++        // A message about a level that isn't open in Lean, e.g. from before switching levels.
++        // RPC calls fail so that the client reconnects; editor features (highlighting etc.)
++        // just get an empty answer.
++        if (message.id === undefined) return []
++        if (message.method?.startsWith("$/lean/rpc/")) {
++          replyError(message, -32900, `Level ${uri} is not open`)
++        } else {
++          socketConnection.writer.write({ jsonrpc: "2.0", id: message.id, result: null } as any)
+         }
+-
+-        let content = message.params.textDocument.text;
+-        // Note: `LevelScope` and `Runner` have to stay on the same line as each other so that
+-        // the proof still starts on line `PROOF_START_LINE`.
+-        const levelIdArgs =
+-          `${JSON.stringify(gameData.name)} ${JSON.stringify(worldId)} ${levelId} `
+-        message.params.textDocument.text =
+-          `import ${levelData.module} import GameServer.Runner \n` +
+-          (usesLevelScope ? `LevelScope ${levelIdArgs}` : ``) +
+-          `Runner ` + levelIdArgs +
+-          `(difficulty := ${difficulty}) ` +
+-          `(inventory := [${inventory.map(s => JSON.stringify(s)).join(',')}]) ` +
+-          `:= by\n${content}\n`
+-      } else {
+-        replaceUri(message, metadataUri)
++        return []
+       }
++      return [message]
++    }
+ 
+-      shiftLines(message, +PROOF_START_LINE)
++    /** Sending messages from the client to the server */
++    socketConnection.reader.listen((message: any) => {
++      if (message?.error) {
++        console.error(`[${new Date()}] CLIENT->SERVER error payload: ${JSON.stringify(message.error)}`)
++      }
+ 
+-      // Print the message as the server will receive it
+-      if (isDevelopment) { console.log(`CLIENT: ${JSON.stringify(message)}`); }
++      // backwards compatibility for versions ≤ v4.7.0
++      if (usesCustomLeanServer) {
++        if (isDevelopment) { console.log(`CLIENT: ${JSON.stringify(message)}`); }
++        if (message.method === "textDocument/didOpen") onLevelOpened?.()
++        serverConnection.writer.write(message)
++        return
++      }
+ 
+-      return message
++      for (const out of fromClient(message)) {
++        replaceUri(out, metadataUri)
++        if ((out as any).method === "textDocument/semanticTokens/full") {
++          semanticTokenRequestIds.add((out as any).id)
++        }
++        shiftLines(out, +PROOF_START_LINE)
++        // Print the message as the server will receive it
++        if (isDevelopment) { console.log(`CLIENT: ${JSON.stringify(out)}`); }
++        serverConnection.writer.write(out as any)
++      }
+     });
+ 
+ 
+@@ -325,7 +414,7 @@ export class GameManager {
+       if (usesCustomLeanServer) return message
+ 
+       shiftLines(message, -PROOF_START_LINE);
+-      replaceUri(message, `file:///${worldId}/${levelId}.lean`) // as defined in `level.tsx`
++      if (serverDocUri !== undefined) replaceUri(message, serverDocUri)
+ 
+       // Disable range semantic tokens because they are difficult to shift
+       if ((message as any)?.result?.capabilities?.semanticTokensProvider?.range) {
