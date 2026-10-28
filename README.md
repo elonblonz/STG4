@@ -99,16 +99,19 @@ The game's UI comes from the [lean4game](https://github.com/leanprover-community
 engine, not from this repository. We use our fork,
 [elonblonz/lean4game](https://github.com/elonblonz/lean4game), branch `stg4-ui`: upstream
 plus dark mode, the phone and tablet layout, the visual refresh, and fixes to level
-navigation and submitting commands. The Docker image builds against that branch. To build
-against another engine, e.g. a branch you are working on:
+navigation and submitting commands. The Docker image builds a fixed release of it, the tag
+set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
+(currently `stg4-v1`), so every build gets the same engine. To build against another engine,
+e.g. a branch you are working on:
 
 ```sh
 LEAN4GAME_REPO=https://github.com/<you>/lean4game.git LEAN4GAME_REF=<branch> \
   docker compose -f .devcontainer/docker-compose.yml build
 ```
 
-Engine changes are made in the fork and merged into `stg4-ui`; rebuild the image to pick
-them up.
+To release engine changes: commit them on the fork's `stg4-ui` branch, tag the commit
+`stg4-v<N+1>` and push both (`git push fork stg4-ui stg4-v<N+1>`), then update the tag in
+the two files above and rebuild the image.
 
 To use a local checkout of the engine's Lean server instead of the published one, run
 `lake update -R -Klean4game.local`. It expects the checkout at `../lean4game` (see
