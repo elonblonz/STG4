@@ -12,7 +12,7 @@ Title "Complement subsets equivalence"
 
 Introduction
 "
-In this last level of Complement World, you'll prove a statement of the form `P ↔ Q`.  The most
+In this level, you'll prove a statement of the form `P ↔ Q`.  The most
 useful theorem for this purpose is `Iff.intro`.  If you have `h1 : P → Q` and `h2 : Q → P`, then
 `Iff.intro h1 h2` is a proof of `P ↔ Q`.  As we saw in the last level, that means you can start your
 proof with `apply Iff.intro`.  Lean will set `P → Q` and `Q → P` as the goals that are needed
@@ -35,7 +35,7 @@ Statement (A B : Set U) : A ⊆ B ↔ Bᶜ ⊆ Aᶜ := by
   `h1 : A ⊆ B`."
   intro h1
   Hint "Fortunately, the theorem `compl_subset_compl_of_subset` can now be used to prove the goal.
-  (Click on `compl_subset_compl_of_subset` in the list of theorems on the right if you don't
+  (Click on `compl_subset_compl_of_subset` in the list of *Theorems* in the inventory if you don't
   remember what the theorem says.)"
   Hint (hidden := true) "`compl_subset_compl_of_subset {h1}` will prove the goal."
   exact compl_subset_compl_of_subset h1
@@ -62,7 +62,9 @@ Statement (A B : Set U) : A ⊆ B ↔ Bᶜ ⊆ Aᶜ := by
 goal with the two goals `P → Q` and `Q → P`.  If your goal has the form `P ∧ Q`, then
 `constructor` will replace this goal with the two goals `P` and `Q`.  There are other
 situations in which the `constructor` tactic can be used, but these two are the ones
-that are most relevant for the set theory game. -/
+that are most relevant for the set theory game.
+
+In a written proof, `constructor` reads "We prove both directions" (for `↔`) or "We prove each part" (for `∧`). -/
 TacticDoc constructor
 
 NewTactic constructor

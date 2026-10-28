@@ -21,21 +21,24 @@ of a set by typing `\\compl` or `\\^c`.)
 
 In this level, we're going to prove that the statement `x ∈ Aᶜ ↔ x ∉ A` is true, and to do
 it we'll use a new tactic: `rfl`.  The `rfl` tactic can prove any statement of the form
-`P ↔ Q` if `P` and `Q` are statements that are equivalent by virtue of the definitions of
-the symbols occurring in them.  (We say in this case that `P` and `Q` are *definitionally
-equivalent*.)  The `rfl` tactic can also prove statements of the form `X = Y`, if `X` and
-`Y` are definitionally equal--that is, equal by virtue of definitions.
+`P ↔ Q` if `P` and `Q` become the same statement once the definitions of the symbols
+occurring in them are written out.  (We say in this case that `P` and `Q` are *definitionally
+equal*.)  The `rfl` tactic can also prove statements of the form `X = Y`, if `X` and
+`Y` are definitionally equal--that is, equal by virtue of definitions.  Note that `rfl`
+doesn't do any logical reasoning: for example, it can't prove `¬¬P ↔ P`.
 "
 
 /-- If your goal is a statement of the form `P ↔ Q`, and `P` and `Q` are definitionally
-equivalent (that is, equivalent by virtue of the definitions of the symbols occurring in
-them), then the `rfl` tactic will close the goal.  It will also close a goal of the form
-`X = Y`, if `X` and `Y` are definitionally equal (that is, equal by virtue of definitions). -/
+equal (that is, they become the same statement once the definitions of the symbols occurring
+in them are written out), then the `rfl` tactic will close the goal.  It will also close a goal of the form
+`X = Y`, if `X` and `Y` are definitionally equal (that is, equal by virtue of definitions).
+
+In a written proof, this step reads "This holds by definition" or "Both sides are the same." -/
 TacticDoc rfl
 
 NewTactic rfl
 
-/-- If `A` is a of objects from the universe `U`, then `Aᶜ` is the complement of `A`; that is,
+/-- If `A` is a set of objects from the universe `U`, then `Aᶜ` is the complement of `A`; that is,
 `Aᶜ` is the set of objects from `U` that are not elements of `A`.  You can enter the symbol `ᶜ`
 by typing `\compl` or `\^c`. -/
 DefinitionDoc comp as "ᶜ"
@@ -44,7 +47,7 @@ DefinitionDoc comp as "ᶜ"
 
 ### If your goal is `P ↔ Q`
 
-If `P` and `Q` are definitionally equivalent, then `rfl` will close the goal.
+If `P` and `Q` are definitionally equal, then `rfl` will close the goal.
 If you have `h1 : P → Q` and `h2 : Q → P`, then `Iff.intro h1 h2` is a proof of `P ↔ Q`,
 so `exact Iff.intro h1 h2` will close the goal.
 If you don't yet have proofs of `P → Q` and `Q → P`, then `apply Iff.intro` will set `P → Q`

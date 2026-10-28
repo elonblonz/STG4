@@ -43,6 +43,13 @@ Statement (F G : Set (Set U)) : ⋂₀ (F ∪ G) = (⋂₀ F) ∩ (⋂₀ G) := 
   rewrite [mem_inter_iff] at h1
   rewrite [mem_sInter, mem_sInter] at h1
   rewrite [mem_union] at h2
+  Hint (hidden := true) "`{h2}` says `{t} ∈ F ∨ {t} ∈ G`, so break the proof into cases.  In each case, `{h1}` tells
+  you what you need."
   rcases h2 with htF | htG
   exact h1.left t htF
   exact h1.right t htG
+
+Conclusion
+"
+In Family Union World you'll prove a similar theorem about `⋃₀ (F ∪ G)`.
+"

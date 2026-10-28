@@ -1,11 +1,32 @@
-version: "3.9"
-
 services:
   game:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+      # The engine: a release of our fork (tag on its `stg4-ui` branch). To build against another one, e.g.
+      #   LEAN4GAME_REPO=https://github.com/you/lean4game.git LEAN4GAME_REF=my-branch docker compose ... build
+      # (an empty LEAN4GAME_REF means the upstream tag matching our Lean version).
+      args:
+        LEAN4GAME_REPO: ${LEAN4GAME_REPO:-https://github.com/elonblonz/lean4game.git}
+        LEAN4GAME_REF: ${LEAN4GAME_REF-stg4-v1}
+    # Used by `docker compose up`; the VS Code dev container overrides it and runs
+    # the same steps via `onCreateCommand` / `postStartCommand` instead.
+    command: bash .devcontainer/run.sh
+    # Run an init process as PID 1 so that exited Lean servers are reaped (npm doesn't do
+    # this, so they would pile up as zombie processes).
+    init: true
     volumes:
       - ..:/home/node/game
+      # Keep Mathlib and build outputs (several GB) in a Docker volume: much faster
+      # than a bind mount on Windows/macOS, and survives container rebuilds.
+      - lake:/home/node/game/.lake
     ports:
       - "3000:3000"
+      # The relay, so a lean4game client running on the host can use this game server
+      # (see "Running against a lean4game fork" in the README).
+      - "8080:8080"
+      # Previews of lean4game client branches, run in containers that share this one's network.
+      - "3001-3003:3001-3003"
+
+volumes:
+  lake:

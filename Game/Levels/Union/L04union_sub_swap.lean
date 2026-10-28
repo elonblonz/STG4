@@ -19,7 +19,7 @@ to prove that intersection is commutative.  We begin by proving `A ∪ B ⊆ B �
 
 TheoremTab "∩∪"
 
-/-- For any sets `A` and `B`, `union_sub_swap A B` is a proof of
+/-- For any sets `A` and `B`, `union_subset_swap A B` is a proof of
 `A ∪ B ⊆ B ∪ A`. -/
 TheoremDoc STG4.union_subset_swap as "union_subset_swap" in "∩∪"
 

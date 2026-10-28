@@ -23,13 +23,18 @@ Statement (F G : Set (Set U)) : (⋃₀ F) ∩ (⋂₀ G)ᶜ ⊆ ⋃₀ {s | ∃
   have h1r := h1.right
   rewrite [mem_sUnion] at h1l
   obtain ⟨u, hu⟩ := h1l
+  Hint "`{h1r}` says `{x} ∈ (⋂₀ G)ᶜ`.  Write out the definitions of complement and `⋂₀`, and then
+  use `push_neg`."
   rewrite [mem_compl_iff, mem_sInter] at h1r
   push_neg at h1r
   obtain ⟨v, hv⟩ := h1r
+  Hint (hidden := true) "Which set in `\{s | ∃ u ∈ F, ∃ v ∈ G, s = u ∩ vᶜ}` contains `{x}`?"
   rewrite [mem_sUnion]
   use u ∩ vᶜ
   apply And.intro
   rewrite [mem_setOf]
+  Hint (hidden := true) "You need two more witnesses, `{u}` and `{v}`.  The final goal is an equation that `rfl`
+  can prove."
   use u
   apply And.intro
   exact hu.left
@@ -39,3 +44,9 @@ Statement (F G : Set (Set U)) : (⋃₀ F) ∩ (⋂₀ G)ᶜ ⊆ ⋃₀ {s | ∃
   rfl
   rewrite [mem_inter_iff, mem_compl_iff]
   exact And.intro hu.right hv.right
+
+Conclusion
+"
+In this proof, `push_neg` turned `¬∀` into `∃`: knowing that `x` is *not* in every set in `G` told you
+that there is a set in `G` that does not contain `x`.
+"

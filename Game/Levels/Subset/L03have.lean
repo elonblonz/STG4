@@ -38,7 +38,9 @@ your original goal, with `h : P` added to the assumption list.
 
 * If you write `have h := t`, then Lean will try to figure out what statement
 `P` is proven by the expression `t` and, if it can figure it out, it will fill
-it in for you. -/
+it in for you.
+
+In a written proof, `have h : P := t` reads "Since …, we know that `P`." -/
 TacticDoc «have»
 
 NewTactic «have»
@@ -60,5 +62,5 @@ Conclusion
 "
 You can use the `have` tactic to add a new statement to your list of
 assumptions, as long as you can justify it with a proof.  For further
-information, click on `have` in the list of tactics on the right.
+information, click on `have` in the list of *Tactics* in the inventory.
 "

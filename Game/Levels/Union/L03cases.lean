@@ -23,7 +23,9 @@ the original goal.
 
 The `rcases` tactic has other uses.  In particular, it can be applied to proofs of statements
 that do not have the form `P ∨ Q`.  However, we will not discuss these other uses of the
-`rcases` tactic in this game. -/
+`rcases` tactic in this game.
+
+In a written proof, `rcases h with h1 | h2` reads "*Case 1:* … *Case 2:* …". -/
 TacticDoc rcases
 
 NewTactic rcases
@@ -49,6 +51,20 @@ Statement (A B C : Set U) (h1 : A ⊆ C) (h2 : B ⊆ C) : A ∪ B ⊆ C := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `A ⊆ C` and `B ⊆ C`, and let `x` be an arbitrary element of `A ∪ B`.  Then either
+> `x ∈ A` or `x ∈ B`.
+>
+> *Case 1:* `x ∈ A`.  Since `A ⊆ C`, `x ∈ C`.
+>
+> *Case 2:* `x ∈ B`.  Since `B ⊆ C`, `x ∈ C`.
+>
+> In either case `x ∈ C`.  Since `x` was arbitrary, `A ∪ B ⊆ C`.
+
+`rcases h3 with h3A | h3B` is the sentence \"Then either `x ∈ A` or `x ∈ B`\", and each goal it
+creates is one of the cases.
+
 Note that Lean also has a `cases` tactic, but the syntax is a little more complicated.
 That's why we have chosen to use the `rcases` tactic.
 

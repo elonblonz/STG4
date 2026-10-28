@@ -25,7 +25,7 @@ Statement (A B C : Set U) (h1 : A ⊆ B) (h2 : A ⊆ C) : A ⊆ B ∩ C := by
   `have` to introduce the assumptions `{x} ∈ B` and `{x} ∈ C`--that is, if you can see
   how to justify those statements!  Then you can use `And.intro` to prove the goal.
 
-  The second possibility is to use the `apply` tactic.  Recall that if you write
+  The second possibility is to use the `apply` tactic.  If you write
   `apply And.intro`, then Lean will figure out that the
   theorem `And.intro` could be applied to prove the goal, if only you had proofs of
   `{x} ∈ B` and `{x} ∈ C`.  So it will set those two statements as goals, to be proven
@@ -38,6 +38,14 @@ Statement (A B C : Set U) (h1 : A ⊆ B) (h2 : A ⊆ C) : A ⊆ B ∩ C := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `A ⊆ B` and `A ⊆ C`, and let `x` be an arbitrary element of `A`.  Since `A ⊆ B`,
+> `x ∈ B`, and since `A ⊆ C`, `x ∈ C`.  Therefore `x ∈ B ∩ C`.  Since `x` was arbitrary,
+> `A ⊆ B ∩ C`.
+
+To prove an \"and\" statement, you prove each half; that is what `apply And.intro` set up.
+
 In general, if you think that some theorem `t` could be used to prove the goal, the tactic
 `apply t` will work backwards from the goal, setting as new goals any hypotheses that are
 needed for the application of the theorem `t`.

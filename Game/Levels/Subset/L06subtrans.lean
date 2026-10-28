@@ -16,6 +16,8 @@ To start a proof, you should look first at the goal.
 What needs to be done to prove the goal?
 In this level, the goal is `A ⊆ C`.  What does that
 tell you about how to proceed?
+
+![Diagram: A ⊆ B ⊆ C](images/subset-trans.svg)
 "
 
 TheoremTab "⊆"
@@ -38,6 +40,17 @@ Statement Subset.trans {A B C : Set U}
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `A ⊆ B` and `B ⊆ C`, and let `x` be an arbitrary element of `A`.  Since `A ⊆ B`,
+> `x ∈ B`.  And since `B ⊆ C`, it follows that `x ∈ C`.  Since `x` was arbitrary, `A ⊆ C`.
+
+The `have` step is the sentence \"Since `A ⊆ B`, `x ∈ B`\": an intermediate fact on the way to
+the goal.
+
+Together with the previous level, this shows that `⊆` behaves like `≤` for numbers: every set
+is a subset of itself, and subsets of subsets are subsets.
+
 The theorem you have proven in this level shows that the subset relation has
 a property called *transitivity*.  We have given the theorem the name `Subset.trans`.
 "

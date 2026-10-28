@@ -20,6 +20,8 @@ theorem in this level is about the complement of a union of a family of sets.
 As in the case of `compl_union`, you have a choice about how to deal with the negations that
 arise when you write out the meaning of complement.  You can use the `push_neg` tactic to
 reexpress negative statements, or you can use proof by contradiction.
+
+![Diagram: a set t and its complement tᶜ](images/famcombo-complements.svg)
 "
 
 /-- For any family of sets $F$, $(\bigcup F)^c = \bigcap \{s \mid s^c \in F\}$. -/
@@ -56,8 +58,8 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
     right away how to justify this assertion, you can just write `have {h2}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}`
     and Lean will set `{t}ᶜ ∈ \{s | sᶜ ∈ F}` as your immediate goal.  Once you achieve that goal,
     Lean will add `{h2}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}` to your list of assumptions, and you can continue
-    with the proof of your original goal.  For further details, click on `have` in the list of tactics
-    on the right."
+    with the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+    in the inventory."
   rewrite [mem_sUnion]
   push_neg
   intro t h2
@@ -67,8 +69,8 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
   right away how to justify this assertion, you can just write `have {h3}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}`
   and Lean will set `{t}ᶜ ∈ \{s | sᶜ ∈ F}` as your immediate goal.  Once you achieve that goal,
   Lean will add `{h3}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}` to your list of assumptions, and you can continue
-  with the proof of your original goal.  For further details, click on `have` in the list of tactics
-  on the right."
+  with the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+  in the inventory."
   have h3a : tᶜ ∈ {A | Aᶜ ∈ F}
   rewrite [mem_setOf]
   rewrite [compl_compl]
@@ -76,3 +78,9 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
   have h4 := h3 h3a
   rewrite [mem_compl_iff] at h4
   exact h4
+
+Conclusion
+"
+This theorem is a version of De Morgan's law for families: the complement of a union is the
+intersection of the complements.
+"

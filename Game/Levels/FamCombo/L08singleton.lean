@@ -17,7 +17,7 @@ set.  The theorem `mem_singleton_iff` expresses the definition of singleton sets
 a proof of any statement of the form `x ∈ {a} ↔ x = a`.
 "
 
-/-- Lean will recognize `mem_singleton_iff` is a proof of any statement of the form
+/-- Lean will recognize `mem_singleton_iff` as a proof of any statement of the form
 `x ∈ {a} ↔ x = a`.  In Mathlib, the name of this theorem is `Set.mem_singleton_iff`. -/
 TheoremDoc Set.mem_singleton_iff as "mem_singleton_iff" in "{ }"
 
@@ -28,6 +28,9 @@ TheoremTab "{ }"
 /-- Suppose $A$ is a set, and for every family of sets $F$, if $\bigcup F = A$ then $A \in F$.
 Then $A$ must be a singleton set.-/
 Statement (A : Set U) (h1 : ∀ F, (⋃₀ F = A → A ∈ F)) : ∃ x, A = {x} := by
+  Hint (hidden := true) "**The idea.**  Apply `h1` to a cleverly chosen family whose union is `A`.  If every set
+  in the family is very small, then knowing that `A` is in the family forces `A` itself to be very
+  small.  Which very small sets have `A` as their union?"
   Hint (strict := true) "Start with `have h2 := h1 \{s | ...}`.  The hard part is figuring out
   how to fill in the `...`."
   Hint (strict := true) (hidden := true) "You need to apply `h1` to a family of sets with two

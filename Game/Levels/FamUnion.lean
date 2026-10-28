@@ -5,6 +5,9 @@ import Game.Levels.FamUnion.L04unionpair
 import Game.Levels.FamUnion.L05unionunion
 import Game.Levels.FamUnion.L06unionsub
 import Game.Levels.FamUnion.L07eltwiseinter
+import Game.Levels.FamUnion.L08powerset
+import Game.Levels.FamUnion.L09powersetinter
+import Game.Levels.FamUnion.L10sunionpowerset
 
 /-!
 
@@ -13,6 +16,7 @@ import Game.Levels.FamUnion.L07eltwiseinter
 -/
 World "FamUnion"
 Title "Family Union World"
+Image "images/world-famunion.svg"
 
 Introduction
 "

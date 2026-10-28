@@ -51,17 +51,16 @@ TheoremDoc Exists.intro as "Exists.intro" in "Logic"
 
 NewTheorem Exists.intro
 
-/--Suppose $A$ is a set.  Then there is some set $S$ such that $S \subseteq A$.-/
+/-- Suppose $A$ is a set.  Then there is some set $s$ such that $s \subseteq A$. -/
 Statement (A : Set U) : ∃ s, s ⊆ A := by
   Hint (strict := true) "Your goal says that there is a set that is a subset of `A`.
   The theorem `Subset.refl` suggests such a set."
   Hint (strict := true) (hidden := true) "Recall that `Subset.refl A` is a proof of `A ⊆ A`.
   So start your proof with `have h : A ⊆ A := Subset.refl A`."
   Branch
-    use ∅
-    Hint "Although `∅` is a reasonable choice for a set that is a subset of `A`, it is difficult
-    to complete the proof with this choice using only methods developed so far in this game.
-    Go back and try a different choice."
+    apply Exists.intro ∅
+    Hint "Good choice!  The theorem `empty_subset` from Complement World proves `∅ ⊆ A`."
+    exact empty_subset A
   have h : A ⊆ A := Subset.refl A
   Hint "Now you can use `Exists.intro` to complete the proof."
   Hint (hidden := true) "`Exists.intro A {h}` is a proof of the goal, so `exact Exists.intro A {h}`
@@ -70,10 +69,17 @@ Statement (A : Set U) : ∃ s, s ⊆ A := by
 
 Conclusion
 "
-By the way, another set that would have worked as a witness for the existential goal in this
-theorem is the empty set, denoted `∅`.  However, to justify the use of that witness you would
-have had to prove `∅ ⊆ A`.  Since we already have the theorem `Subset.refl`, it was easier to use
-`A` as the witness.
+**The proof, written out.**
+
+> We need a set `s` such that `s ⊆ A`.  Take `s = A`: every set is a subset of itself.
+
+To prove that something exists, you name an example (a *witness*) and show that it has the
+required property.  `Exists.intro A h` does exactly that: `A` is the witness, and `h` shows that
+it works.
+
+By the way, another set that works as a witness for the existential goal in this theorem is the
+empty set, `∅`.  To justify the use of that witness, you can use the theorem `empty_subset` from
+Complement World: `Exists.intro ∅ (empty_subset A)` is also a proof of the goal.
 
 Now that you know how to prove existential statements, you're ready to start working with
 unions of families.

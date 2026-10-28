@@ -3,6 +3,9 @@ import Game.Levels.Comp.L02compdef
 import Game.Levels.Comp.L03compsub
 import Game.Levels.Comp.L04compcomp
 import Game.Levels.Comp.L05compsubiff
+import Game.Levels.Comp.L06emptysub
+import Game.Levels.Comp.L07subuniv
+import Game.Levels.Comp.L08compempty
 
 /-!
 
@@ -11,6 +14,7 @@ import Game.Levels.Comp.L05compsubiff
 
 World "Complement"
 Title "Complement World"
+Image "images/world-complement.svg"
 
 Introduction
 "If `A` is a set of objects from the universe `U`, then the *complement* of `A`,

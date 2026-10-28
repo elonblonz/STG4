@@ -23,7 +23,7 @@ And that means that `rewrite [mem_setOf]` will rewrite `a ∈ {x | P x}` as `P a
 "
 
 /-- Lean will recognize `mem_setOf` as a proof of any statement of the form
-`a ∈ {x | P x} ↔ P a`.  In Mathlib, the name of this theorem is `Set.mem_setOf`. -/
+`a ∈ {x | P x} ↔ P a`.  In Mathlib, the name of this theorem is `Set.mem_ofPred`. -/
 TheoremDoc Set.mem_setOf as "mem_setOf" in "{ }"
 
 NewTheorem Set.mem_setOf
@@ -78,3 +78,9 @@ Statement (A : Set U) (F : Set (Set U)) : A ∩ (⋃₀ F) = ⋃₀ {s | ∃ u �
   rewrite [mem_sUnion]
   use u
   exact And.intro hu.left ht.right.right
+
+Conclusion
+"
+Set-builder notation lets you describe a family of sets by a property of its elements.  You'll
+see it again in Family Combination World.
+"

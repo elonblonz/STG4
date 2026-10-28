@@ -18,6 +18,8 @@ then `mem_compl_iff A x` is a proof of the statement `x ∈ Aᶜ ↔ x ∉ A`.
 You could think of the statement `x ∈ Aᶜ ↔ x ∉ A` as saying that if `x ∈ Aᶜ` occurs anywhere
 in a proof, you can replace it with `x ∉ A`.  There is a tactic called `rewrite` that can be
 used to perform such replacements.  You'll get to try out the `rewrite` tactic in this level.
+
+![Diagram: A ⊆ B, with Bᶜ shaded](images/comp-contra.svg)
 "
 
 /-- If the expression `t` is a proof of a statement of the form `P ↔ Q`, then the tactic
@@ -25,12 +27,18 @@ used to perform such replacements.  You'll get to try out the `rewrite` tactic i
 replace `Q` with `P`, use `rewrite [← t]`.  (Type `\l` to enter the symbol `←`.)  To do the
 replacement in an assumption `h`, use `rewrite [t] at h`.
 
+If you leave out some of the arguments of a theorem, as in `rewrite [mem_compl_iff]`, then
+Lean fills them in from the first place where the theorem can be used, and then only replaces
+that particular instance of `P`.
+
 The `rewrite` tactic can also be used with equations.  If `t` is a proof of an equation
 `p = q`, then `rewrite [t]` will replace `p` with `q` wherever it appears, and `rewrite [← t]`
 will replace `q` with `p`.
 
 To do multiple replacements, one after another, put a list of proofs inside the brackets, like
-this:  `rewrite [t1, t2]`. -/
+this:  `rewrite [t1, t2]`.
+
+In a written proof, a rewrite usually reads "By the definition of …, the goal becomes …" or "By theorem `t`, …". -/
 TacticDoc rewrite
 
 NewTactic rewrite
@@ -71,10 +79,10 @@ NewHiddenTactic rw
 Conclusion
 "
 The `rewrite` tactic is often useful for writing out definitions.  For more information about
-how it works, click on `rewrite` in the list of tactics on the right.  You can also use `rw`
+how it works, click on `rewrite` in the list of *Tactics* in the inventory.  You can also use `rw`
 instead of `rewrite`.  (There is actually a small difference between the tactics `rw` and
 `rewrite`, but the difference won't concern us in this game.)
 
 You'll find the theorem you proved in this level listed as `compl_subset_compl_of_subset` in the list of
-theorems on the right.  This theorem will be useful in the last level of this world.
+*Theorems* in the inventory.  This theorem will be useful later in this world.
 "

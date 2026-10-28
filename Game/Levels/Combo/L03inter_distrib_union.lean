@@ -14,13 +14,15 @@ Introduction
 "
 This proof is longer than previous ones, but it doesn't require any new tactics or theorems.
 Just stick with it and keep applying the ideas from previous levels!
+
+![Diagram: A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)](images/combo-distrib.svg)
 "
 
 TheoremTab "∩∪"
 
 /-- For any sets `A`, `B`, and `C`, `inter_distrib_left A B C` is a proof of the
 statement `A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)`.  In Mathlib, the name of this theorem
-is `Set.inter_distrib_left`. -/
+is `Set.inter_union_distrib_left`. -/
 TheoremDoc STG4.inter_distrib_left as "inter_distrib_left" in "∩∪"
 
 /-- For any sets $A$, $B$, and $C$, $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$. -/
@@ -60,5 +62,9 @@ Statement inter_distrib_left (A B C : Set U) : A ∩ (B ∪ C) = (A ∩ B) ∪ (
 
 Conclusion
 "
-Whew!
+Whew!  That was a long proof.  This theorem is the *distributive law* for intersection over union.
+In the next level you'll prove the other distributive law, for union over intersection.
+
+It looks just like the law `a * (b + c) = a * b + a * c` from arithmetic, with `∩` playing the
+role of `*` and `∪` the role of `+`.
 "

@@ -73,8 +73,8 @@ Statement (A B : Set U) : A ∩ B = ⋂₀ {A, B} := by
   away how to justify this assertion, you can just write `have hAinAB : A ∈ \{A, B}` and Lean will
   set `A ∈ \{A, B}` as your immediate goal.  Once you achieve that goal, Lean will add
   `hAinAB : A ∈ \{A, B}` to your list of assumptions, and you can continue with
-  the proof of your original goal.  For further details, click on `have` in the list of tactics
-  on the right."
+  the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+  in the inventory."
   have h2 : A ∈ {A, B}
   rewrite [mem_pair]
   apply Or.inl
@@ -85,3 +85,9 @@ Statement (A B : Set U) : A ∩ B = ⋂₀ {A, B} := by
   apply Or.inr
   rfl
   exact h1 B h2
+
+Conclusion
+"
+So the intersection of a family generalizes the intersection of two sets: `A ∩ B` is the same as
+`⋂₀ {A, B}`.
+"

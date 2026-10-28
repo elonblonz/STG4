@@ -1,0 +1,22 @@
+name: check-content
+run-name: Check translations and diagrams
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: [".i18n/**", "Game/**", "Game.lean", "images/**", "scripts/**"]
+  push:
+    paths: [".i18n/**", "Game/**", "Game.lean", "images/**", "scripts/**"]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check translations
+        run: python3 scripts/check_i18n.py
+      - name: Check diagrams are up to date with scripts/make_diagrams.py
+        run: |
+          python3 scripts/make_diagrams.py
+          git diff --exit-code -- images/ || { echo "::error::Run 'python scripts/make_diagrams.py' and commit the result"; exit 1; }

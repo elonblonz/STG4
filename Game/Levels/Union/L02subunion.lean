@@ -16,7 +16,8 @@ As with complements and intersections, one of the key tools for proving theorems
 is a theorem stating the definition.  If you have `x : U`, `A : Set U`, and `B : Set U`,
 then `mem_union x A B` is a proof of the statement `x ∈ A ∪ B ↔ x ∈ A ∨ x ∈ B`.
 That means you can use `rewrite [mem_union]` to write out the definition of
-`x ∈ A ∪ B` if it appears in any assumption or the goal.  (The similar theorem about intersections
+`x ∈ A ∪ B` if it appears in the goal, or `rewrite [mem_union] at h` if it appears in an
+assumption `h`.  (The similar theorem about intersections
 was called `mem_inter_iff`.  Why isn't this one called `mem_union_iff`?  I don't know.  The
 naming of theorems in Lean is systematic, but there are occasional surprises.)
 "

@@ -48,3 +48,9 @@ Statement (A B : Set U) : A ∪ B = ⋃₀ {A, B}:= by
   exact Or.inl ht.right
   rewrite [hB] at ht
   exact Or.inr ht.right
+
+Conclusion
+"
+Just as with intersections, the union of a family generalizes the union of two sets: `A ∪ B` is the
+same as `⋃₀ {A, B}`.
+"

@@ -21,6 +21,9 @@ such that $s \subseteq t$, and also there is some $s \in F$ such that for every 
 $t \subseteq s$.  Then $F$ and $G$ have an element in common.-/
 Statement (F G : Set (Set U)) (h1 : ∀ s ∈ F, ∃ t ∈ G, s ⊆ t) (h2 : ∃ s ∈ F, ∀ t ∈ G, t ⊆ s) :
     ∃ u, u ∈ F ∩ G := by
+  Hint (hidden := true) "**The idea.**  `h2` gives a set `s ∈ F` that contains every set in `G`.  Applying
+  `h1` to this `s` gives a set `t ∈ G` with `s ⊆ t`.  But also `t ⊆ s`, because `s` contains every
+  set in `G`.  So `s = t`, and this set is in both `F` and `G`."
   obtain ⟨s, h3⟩ := h2
   have h4 := h1 s h3.left
   obtain ⟨t, h5⟩ := h4
@@ -32,3 +35,9 @@ Statement (F G : Set (Set U)) (h1 : ∀ s ∈ F, ∃ t ∈ G, s ⊆ t) (h2 : ∃
   exact h3.left
   rewrite [h7]
   exact h5.left
+
+Conclusion
+"
+Notice how the proof followed the structure of the quantifiers in the assumptions: each `∀` told you
+something you could apply, and each `∃` gave you a new object to work with.
+"

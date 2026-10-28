@@ -37,7 +37,7 @@ the same effect as `apply Or.inl`, and `right` will have the same effect as
 
 A good strategy would be to use proof by cases.  The tactic `rcases h with hP | hQ`
 will break the proof into two cases.  In case 1, the assumption `h` is replaced by
-`hP : P `, and in case 2 it is replaced by `hQ : Q`.  In both cases, you must prove
+`hP : P`, and in case 2 it is replaced by `hQ : Q`.  In both cases, you must prove
 the goal.
 -/
 DefinitionDoc or as "∨"

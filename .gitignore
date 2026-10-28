@@ -4,3 +4,4 @@ lake-packages/
 **/.DS_Store
 **/*.mo
 Update Procedure.md
+__pycache__/

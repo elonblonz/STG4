@@ -33,7 +33,9 @@ statement, then `by_contra h` will introduce the new assumption
 To achieve your new goal, you will need to establish
 `h1 : Q` and `h2 : ¬Q`, for some statement `Q`.  If you can do that,
 then `h2 h1` will prove the goal `False`.  Notice that `h1 h2` will not be
-recognized as a proof of `False`; the negative statement must come first. -/
+recognized as a proof of `False`; the negative statement must come first.
+
+In a written proof, `by_contra h` reads "Suppose, for the sake of contradiction, that …" (the opposite of the goal). -/
 TacticDoc by_contra
 
 NewTactic by_contra
@@ -58,9 +60,10 @@ DefinitionDoc not as "¬"
 
 NewDefinition not
 
-/-- Suppose $x \in A$ and $x \notin B$.  Then $\neg A \subseteq B$. -/
+/-- Suppose $x \in A$ and $x \notin B$.  Then $A \not\subseteq B$. -/
 Statement {A B : Set U} {x : U} (h1 : x ∈ A) (h2 : x ∉ B) : ¬A ⊆ B := by
-  Hint "For the theorem in this level, your goal is `¬A ⊆ B`.  To use proof by contradiction
+  Hint "For the theorem in this level, your goal is `¬A ⊆ B`, which Lean reads as `¬(A ⊆ B)`:
+  it is not the case that `A` is a subset of `B`.  To use proof by contradiction
   in this proof, you must begin by introducing the assumption `h3 : A ⊆ B`.  To do that, type
   `by_contra h3`"
   by_contra h3
@@ -78,6 +81,13 @@ Statement {A B : Set U} {x : U} (h1 : x ∈ A) (h2 : x ∉ B) : ¬A ⊆ B := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose, for the sake of contradiction, that `A ⊆ B`.  Since `x ∈ A`, it follows that
+> `x ∈ B`.  But this contradicts the assumption that `x ∉ B`.  Therefore `A ⊈ B`.
+
+`by_contra h3` is the sentence \"Suppose, for the sake of contradiction, …\".
+
 You can use the `by_contra` tactic in any proof to assume the
 opposite of your goal.  But it is most useful when the goal
 starts with the symbol `¬`.  After using the `by_contra` tactic,
