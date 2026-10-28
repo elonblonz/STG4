@@ -12,6 +12,7 @@ import Game.Levels.Union.L06union_assoc
 -/
 World "Union"
 Title "Union World"
+Image "images/world-union.svg"
 
 Introduction
 "If `A` and `B` are sets, then the *union* of `A` and `B`, denoted

@@ -16,6 +16,8 @@ To start a proof, you should look first at the goal.
 What needs to be done to prove the goal?
 In this level, the goal is `A ⊆ C`.  What does that
 tell you about how to proceed?
+
+![Diagram: A ⊆ B ⊆ C](images/subset-trans.svg)
 "
 
 TheoremTab "⊆"

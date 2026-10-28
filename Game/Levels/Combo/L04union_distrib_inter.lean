@@ -26,7 +26,7 @@ TheoremTab "∩∪"
 
 /-- For any sets `A`, `B`, and `C`, `union_distrib_left A B C` is a proof of the
 statement `A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)`.  In Mathlib, the name of this theorem
-is `Set.union_distrib_left`. -/
+is `Set.union_inter_distrib_left`. -/
 TheoremDoc STG4.union_distrib_left as "union_distrib_left" in "∩∪"
 
 /-- For any sets $A$, $B$, and $C$, $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$. -/
@@ -37,7 +37,7 @@ Statement union_distrib_left (A B C : Set U) : A ∪ (B ∩ C) = (A ∪ B) ∩ (
   in this situation, `rewrite [compl_inter]` is ambiguous, because there are
   two ways that the theorem `compl_inter` could be applied to rewrite the goal: `compl_inter B C`
   is a proof of `(B ∩ C)ᶜ = Bᶜ ∪ Cᶜ` and `compl_inter Aᶜ (B ∩ C)ᶜ` is a proof of
-  `(Aᶜ ∩ (B ∩ C)ᶜ)ᶜ = Aᶝᶜ ∪ (B ∩ C)ᶜᶜ`, and either one of those equations could be used to
+  `(Aᶜ ∩ (B ∩ C)ᶜ)ᶜ = Aᶜᶜ ∪ (B ∩ C)ᶜᶜ`, and either one of those equations could be used to
   rewrite the goal.  If you say `rewrite [compl_inter]`, then Lean will pick one of those two
   rewriting steps, and it might not pick the one you wanted.  So you'd better say explicitly
   what you want Lean to apply the theorem `compl_inter` to."

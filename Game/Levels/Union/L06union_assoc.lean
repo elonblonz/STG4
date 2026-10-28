@@ -67,6 +67,7 @@ NewTactic left right
 
 Conclusion
 "
-You've mastered reasoning about complements, intersections, and unions.  In the next world,
-we'll start mixing them up!
+You've mastered reasoning about complements, intersections, and unions.  Two worlds are now open:
+in Combination World we'll start mixing these operations up, and in Family Intersection World
+we'll intersect whole families of sets.
 "

@@ -29,6 +29,8 @@ As with other set theory operations, we have a theorem that expresses this defin
 recognize `mem_sInter` as a proof of any statement of the form `x ∈ ⋂₀ F ↔ ∀ t ∈ F, x ∈ t`.
 
 In this level, you'll try out these ideas.
+
+![Diagram: a family F with one member A highlighted, and ⋂₀ F shaded](images/faminter-member.svg)
 "
 
 /-- `⋂₀ F` is the intersection of the family of sets `F`.  To enter the symbol `⋂₀`, type `\I0`. -/
@@ -61,8 +63,12 @@ NewTheorem Set.mem_sInter
 
 TheoremTab "⋂₀⋃₀"
 
+/-- If `A` is a set, `F` is a family of sets, and `h : A ∈ F`, then `sInter_subset_of_mem A F h` is a
+proof of `⋂₀ F ⊆ A`.  In Mathlib, the name of this theorem is `Set.sInter_subset_of_mem`. -/
+TheoremDoc STG4.sInter_subset_of_mem as "sInter_subset_of_mem" in "⋂₀⋃₀"
+
 /-- Suppose $F$ is a family of sets and $A \in F$.  Then $\bigcap F \subseteq A$. -/
-Statement (A : Set U) (F : Set (Set U)) (h1 : A ∈ F) : ⋂₀ F ⊆ A := by
+Statement sInter_subset_of_mem (A : Set U) (F : Set (Set U)) (h1 : A ∈ F) : ⋂₀ F ⊆ A := by
   intro x h2
   Hint "As usual, you may find it helpful to use the `rewrite` tactic to write out the
   definition of `{x} ∈ ⋂₀ F`, using the theorem `mem_sInter`."

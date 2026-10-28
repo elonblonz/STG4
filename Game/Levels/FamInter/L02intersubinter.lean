@@ -18,6 +18,8 @@ perhaps more sets.  You're going to prove that intersecting this larger collecti
 leads to a smaller result; more precisely, you're going to prove that `⋂₀ G ⊆ ⋂₀ F`.
 
 Of course, by now you know how to start a proof that one set is a subset of another.
+
+![Diagram: the intersection of a larger family G is smaller](images/faminter-larger.svg)
 "
 
 /-- Suppose $F$ and $G$ are families of sets and $F \subseteq G$.

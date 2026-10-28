@@ -3,6 +3,7 @@ import Game.Levels.Comp
 import Game.Levels.Inter
 import Game.Levels.Union
 import Game.Levels.Combo
+import Game.Levels.Diff
 import Game.Levels.FamInter
 import Game.Levels.FamUnion
 import Game.Levels.FamCombo
@@ -79,6 +80,7 @@ Alternatively, if you experience issues / bugs you can also open github issues:
 Dependency Intersection → Union
 Dependency FamInter → FamUnion
 Dependency Combination → FamCombo
+Dependency Combination → Difference
 
 /-! Information to be displayed on the servers landing page. -/
 Languages "en" "es" "ru"

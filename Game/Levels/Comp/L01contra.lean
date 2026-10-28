@@ -58,9 +58,10 @@ DefinitionDoc not as "¬"
 
 NewDefinition not
 
-/-- Suppose $x \in A$ and $x \notin B$.  Then $\neg A \subseteq B$. -/
+/-- Suppose $x \in A$ and $x \notin B$.  Then $A \not\subseteq B$. -/
 Statement {A B : Set U} {x : U} (h1 : x ∈ A) (h2 : x ∉ B) : ¬A ⊆ B := by
-  Hint "For the theorem in this level, your goal is `¬A ⊆ B`.  To use proof by contradiction
+  Hint "For the theorem in this level, your goal is `¬A ⊆ B`, which Lean reads as `¬(A ⊆ B)`:
+  it is not the case that `A` is a subset of `B`.  To use proof by contradiction
   in this proof, you must begin by introducing the assumption `h3 : A ⊆ B`.  To do that, type
   `by_contra h3`"
   by_contra h3

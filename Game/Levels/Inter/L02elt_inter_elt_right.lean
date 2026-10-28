@@ -47,3 +47,9 @@ Statement (x : U) (A B : Set U) (h : x ∈ A ∩ B) : x ∈ B := by
   rewrite [mem_inter_iff] at h
   Hint "Now your situation is similar to the previous level."
   exact h.right
+
+Conclusion
+"
+Notice that `mem_inter_iff` turned a statement about `∩` into a statement about `∧`.  Writing out
+definitions like this is the first step in many of the proofs in this game.
+"

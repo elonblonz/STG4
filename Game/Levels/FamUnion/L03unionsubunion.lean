@@ -48,3 +48,9 @@ Statement (F G : Set (Set U)) (h1 : F ⊆ G) : ⋃₀ F ⊆ ⋃₀ G := by
   apply Exists.intro s
   have h2 : s ∈ G := h1 hs.left
   exact And.intro h2 hs.right
+
+Conclusion
+"
+Compare this with Family Intersection World, where you showed that the intersection of a larger
+family is *smaller*.
+"

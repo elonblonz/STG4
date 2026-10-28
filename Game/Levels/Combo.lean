@@ -10,6 +10,7 @@ import Game.Levels.Combo.L05union_sub_inter_sub
 
 World "Combination"
 Title "Combination World"
+Image "images/world-combination.svg"
 
 Introduction
 "

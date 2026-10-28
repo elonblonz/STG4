@@ -20,6 +20,8 @@ theorem in this level is about the complement of a union of a family of sets.
 As in the case of `compl_union`, you have a choice about how to deal with the negations that
 arise when you write out the meaning of complement.  You can use the `push_neg` tactic to
 reexpress negative statements, or you can use proof by contradiction.
+
+![Diagram: a set t and its complement tᶜ](images/famcombo-complements.svg)
 "
 
 /-- For any family of sets $F$, $(\bigcup F)^c = \bigcap \{s \mid s^c \in F\}$. -/
@@ -76,3 +78,9 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
   have h4 := h3 h3a
   rewrite [mem_compl_iff] at h4
   exact h4
+
+Conclusion
+"
+This theorem is a version of De Morgan's law for families: the complement of a union is the
+intersection of the complements.
+"

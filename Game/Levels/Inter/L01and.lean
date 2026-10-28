@@ -39,7 +39,7 @@ DefinitionDoc and as "∧"
 
 NewDefinition and
 
-/-- Suppose $x \in A$ and $x \in B$.  Then $x \in A$. -/
+/-- Suppose $x \in A \wedge x \in B$.  Then $x \in A$. -/
 Statement (x : U) (A B : Set U) (h : x ∈ A ∧ x ∈ B) : x ∈ A := by
   exact h.left
 

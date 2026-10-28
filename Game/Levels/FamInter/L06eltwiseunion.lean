@@ -14,7 +14,7 @@ Introduction
 "
 In this level you'll need a new kind of proof by cases.  For any statement `P`, the
 tactic `by_cases h : P` will break the proof into two cases.  In the first case, the new
-assumption `h : P` is added to the list of assumptions, and in second, the new
+assumption `h : P` is added to the list of assumptions, and in the second, the new
 assumption `h : ¬P` is added.  Since `P` must be either true or false, these two cases cover
 all possibilities.
 "

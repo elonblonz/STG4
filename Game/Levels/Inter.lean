@@ -13,6 +13,7 @@ import Game.Levels.Inter.L08inter_assoc
 -/
 World "Intersection"
 Title "Intersection World"
+Image "images/world-intersection.svg"
 
 Introduction
 "If `A` and `B` are sets, then the *intersection* of `A` and `B`, denoted

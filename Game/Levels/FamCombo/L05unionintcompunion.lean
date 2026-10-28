@@ -18,6 +18,8 @@ What happens if you intersect `⋃₀ F` with `(⋃₀ G)ᶜ`, for two families 
 /-- Suppose $F$ and $G$ are families of sets.  Then $(\bigcup F) \cap (\bigcup G)^c \subseteq
 \bigcup (F \cap G^c)$.-/
 Statement (F G : Set (Set U)) : (⋃₀ F) ∩ (⋃₀ G)ᶜ ⊆ ⋃₀ (F ∩ Gᶜ) := by
+  Hint "Start by introducing `x` and the assumption about `x`.  The left half of that assumption
+  tells you that `x` is in some set in `F`."
   intro x h1
   rewrite [mem_inter_iff] at h1
   have h1l := h1.left
@@ -30,6 +32,8 @@ Statement (F G : Set (Set U)) : (⋃₀ F) ∩ (⋃₀ G)ᶜ ⊆ ⋃₀ (F ∩ G
   apply And.intro
   exact ht.left
   rewrite [mem_compl_iff]
+  Hint (hidden := true) "To prove `{t} ∉ G`, try proof by contradiction.  If `{t}` were in `G`, then `{x}` would be in
+  `⋃₀ G`.  Does that contradict any of your assumptions?"
   by_contra h2
   have h1r := h1.right
   rewrite [mem_compl_iff, mem_sUnion] at h1r
@@ -37,3 +41,8 @@ Statement (F G : Set (Set U)) : (⋃₀ F) ∩ (⋃₀ G)ᶜ ⊆ ⋃₀ (F ∩ G
   have hnt := h1r t h2
   exact hnt ht.right
   exact ht.right
+
+Conclusion
+"
+Is the reverse subset statement also true?  You'll investigate that in the next level.
+"

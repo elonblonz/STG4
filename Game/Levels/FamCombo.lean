@@ -13,9 +13,10 @@ import Game.Levels.FamCombo.L08singleton
 -/
 World "FamCombo"
 Title "Family Combination World"
+Image "images/world-famcombo.svg"
 
 Introduction
 "
 In this world we combine family unions and intersections with each other, and with complements.
-This level contains some of the hardest proofs in the game!
+This world contains some of the hardest proofs in the game!
 "

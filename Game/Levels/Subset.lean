@@ -16,6 +16,7 @@ the order of the levels.
 -/
 World "Subset"
 Title "Subset World"
+Image "images/world-subset.svg"
 
 Introduction
 "Welcome to Subset World! In this world you will learn about sets and

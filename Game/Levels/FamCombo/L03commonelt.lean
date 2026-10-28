@@ -32,3 +32,9 @@ Statement (F G : Set (Set U)) (h1 : ∀ s ∈ F, ∃ t ∈ G, s ⊆ t) (h2 : ∃
   exact h3.left
   rewrite [h7]
   exact h5.left
+
+Conclusion
+"
+Notice how the proof followed the structure of the quantifiers in the assumptions: each `∀` told you
+something you could apply, and each `∃` gave you a new object to work with.
+"

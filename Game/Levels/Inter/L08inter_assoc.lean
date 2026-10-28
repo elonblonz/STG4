@@ -17,12 +17,14 @@ we've started with the tactic `apply Subset.antisymm`, and that would work here 
 But we're going to try out an alternative: the tactic `ext`.  This tactic applies the principle
 of *extensionality* for sets, which says that if
 two sets have exactly the same elements, then they are equal.
+
+![Diagram: A ∩ B ∩ C](images/inter-assoc.svg)
 "
 
 TheoremTab "∩∪"
 
 /-- For any sets `A`, `B`, and `C`, `inter_assoc A B C` is a proof of the
-statement `(A ∩ B) ∩ C = A ∩ (B ∩ C)`.  Im Mathlib, the name of this theorem is `Set.inter_assoc`. -/
+statement `(A ∩ B) ∩ C = A ∩ (B ∩ C)`.  In Mathlib, the name of this theorem is `Set.inter_assoc`. -/
 TheoremDoc STG4.inter_assoc as "inter_assoc" in "∩∪"
 
 /-- If your goal is `A = B`, where `A` and `B` are sets, then the tactic `ext x` will introduce

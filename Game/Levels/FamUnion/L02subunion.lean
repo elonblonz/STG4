@@ -49,8 +49,12 @@ NewTactic use
 
 TheoremTab "⋂₀⋃₀"
 
+/-- If `A` is a set, `F` is a family of sets, and `h : A ∈ F`, then `subset_sUnion_of_mem A F h` is a
+proof of `A ⊆ ⋃₀ F`.  In Mathlib, the name of this theorem is `Set.subset_sUnion_of_mem`. -/
+TheoremDoc STG4.subset_sUnion_of_mem as "subset_sUnion_of_mem" in "⋂₀⋃₀"
+
 /-- Suppose $F$ is a family of sets and $A \in F$.  Then $A \subseteq \bigcup F$. -/
-Statement (A : Set U) (F : Set (Set U)) (h1 : A ∈ F) : A ⊆ ⋃₀ F := by
+Statement subset_sUnion_of_mem (A : Set U) (F : Set (Set U)) (h1 : A ∈ F) : A ⊆ ⋃₀ F := by
   intro x h2
   rewrite [mem_sUnion]
   Hint "Remember that the goal `∃ t ∈ F, {x} ∈ t` is an abbreviation for

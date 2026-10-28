@@ -11,6 +11,7 @@ import Game.Levels.FamInter.L06eltwiseunion
 -/
 World "FamInter"
 Title "Family Intersection World"
+Image "images/world-faminter.svg"
 
 Introduction
 "So far the elements of all of our sets have been objects in the universe `U`.  But

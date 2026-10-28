@@ -85,3 +85,9 @@ Statement (A B : Set U) : A ∩ B = ⋂₀ {A, B} := by
   apply Or.inr
   rfl
   exact h1 B h2
+
+Conclusion
+"
+So the intersection of a family generalizes the intersection of two sets: `A ∩ B` is the same as
+`⋂₀ {A, B}`.
+"

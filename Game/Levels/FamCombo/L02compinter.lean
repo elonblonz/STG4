@@ -57,3 +57,9 @@ Statement (F : Set (Set U)) : (⋂₀ F)ᶜ = ⋃₀ {s | sᶜ ∈ F} := by
   rewrite [mem_compl_iff]
   push_neg
   exact hu.right
+
+Conclusion
+"
+And this is the other De Morgan law for families.  Compare these two proofs with your proofs of
+De Morgan's laws in Combination World.
+"

@@ -17,7 +17,7 @@ set.  The theorem `mem_singleton_iff` expresses the definition of singleton sets
 a proof of any statement of the form `x ∈ {a} ↔ x = a`.
 "
 
-/-- Lean will recognize `mem_singleton_iff` is a proof of any statement of the form
+/-- Lean will recognize `mem_singleton_iff` as a proof of any statement of the form
 `x ∈ {a} ↔ x = a`.  In Mathlib, the name of this theorem is `Set.mem_singleton_iff`. -/
 TheoremDoc Set.mem_singleton_iff as "mem_singleton_iff" in "{ }"
 

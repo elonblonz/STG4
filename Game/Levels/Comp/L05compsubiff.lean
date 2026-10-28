@@ -12,7 +12,7 @@ Title "Complement subsets equivalence"
 
 Introduction
 "
-In this last level of Complement World, you'll prove a statement of the form `P ↔ Q`.  The most
+In this level, you'll prove a statement of the form `P ↔ Q`.  The most
 useful theorem for this purpose is `Iff.intro`.  If you have `h1 : P → Q` and `h2 : Q → P`, then
 `Iff.intro h1 h2` is a proof of `P ↔ Q`.  As we saw in the last level, that means you can start your
 proof with `apply Iff.intro`.  Lean will set `P → Q` and `Q → P` as the goals that are needed

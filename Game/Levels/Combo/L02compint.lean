@@ -18,7 +18,7 @@ the theorem from the previous level (`compl_union`) to prove the
 theorem in this level.
 
 The trick to get started on this proof is to rewrite `Aᶜ ∪ Bᶜ` as `(Aᶜ ∪ Bᶜ)ᶜᶜ`.  As you
-know, `compl_compl (Aᶜ ∪ Bᶜ)` is a proof of the theorem `(Aᶜ ∪ Bᶜ)ᶜᶜ = Aᶜ ∪ Bᶜ`, and therefore
+know, `compl_compl (Aᶜ ∪ Bᶜ)` is a proof of the statement `(Aᶜ ∪ Bᶜ)ᶜᶜ = Aᶜ ∪ Bᶜ`, and therefore
 `rewrite [compl_compl (Aᶜ ∪ Bᶜ)]` could be used to rewrite `(Aᶜ ∪ Bᶜ)ᶜᶜ` as `Aᶜ ∪ Bᶜ`; but we
 want to go in the opposite direction, rewriting `Aᶜ ∪ Bᶜ` as `(Aᶜ ∪ Bᶜ)ᶜᶜ`. To do that, use
 `rewrite [← compl_compl (Aᶜ ∪ Bᶜ)]`. (To enter the left-pointing arrow, type `\\l`.)
@@ -37,3 +37,9 @@ Statement compl_inter (A B : Set U) : (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ := by
   rewrite [compl_union]
   rewrite [compl_compl, compl_compl]
   rfl
+
+Conclusion
+"
+Rewriting in the opposite direction with `←` is a useful trick.  By applying the theorem from the
+previous level to `Aᶜ` and `Bᶜ`, you got the second De Morgan law with very little work.
+"
