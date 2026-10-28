@@ -25,6 +25,10 @@ ROOT = Path(__file__).resolve().parent.parent / ".i18n"
 PLACEHOLDER = re.compile(r"§\d+")
 
 
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from i18n_merge import parse as parse_po  # noqa: E402
+
 def pot_msgids(path):
     ids, cur, in_id = set(), "", False
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -57,6 +61,10 @@ def check(lang, template):
             missing = ", ".join(sorted(want - got, key=lambda s: int(s[1:])))
             extra = ", ".join(sorted(got - want, key=lambda s: int(s[1:])))
             errors.append(f"placeholders missing [{missing}] extra [{extra}]: {short!r}")
+    # The game loads Game.json, which is generated from Game.po (the file translators edit).
+    po = {msgid: msgstr for _, msgid, msgstr in parse_po(ROOT / lang / "Game.po") if msgid and msgstr}
+    if po != dict(pairs):
+        errors.append("Game.json differs from Game.po: run `lake exe i18n --export-json`")
     untranslated = len(template - seen)
     for e in errors:
         print(f"::error file=.i18n/{lang}/Game.json::{e}")

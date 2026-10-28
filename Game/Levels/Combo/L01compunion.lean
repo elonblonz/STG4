@@ -33,7 +33,7 @@ Statement compl_union (A B : Set U) : (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ := by
   ext x
   rewrite [mem_compl_iff, mem_union]
   rewrite [mem_inter_iff, mem_compl_iff, mem_compl_iff]
-  Hint (hidden := true) "The goal is now an `↔` statement.  Prove the two directions separately, starting with
+  Hint (hidden := true) "Prove the two directions of the `↔` separately, starting with
   `apply Iff.intro`."
   apply Iff.intro
   intro h

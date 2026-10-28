@@ -121,10 +121,14 @@ To use a local checkout of the engine's Lean server instead of the published one
 
 Pushing to `main` builds the game and uploads it as a workflow artifact. To publish it to
 [adam.math.hhu.de](https://adam.math.hhu.de), open
-`https://adam.math.hhu.de/import/trigger/<owner>/<repo>`.
+`https://adam.math.hhu.de/import/trigger/<owner>/<repo>`. Note that adam.math.hhu.de serves
+the game with the upstream engine: our engine changes (dark mode, the phone layout, the visual
+refresh and the fixes) appear only when the game runs on our fork, as in the Docker setup or a
+self-hosted server.
 
-If you host the patched engine yourself, replace the placeholder impressum and privacy
-policy in the engine's `client/public/legal/` (`impressum.md`, `privacy.md`) with your own.
+If you host our engine fork yourself, replace the placeholder impressum and privacy policy in
+its `client/public/legal/` (`impressum.md`, `privacy.md`) with your own, and read the fork's
+`doc/server.md` (sandbox, memory limits, and the relay's settings).
 
 ## License
 

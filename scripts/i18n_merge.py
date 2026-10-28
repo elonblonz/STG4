@@ -77,10 +77,13 @@ def main():
     for po_path in sorted(ROOT.glob("*/Game.po")):
         lang = po_path.parent.name
         old = parse(po_path)
-        header = next(e for e in old if e[1] == "")
+        header = next((e for e in old if e[1] == ""), None)
+        if header is None:
+            raise SystemExit(f"{po_path} has no header entry (msgid \"\")")
         existing = {msgid: msgstr for _, msgid, msgstr in old if msgid}
         for old_id, new_id in renames.items():
-            if old_id in existing and new_id not in existing:
+            # The new msgid may already be there, untranslated (e.g. after an earlier merge).
+            if existing.get(old_id) and not existing.get(new_id):
                 existing[new_id] = existing[old_id]
         merged = [header]
         missing = 0

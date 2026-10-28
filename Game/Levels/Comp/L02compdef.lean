@@ -58,6 +58,8 @@ and `Q → P` as your goals.  In this situation, the tactic `constructor` has th
 
 Lean will recognize `h.mp` as a proof of `P → Q` and `h.mpr` as a proof of `Q → P`.  You may
 also find it helpful to use `h` in the `rewrite` tactic.
+
+(`apply`, `Iff.intro`, `constructor` and `rewrite` are introduced in later levels.)
 -/
 DefinitionDoc iff as "↔"
 

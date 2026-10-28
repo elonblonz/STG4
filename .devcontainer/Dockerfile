@@ -27,7 +27,7 @@ ARG LEAN4GAME_REPO=https://github.com/elonblonz/lean4game.git
 ARG LEAN4GAME_REF=stg4-v1
 RUN git clone --depth 1 --branch "${LEAN4GAME_REF:-$(grep -oE '[^:]+$' /lean-toolchain)}" \
     "$LEAN4GAME_REPO" lean4game \
-  && cd lean4game && npm install
+  && cd lean4game && npm ci
 
 # Mount point for the `.lake` named volume (see docker-compose.yml). Creating it here
 # makes the volume owned by `node` instead of `root`.

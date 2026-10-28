@@ -35,7 +35,7 @@ TheoremTab "ᶜ"
 theorem is `Set.subset_univ`. -/
 TheoremDoc STG4.subset_univ as "subset_univ" in "ᶜ"
 
-/-- For any set $A$, $A \subseteq U$. -/
+/-- For any set $A$, $A \subseteq U$ (in Lean, the set of all objects in $U$ is written `univ`). -/
 Statement subset_univ (A : Set U) : A ⊆ univ := by
   intro x h
   Hint (hidden := true) "You don't need the assumption `{h}`: `mem_univ {x}` proves the goal."

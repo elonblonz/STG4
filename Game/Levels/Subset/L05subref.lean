@@ -40,7 +40,7 @@ Statement Subset.refl (A : Set U) : A ⊆ A := by
   Hint (hidden := true) "Use `intro` again to introduce the assumption `{x} ∈ A`."
   intro h
   Hint "The situation now should remind you of your first proof, in level 1 of this world."
-  Hint (hidden := true) "Notice that {h} is now a proof of the goal."
+  Hint (hidden := true) "Notice that `{h}` is now a proof of the goal."
   exact h
 
 Conclusion
