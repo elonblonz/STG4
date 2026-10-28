@@ -19,9 +19,9 @@ WORKDIR /home/node
 
 # Clone the game engine and install its npm dependencies here, so they are cached in the image
 # rather than redone per container. By default this is a release of our engine fork (upstream
-# lean4game plus our changes, tags `stg4-v<N>` on branch `stg4-ui`); set LEAN4GAME_REPO / LEAN4GAME_REF (see
-# docker-compose.yml) to build against another one. With LEAN4GAME_REF empty, the upstream
-# tag matching our Lean version is used, e.g. for
+# lean4game plus our changes, tags `stg4-v<N>` on branch `stg4-ui`); set LEAN4GAME_REPO /
+# LEAN4GAME_REF (see docker-compose.yml) to build against another one. With LEAN4GAME_REF
+# empty, the upstream tag matching our Lean version is used, e.g. for
 #   LEAN4GAME_REPO=https://github.com/leanprover-community/lean4game.git LEAN4GAME_REF=
 ARG LEAN4GAME_REPO=https://github.com/elonblonz/lean4game.git
 ARG LEAN4GAME_REF=stg4-v1
