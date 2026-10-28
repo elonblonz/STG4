@@ -31,7 +31,9 @@ doesn't do any logical reasoning: for example, it can't prove `¬¬P ↔ P`.
 /-- If your goal is a statement of the form `P ↔ Q`, and `P` and `Q` are definitionally
 equal (that is, they become the same statement once the definitions of the symbols occurring
 in them are written out), then the `rfl` tactic will close the goal.  It will also close a goal of the form
-`X = Y`, if `X` and `Y` are definitionally equal (that is, equal by virtue of definitions). -/
+`X = Y`, if `X` and `Y` are definitionally equal (that is, equal by virtue of definitions).
+
+In a written proof, this step reads "This holds by definition" or "Both sides are the same." -/
 TacticDoc rfl
 
 NewTactic rfl

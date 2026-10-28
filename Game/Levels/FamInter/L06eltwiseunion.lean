@@ -21,7 +21,9 @@ all possibilities.
 
 /-- The tactic `by_cases h : P` breaks the proof into two cases.  In the first case, the
 assumption `h : P` is added to the list of assumptions, and in the second case, the
-assumption `h : ¬P` is added. -/
+assumption `h : ¬P` is added.
+
+In a written proof, `by_cases h : P` reads "Either `P` is true or it isn't.  *Case 1:* `P` … *Case 2:* `¬P` …". -/
 TacticDoc by_cases
 
 NewTactic by_cases
@@ -62,6 +64,17 @@ Statement (A : Set U) (F G : Set (Set U)) (h1 : ∀ s ∈ F, A ∪ s ∈ G) : �
 
 Conclusion
 "
+**The proof, written out.**
+
+> Let `x` be an arbitrary element of `⋂₀ G`.  We must show that `x ∈ A` or `x ∈ ⋂₀ F`.  If
+> `x ∈ A`, we are done, so suppose `x ∉ A`; we show that `x ∈ ⋂₀ F`.  Let `t` be an arbitrary
+> set in `F`.  By assumption `A ∪ t ∈ G`, and since `x` belongs to every set in `G`,
+> `x ∈ A ∪ t`.  As `x ∉ A`, it follows that `x ∈ t`.  Since `t` was arbitrary, `x ∈ ⋂₀ F`.
+
+This shows a useful strategy for proving an \"or\" statement: consider whether the first part is
+true (that is what `by_cases` does).  If it is, you're done; if not, you have an extra assumption
+to help you prove the second part.
+
 You've finished Family Intersection World!  As you might guess, you can also take the union of
 a family of sets.  Can you guess how to define it?  Continue on to Family Union World to see
 if your guess is right.

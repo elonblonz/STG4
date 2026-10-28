@@ -45,9 +45,18 @@ Statement Subset.refl (A : Set U) : A ⊆ A := by
 
 Conclusion
 "
+**The proof, written out.**  Mathematicians write proofs in words.  Here is how the
+proof you just gave would usually be written; each sentence corresponds to one of your tactics:
+
+> Let `x` be arbitrary, and suppose `x ∈ A`.  Then `x ∈ A`.  Since `x` was arbitrary, every
+> element of `A` is an element of `A`; that is, `A ⊆ A`.
+
+`intro x` is \"Let `x` be arbitrary\", `intro h` is \"Suppose `x ∈ A`\", and `exact h` gives
+the conclusion.  Proving that one set is a subset of another almost always starts this way.
+
 The theorem you have proven in this level shows that the subset relation has
 a property called *reflexivity*.  We have given the theorem the name `Subset.refl`.  You
-will see it in the list of theorems on the right.  (This theorem is included in Lean's
+will see it in the list of *Theorems* in the inventory.  (This theorem is included in Lean's
 mathematical library, Mathlib.  In Mathlib, the name of the theorem is `Set.Subset.refl`.
 Many other set-theoretic theorems in this game have `Set.` at the beginnings of their names
 in Mathlib.)

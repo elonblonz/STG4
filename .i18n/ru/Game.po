@@ -21,8 +21,10 @@ msgstr ""
 #. §9: `h : x ∈ A`
 #. §10: `h`
 #. §11: `x ∈ A`
-#. §12: `exact`
-#. §13: `exact`
+#. §12: `x ∈ A`
+#. §13: `h`
+#. §14: `exact`
+#. §15: `exact`
 #: Game/Levels/Subset/L01exact.lean:13
 msgid ""
 "# Read this first\n"
@@ -31,15 +33,27 @@ msgid ""
 "When you give a proof of this statement that\n"
 "is accepted by Lean, we say that you have *closed* the goal.\n"
 "\n"
-"In this first level you're going to prove that if §0 belongs to the universe §1,\n"
-"§2 is a set of objects from §3, and §4, then §5.  You should see\n"
-"§6, §7, and §8 under *Objects* in the pane to the right, and\n"
-"§9 under *Assumptions*.  The letter §10 here is called an *identifier*\n"
-"for the assumption §11.\n"
+"This first level is deliberately easy: its purpose is to show you how the game\n"
+"presents a theorem.  The theorem says:\n"
+"\n"
+"*Let §0 be an object in the universe §1, and let §2 be a set of objects\n"
+"from §3.  Suppose §4.  Then §5.*\n"
+"\n"
+"Most theorems have this shape, and the game splits it into three parts:\n"
+"\n"
+"* **Objects** (the *Let* part): §6, §7 and §8 say what kind\n"
+"of thing each name refers to.\n"
+"* **Assumptions** (the *Suppose* part): §9 is a fact you may use.  The\n"
+"letter §10 is called an *identifier* for the assumption §11: it is its name,\n"
+"so that you can refer to it.\n"
+"* **Goal** (the *Then* part): §12 is what you must prove.\n"
+"\n"
+"Here the goal is literally one of your assumptions, so the proof takes a single\n"
+"step: tell Lean that §13 is exactly what is needed.\n"
 "\n"
 "You will prove goals in Lean using *tactics*.  The first tactic you're\n"
-"going to learn is called §12, and it is used to close the goal.\n"
-"You can close the goal by typing §13 followed by a proof of the goal."
+"going to learn is called §14, and it is used to close the goal.\n"
+"You can close the goal by typing §15 followed by a proof of the goal."
 msgstr ""
 "# Прочтите перед началом\n"
 "\n"
@@ -47,23 +61,45 @@ msgstr ""
 "Когда вы приводите доказательство этого утверждения и\n"
 "Lean его принимает, говорят, что вы *закрыли* цель.\n"
 "\n"
-"На этом первом уровне вам предстоит доказать, что если §0 принадлежит универсуму §1,\n"
-"§2 — множество объектов из §3 и §4, то §5. На панели справа в разделе *Объекты* (Objects)\n"
-"вы увидите §6, §7 и §8, а в разделе\n"
-"*Предположения* (Assumptions) — запись §9. Буква §10 здесь называется *идентификатором*\n"
-"предположения §11.\n"
+"Этот первый уровень намеренно простой: его задача — показать, как игра\n"
+"представляет теорему.  Теорема гласит:\n"
+"\n"
+"*Пусть §0 — объект из универсума §1, и пусть §2 — множество объектов\n"
+"из §3.  Предположим, что §4.  Тогда §5.*\n"
+"\n"
+"Так устроено большинство теорем, и игра делит такую формулировку на три части:\n"
+"\n"
+"* **Объекты** (часть *Пусть*): §6, §7 и §8 указывают, какого рода\n"
+"объект обозначает каждое имя.\n"
+"* **Предположения** (часть *Предположим*): §9 — факт, которым можно пользоваться.\n"
+"Буква §10 называется *идентификатором* предположения §11: это его имя,\n"
+"по которому на него можно ссылаться.\n"
+"* **Цель** (часть *Тогда*): §12 — то, что нужно доказать.\n"
+"\n"
+"Здесь цель буквально совпадает с одним из ваших предположений, поэтому доказательство состоит из одного\n"
+"шага: нужно сообщить Lean, что §13 — это в точности то, что требуется.\n"
 "\n"
 "Доказывать цели в Lean вы будете с помощью *тактик*. Первая тактика, с которой вы\n"
-"познакомитесь, называется §12 и служит для закрытия цели.\n"
-"Чтобы закрыть цель, наберите §13, а затем укажите доказательство этой цели."
+"познакомитесь, называется §14 и служит для закрытия цели.\n"
+"Чтобы закрыть цель, наберите §15, а затем укажите доказательство этой цели."
 
 #: Game.lean:12
 msgid ""
 "# Welcome to the Set Theory Game\n"
 "#### An introduction to mathematical proof.\n"
 "\n"
-"In this game, you will solve a sequence of levels by proving theorems.  The game\n"
-"is based on an interactive theorem prover called *Lean*.\n"
+"In this game, you will solve a sequence of levels by proving theorems.\n"
+"\n"
+"A *proof* is a chain of steps that leads from what you are given to what\n"
+"you want to show, where every step is justified.  In each level the game\n"
+"shows you the *givens* (the objects and assumptions you may use) and the\n"
+"*goal* (the statement you must prove).  You make progress one step at a time,\n"
+"and each step changes the givens or the goal, until nothing is left to prove.\n"
+"\n"
+"Every step you take is checked by an interactive theorem prover called *Lean*.\n"
+"Lean accepts a step only if it is fully justified, and it tells you at once\n"
+"when something is wrong.  So you can experiment freely: a wrong step costs\n"
+"nothing, and when Lean accepts your proof, you know it is correct.\n"
 "\n"
 "The theorems in this game will be about sets.\n"
 "A *set* is a collection of objects; the objects in the collection are\n"
@@ -87,8 +123,18 @@ msgstr ""
 "# Добро пожаловать в Игру по теории множеств\n"
 "#### Введение в математические доказательства.\n"
 "\n"
-"В этой игре вы будете проходить уровни один за другим, доказывая теоремы. Игра\n"
-"построена на базе интерактивной системы доказательства теорем *Lean*.\n"
+"В этой игре вы будете проходить уровни один за другим, доказывая теоремы.\n"
+"\n"
+"*Доказательство* — это цепочка шагов, ведущая от того, что вам дано, к тому, что\n"
+"требуется показать, причём каждый шаг обоснован.  На каждом уровне игра\n"
+"показывает *данные* (объекты и предположения, которыми можно пользоваться) и\n"
+"*цель* (утверждение, которое нужно доказать).  Вы продвигаетесь шаг за шагом,\n"
+"и каждый шаг изменяет данные или цель, пока доказывать будет больше нечего.\n"
+"\n"
+"Каждый ваш шаг проверяется интерактивной системой доказательства теорем *Lean*.\n"
+"Lean принимает шаг, только если он полностью обоснован, и сразу сообщает,\n"
+"если что-то не так.  Поэтому можно смело экспериментировать: неверный шаг ничего не стоит,\n"
+"а если Lean принял ваше доказательство, значит, оно правильное.\n"
 "\n"
 "Теоремы в этой игре посвящены множествам.\n"
 "*Множество* — это совокупность объектов; объекты, входящие в эту совокупность,\n"
@@ -109,7 +155,626 @@ msgstr ""
 "Откройте раздел «Об игре» (Game Info) в меню «≡» в правом верхнем углу — там собраны полезные материалы,\n"
 "ссылки и способы связи с сообществом Lean."
 
-#: Game.lean:40
+#. §0: `x`
+#. §1: `⋂₀ G`
+#. §2: `x ∈ A`
+#. §3: `x ∈ ⋂₀ F`
+#. §4: `x ∈ A`
+#. §5: `x ∉ A`
+#. §6: `x ∈ ⋂₀ F`
+#. §7: `t`
+#. §8: `F`
+#. §9: `A ∪ t ∈ G`
+#. §10: `x`
+#. §11: `G`
+#. §12: `x ∈ A ∪ t`
+#. §13: `x ∉ A`
+#. §14: `x ∈ t`
+#. §15: `t`
+#. §16: `x ∈ ⋂₀ F`
+#. §17: `by_cases`
+#: Game/Levels/FamInter/L06eltwiseunion.lean:65
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Let §0 be an arbitrary element of §1.  We must show that §2 or §3.  If\n"
+"> §4, we are done, so suppose §5; we show that §6.  Let §7 be an arbitrary\n"
+"> set in §8.  By assumption §9, and since §10 belongs to every set in §11,\n"
+"> §12.  As §13, it follows that §14.  Since §15 was arbitrary, §16.\n"
+"\n"
+"This shows a useful strategy for proving an \"or\" statement: consider whether the first part is\n"
+"true (that is what §17 does).  If it is, you're done; if not, you have an extra assumption\n"
+"to help you prove the second part.\n"
+"\n"
+"You've finished Family Intersection World!  As you might guess, you can also take the union of\n"
+"a family of sets.  Can you guess how to define it?  Continue on to Family Union World to see\n"
+"if your guess is right."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Пусть §0 — произвольный элемент §1.  Нужно показать, что §2 или §3.  Если\n"
+"> §4, то всё доказано, поэтому предположим, что §5; покажем, что §6.  Пусть §7 — произвольное\n"
+"> множество из §8.  По предположению §9, а поскольку §10 принадлежит каждому множеству из §11,\n"
+"> имеем §12.  Так как §13, отсюда следует, что §14.  Поскольку §15 был произвольным, §16.\n"
+"\n"
+"Это иллюстрирует полезную стратегию доказательства утверждения с «или»: проверьте, истинна ли первая часть\n"
+"(именно это делает §17).  Если да, то всё доказано; если нет, у вас появляется дополнительное предположение,\n"
+"которое поможет доказать вторую часть.\n"
+"\n"
+"Вы прошли Мир пересечений семейств! Как нетрудно догадаться, для семейства множеств можно\n"
+"взять и объединение. Догадываетесь, как оно определяется? Переходите в Мир объединений семейств и проверьте\n"
+"свою догадку."
+
+#. §0: `x`
+#. §1: `x ∈ (A ∩ B) ∩ C`
+#. §2: `x ∈ A ∩ B`
+#. §3: `x ∈ C`
+#. §4: `x ∈ A`
+#. §5: `x ∈ B`
+#. §6: `x ∈ C`
+#. §7: `x ∈ B`
+#. §8: `x ∈ C`
+#. §9: `x ∈ B ∩ C`
+#. §10: `x ∈ A`
+#. §11: `x ∈ A ∩ (B ∩ C)`
+#. §12: `x ∈ A ∩ (B ∩ C)`
+#. §13: `x ∈ A`
+#. §14: `x ∈ B`
+#. §15: `x ∈ C`
+#. §16: `x ∈ A ∩ B`
+#. §17: `x ∈ (A ∩ B) ∩ C`
+#. §18: `ext`
+#. §19: `(a * b) * c = a * (b * c)`
+#. §20: `A ∩ B ∩ C`
+#: Game/Levels/Inter/L08inter_assoc.lean:73
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Let §0 be arbitrary.  Suppose first that §1.  Then §2 and §3,\n"
+"> so §4, §5, and §6.  Since §7 and §8, §9, and since also\n"
+"> §10, §11.  The converse is similar: if §12, then §13,\n"
+"> §14, and §15, so §16 and therefore §17.  Thus the two sets have\n"
+"> exactly the same elements, so they are equal.\n"
+"\n"
+"This is the method behind §18: two sets are equal when every object belongs to one exactly\n"
+"when it belongs to the other.  Associativity is familiar from arithmetic, where\n"
+"§19; it is what allows us to write §20 without worrying about\n"
+"parentheses.\n"
+"\n"
+"Well done!  You're ready to move on to Union World."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Пусть §0 — произвольный объект.  Предположим сначала, что §1.  Тогда §2 и §3,\n"
+"> поэтому §4, §5 и §6.  Так как §7 и §8, имеем §9, а так как ещё и\n"
+"> §10, то §11.  Обратное доказывается аналогично: если §12, то §13,\n"
+"> §14 и §15, поэтому §16 и, следовательно, §17.  Таким образом, у этих двух множеств\n"
+"> в точности одни и те же элементы, а значит, они равны.\n"
+"\n"
+"Именно этот метод стоит за §18: два множества равны, если каждый объект принадлежит одному из них тогда и только тогда,\n"
+"когда он принадлежит другому.  Ассоциативность знакома вам по арифметике, где\n"
+"§19; именно она позволяет писать §20, не заботясь о\n"
+"скобках.\n"
+"\n"
+"Отличная работа! Теперь вы готовы перейти в Мир объединений."
+
+#. §0: `A ⊆ B`
+#. §1: `A ⊆ C`
+#. §2: `x`
+#. §3: `A`
+#. §4: `A ⊆ B`
+#. §5: `x ∈ B`
+#. §6: `A ⊆ C`
+#. §7: `x ∈ C`
+#. §8: `x ∈ B ∩ C`
+#. §9: `x`
+#. §10: `A ⊆ B ∩ C`
+#. §11: `apply And.intro`
+#. §12: `t`
+#. §13: `apply t`
+#. §14: `t`
+#. §15: `P ∧ Q`
+#. §16: `constructor`
+#. §17: `apply And.intro`
+#. §18: `P`
+#. §19: `Q`
+#: Game/Levels/Inter/L05subint.lean:39
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0 and §1, and let §2 be an arbitrary element of §3.  Since §4,\n"
+"> §5, and since §6, §7.  Therefore §8.  Since §9 was arbitrary,\n"
+"> §10.\n"
+"\n"
+"To prove an \"and\" statement, you prove each half; that is what §11 set up.\n"
+"\n"
+"In general, if you think that some theorem §12 could be used to prove the goal, the tactic\n"
+"§13 will work backwards from the goal, setting as new goals any hypotheses that are\n"
+"needed for the application of the theorem §14.\n"
+"\n"
+"If your goal has the form §15, then the §16 tactic will have the same\n"
+"effect as §17; that is, it will set §18 and §19 as goals to be proven."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0 и §1, и пусть §2 — произвольный элемент §3.  Так как §4,\n"
+"> имеем §5, а так как §6, то §7.  Следовательно, §8.  Поскольку §9 был произвольным,\n"
+"> §10.\n"
+"\n"
+"Чтобы доказать утверждение с «и», нужно доказать каждую из его частей; именно к этому и свела задачу команда §11.\n"
+"\n"
+"В общем случае, если вы считаете, что для доказательства цели можно применить некоторую теорему §12, тактика\n"
+"§13 позволит рассуждать в обратном направлении — от цели, сделав новыми целями все посылки,\n"
+"необходимые для применения теоремы §14.\n"
+"\n"
+"Если ваша цель имеет вид §15, то тактика §16 даст тот же\n"
+"результат, что и §17, то есть сделает новыми целями утверждения §18 и §19."
+
+#. §0: `A ⊆ B`
+#. §1: `B ⊆ C`
+#. §2: `x`
+#. §3: `A`
+#. §4: `A ⊆ B`
+#. §5: `x ∈ B`
+#. §6: `B ⊆ C`
+#. §7: `x ∈ C`
+#. §8: `x`
+#. §9: `A ⊆ C`
+#. §10: `have`
+#. §11: `A ⊆ B`
+#. §12: `x ∈ B`
+#. §13: `⊆`
+#. §14: `≤`
+#. §15: `Subset.trans`
+#: Game/Levels/Subset/L06subtrans.lean:41
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0 and §1, and let §2 be an arbitrary element of §3.  Since §4,\n"
+"> §5.  And since §6, it follows that §7.  Since §8 was arbitrary, §9.\n"
+"\n"
+"The §10 step is the sentence \"Since §11, §12\": an intermediate fact on the way to\n"
+"the goal.\n"
+"\n"
+"Together with the previous level, this shows that §13 behaves like §14 for numbers: every set\n"
+"is a subset of itself, and subsets of subsets are subsets.\n"
+"\n"
+"The theorem you have proven in this level shows that the subset relation has\n"
+"a property called *transitivity*.  We have given the theorem the name §15."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0 и §1, и пусть §2 — произвольный элемент §3.  Так как §4,\n"
+"> имеем §5.  А так как §6, отсюда следует, что §7.  Поскольку §8 был произвольным, §9.\n"
+"\n"
+"Шаг §10 — это фраза «Так как §11, имеем §12»: промежуточный факт на пути к\n"
+"цели.\n"
+"\n"
+"Вместе с предыдущим уровнем это показывает, что §13 ведёт себя как §14 для чисел: каждое множество\n"
+"является подмножеством самого себя, а подмножество подмножества — тоже подмножество.\n"
+"\n"
+"Доказанная вами на этом уровне теорема показывает, что отношение подмножества обладает\n"
+"свойством *транзитивности*. Мы назвали эту теорему §15."
+
+#. §0: `A ⊆ C`
+#. §1: `B ⊆ C`
+#. §2: `x`
+#. §3: `A ∪ B`
+#. §4: `x ∈ A`
+#. §5: `x ∈ B`
+#. §6: `x ∈ A`
+#. §7: `A ⊆ C`
+#. §8: `x ∈ C`
+#. §9: `x ∈ B`
+#. §10: `B ⊆ C`
+#. §11: `x ∈ C`
+#. §12: `x ∈ C`
+#. §13: `x`
+#. §14: `A ∪ B ⊆ C`
+#. §15: `rcases h3 with h3A | h3B`
+#. §16: `x ∈ A`
+#. §17: `x ∈ B`
+#. §18: `cases`
+#. §19: `rcases`
+#. §20: `rcases`
+#: Game/Levels/Union/L03cases.lean:52
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0 and §1, and let §2 be an arbitrary element of §3.  Then either\n"
+"> §4 or §5.\n"
+">\n"
+"> *Case 1:* §6.  Since §7, §8.\n"
+">\n"
+"> *Case 2:* §9.  Since §10, §11.\n"
+">\n"
+"> In either case §12.  Since §13 was arbitrary, §14.\n"
+"\n"
+"§15 is the sentence \"Then either §16 or §17\", and each goal it\n"
+"creates is one of the cases.\n"
+"\n"
+"Note that Lean also has a §18 tactic, but the syntax is a little more complicated.\n"
+"That's why we have chosen to use the §19 tactic.\n"
+"\n"
+"The §20 tactic has other uses.  However, in this game we will be using it only with\n"
+"assumptions that are \"or\" statements, to break the proof into cases."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0 и §1, и пусть §2 — произвольный элемент §3.  Тогда\n"
+"> либо §4, либо §5.\n"
+">\n"
+"> *Случай 1:* §6.  Так как §7, имеем §8.\n"
+">\n"
+"> *Случай 2:* §9.  Так как §10, имеем §11.\n"
+">\n"
+"> В обоих случаях §12.  Поскольку §13 был произвольным, §14.\n"
+"\n"
+"§15 — это фраза «Тогда либо §16, либо §17», и каждая создаваемая ею цель\n"
+"соответствует одному из случаев.\n"
+"\n"
+"Отметим, что в Lean также есть тактика §18, но у неё чуть более сложный синтаксис.\n"
+"Именно поэтому мы решили использовать тактику §19.\n"
+"\n"
+"У тактики §20 есть и другие применения. Однако в этой игре мы будем использовать её только с\n"
+"предположениями, содержащими «или», чтобы разбить доказательство на случаи."
+
+#. §0: `F ⊆ G`
+#. §1: `x`
+#. §2: `⋃₀ F`
+#. §3: `F`
+#. §4: `x`
+#. §5: `s`
+#. §6: `s ∈ F`
+#. §7: `x ∈ s`
+#. §8: `F ⊆ G`
+#. §9: `s ∈ G`
+#. §10: `s`
+#. §11: `G`
+#. §12: `x`
+#. §13: `x ∈ ⋃₀ G`
+#. §14: `x`
+#. §15: `⋃₀ F ⊆ ⋃₀ G`
+#. §16: `obtain ⟨s, hs⟩ := h2`
+#. §17: `s`
+#: Game/Levels/FamUnion/L03unionsubunion.lean:54
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0, and let §1 be an arbitrary element of §2.  Then there is some set in\n"
+"> §3 that contains §4; choose such a set §5, so §6 and §7.  Since §8, §9.\n"
+"> So §10 is a set in §11 that contains §12, and therefore §13.  Since §14 was arbitrary,\n"
+"> §15.\n"
+"\n"
+"§16 is the sentence \"choose such a set §17\": an assumption that something\n"
+"exists lets you give a name to one example of it.\n"
+"\n"
+"Compare this with Family Intersection World, where you showed that the intersection of a larger\n"
+"family is *smaller*."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0, и пусть §1 — произвольный элемент §2.  Тогда в §3 есть некоторое множество,\n"
+"> содержащее §4; выберем такое множество §5, так что §6 и §7.  Так как §8, имеем §9.\n"
+"> Значит, §10 — множество из §11, содержащее §12, и поэтому §13.  Поскольку §14 был произвольным,\n"
+"> §15.\n"
+"\n"
+"§16 — это фраза «выберем такое множество §17»: предположение о том, что нечто\n"
+"существует, позволяет дать имя одному такому объекту.\n"
+"\n"
+"Сравните это с миром пересечений семейств, где вы показали, что пересечение большего\n"
+"семейства *меньше*."
+
+#. §0: `F ⊆ G`
+#. §1: `x`
+#. §2: `⋂₀ G`
+#. §3: `x ∈ ⋂₀ F`
+#. §4: `t`
+#. §5: `F`
+#. §6: `x ∈ t`
+#. §7: `F ⊆ G`
+#. §8: `t ∈ G`
+#. §9: `x`
+#. §10: `G`
+#. §11: `x ∈ t`
+#. §12: `x`
+#. §13: `F`
+#. §14: `x ∈ ⋂₀ F`
+#. §15: `x`
+#. §16: `⋂₀ G ⊆ ⋂₀ F`
+#. §17: `intro`
+#. §18: `intro`
+#. §19: `intro`
+#: Game/Levels/FamInter/L02intersubinter.lean:48
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0, and let §1 be an arbitrary element of §2.  To show that §3,\n"
+"> let §4 be an arbitrary set in §5; we must show that §6.  Since §7, §8, and\n"
+"> since §9 belongs to every set in §10, §11.  So §12 belongs to every set in §13, which\n"
+"> means that §14.  Since §15 was arbitrary, §16.\n"
+"\n"
+"Notice the direction: a *larger* family has a *smaller* intersection, because each extra set in\n"
+"the family is one more set that the elements of the intersection have to belong to.\n"
+"\n"
+"You probably used §17 several times in this proof.  Recall that two §18 steps in a row\n"
+"can be combined into one step.  Click on §19 in the list of *Tactics* in the inventory for\n"
+"further details."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0, и пусть §1 — произвольный элемент §2.  Чтобы показать, что §3,\n"
+"> возьмём произвольное множество §4 из §5; нужно показать, что §6.  Так как §7, имеем §8, а\n"
+"> так как §9 принадлежит каждому множеству из §10, то §11.  Итак, §12 принадлежит каждому множеству из §13, а это\n"
+"> означает, что §14.  Поскольку §15 был произвольным, §16.\n"
+"\n"
+"Обратите внимание на направление: у *большего* семейства пересечение *меньше*, потому что каждое дополнительное множество\n"
+"семейства — это ещё одно множество, которому должны принадлежать элементы пересечения.\n"
+"\n"
+"Вероятно, в этом доказательстве вы использовали §17 несколько раз. Напомним, что два идущих подряд шага §18\n"
+"можно объединить в один. Нажмите на §19 в разделе *Тактики* инвентаря, чтобы\n"
+"узнать подробности."
+
+#. §0: `A ∈ F`
+#. §1: `x`
+#. §2: `A`
+#. §3: `x ∈ ⋃₀ F`
+#. §4: `F`
+#. §5: `x`
+#. §6: `A`
+#. §7: `A ∈ F`
+#. §8: `x ∈ A`
+#. §9: `x`
+#. §10: `A ⊆ ⋃₀ F`
+#. §11: `apply Exists.intro A`
+#. §12: `use A`
+#. §13: `use`
+#. §14: `A`
+#. §15: `t`
+#: Game/Levels/FamUnion/L02subunion.lean:74
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose §0, and let §1 be an arbitrary element of §2.  To show that §3, we\n"
+"> must find a set in §4 that contains §5.  The set §6 works, since §7 and §8.\n"
+"> Since §9 was arbitrary, §10.\n"
+"\n"
+"There is another tactic you could have used to complete this proof.  Instead of\n"
+"§11, you could write §12.  The §13 tactic is actually a powerful\n"
+"tactic.  Not only does it fill in §14 for §15 in the existential goal, it then tries to\n"
+"complete the proof on its own--and in this case, it would have succeeded!"
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим, что §0, и пусть §1 — произвольный элемент §2.  Чтобы показать, что §3,\n"
+"> нужно найти множество из §4, содержащее §5.  Подходит множество §6, так как §7 и §8.\n"
+"> Поскольку §9 был произвольным, §10.\n"
+"\n"
+"Завершить это доказательство можно было и с помощью другой тактики. Вместо\n"
+"§11 вы могли написать §12. На самом деле §13 — весьма мощная\n"
+"тактика. Она не только подставляет §14 вместо §15 в цель существования, но затем ещё и пытается\n"
+"самостоятельно довести доказательство до конца — и в данном случае у неё бы это получилось!"
+
+#. §0: `A ⊆ B`
+#. §1: `x ∈ A`
+#. §2: `x ∈ B`
+#. §3: `x ∉ B`
+#. §4: `A ⊈ B`
+#. §5: `by_contra h3`
+#. §6: `by_contra`
+#. §7: `¬`
+#. §8: `by_contra`
+#. §9: `False`
+#. §10: `False`
+#. §11: `h1 : P`
+#. §12: `h2 : ¬P`
+#. §13: `P`
+#. §14: `exact h2 h1`
+#. §15: `exact h1 h2`
+#: Game/Levels/Comp/L01contra.lean:82
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> Suppose, for the sake of contradiction, that §0.  Since §1, it follows that\n"
+"> §2.  But this contradicts the assumption that §3.  Therefore §4.\n"
+"\n"
+"§5 is the sentence \"Suppose, for the sake of contradiction, …\".\n"
+"\n"
+"You can use the §6 tactic in any proof to assume the\n"
+"opposite of your goal.  But it is most useful when the goal\n"
+"starts with the symbol §7.  After using the §8 tactic,\n"
+"your goal will be §9.\n"
+"\n"
+"To complete a proof by contradiction, you must prove contradictory statements.\n"
+"If your goal is §10 and you have assumptions §11 and §12, for\n"
+"some statement §13, then §14 will close the goal.  Note that §15 won't\n"
+"work; you must list the negative statement first to establish a contradiction."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Предположим противное: §0.  Так как §1, отсюда следует, что\n"
+"> §2.  Но это противоречит предположению о том, что §3.  Следовательно, §4.\n"
+"\n"
+"§5 — это фраза «Предположим противное: …».\n"
+"\n"
+"Вы можете использовать тактику §6 в любом доказательстве, чтобы предположить\n"
+"противоположное вашей цели. Но особенно полезна она тогда, когда цель\n"
+"начинается с символа §7. После применения тактики §8\n"
+"вашей целью станет §9.\n"
+"\n"
+"Чтобы завершить доказательство от противного, нужно получить два противоречащих друг другу утверждения.\n"
+"Если ваша цель — §10 и у вас есть предположения §11 и §12 для\n"
+"некоторого утверждения §13, то команда §14 закроет цель. Обратите внимание, что §15 не\n"
+"сработает: чтобы зафиксировать противоречие, сначала нужно указать утверждение с отрицанием."
+
+#. §0: `s`
+#. §1: `s ⊆ A`
+#. §2: `s = A`
+#. §3: `Exists.intro A h`
+#. §4: `A`
+#. §5: `h`
+#. §6: `∅`
+#. §7: `empty_subset`
+#. §8: `Exists.intro ∅ (empty_subset A)`
+#: Game/Levels/FamUnion/L01proveexists.lean:70
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> We need a set §0 such that §1.  Take §2: every set is a subset of itself.\n"
+"\n"
+"To prove that something exists, you name an example (a *witness*) and show that it has the\n"
+"required property.  §3 does exactly that: §4 is the witness, and §5 shows that\n"
+"it works.\n"
+"\n"
+"By the way, another set that works as a witness for the existential goal in this theorem is the\n"
+"empty set, §6.  To justify the use of that witness, you can use the theorem §7 from\n"
+"Complement World: §8 is also a proof of the goal.\n"
+"\n"
+"Now that you know how to prove existential statements, you're ready to start working with\n"
+"unions of families."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Нам нужно множество §0, такое что §1.  Возьмём §2: каждое множество является подмножеством самого себя.\n"
+"\n"
+"Чтобы доказать, что нечто существует, нужно предъявить пример (*свидетель*) и показать, что он обладает\n"
+"нужным свойством.  Именно это и делает §3: §4 — свидетель, а §5 показывает, что\n"
+"он подходит.\n"
+"\n"
+"Кстати, в качестве свидетеля для цели существования в этой теореме подходит и\n"
+"пустое множество §6. Чтобы обосновать выбор такого свидетеля, можно воспользоваться теоремой §7 из\n"
+"мира дополнений: §8 — тоже доказательство цели.\n"
+"\n"
+"Теперь, когда вы умеете доказывать утверждения о существовании, можно переходить к работе с\n"
+"объединениями семейств."
+
+#. §0: `x`
+#. §1: `Aᶜᶜ`
+#. §2: `x ∉ Aᶜ`
+#. §3: `x ∉ A`
+#. §4: `x ∈ A`
+#. §5: `Aᶜᶜ ⊆ A`
+#. §6: `x`
+#. §7: `A`
+#. §8: `x ∉ A`
+#. §9: `x ∉ Aᶜ`
+#. §10: `x ∈ Aᶜᶜ`
+#. §11: `A ⊆ Aᶜᶜ`
+#. §12: `Aᶜᶜ = A`
+#. §13: `⊆`
+#. §14: `A ⊆ B`
+#. §15: `B ⊆ A`
+#. §16: `A`
+#. §17: `B`
+#. §18: `x ∉ A`
+#. §19: `x ∈ A`
+#. §20: `push_neg`
+#. §21: `push_neg`
+#. §22: `push_neg`
+#. §23: `push_neg at h`
+#. §24: `h`
+#. §25: `apply`
+#. §26: `push_neg`
+#. §27: `apply`
+#. §28: `compl_compl`
+#: Game/Levels/Comp/L04compcomp.lean:100
+msgid ""
+"**The proof, written out.**\n"
+"\n"
+"> We prove that each set is a subset of the other.  First, let §0 be an arbitrary element of\n"
+"> §1.  Then §2, which means that it is not the case that §3; in other words,\n"
+"> §4.  So §5.  Conversely, let §6 be an arbitrary element of §7.  Then it is not\n"
+"> the case that §8, so §9, and therefore §10.  So §11.  Since each set\n"
+"> is a subset of the other, §12.\n"
+"\n"
+"This is the most common way to prove that two sets are equal.  It works because §13 is\n"
+"*antisymmetric*: if §14 and §15, then §16 and §17 have the same elements, so they are\n"
+"equal.  And the step \"it is not the case that §18; in other words, §19\" is exactly\n"
+"what §20 did for you.\n"
+"\n"
+"The §21 tactic can reexpress a number of different kinds of negative statements as\n"
+"equivalent positive statements; use\n"
+"§22 to reexpress a negative goal, and §23 to reexpress a negative assumption §24.\n"
+"We'll see many more uses of the §25 tactic in this game.\n"
+"For more details about the use of these tactics,\n"
+"click on §26 or §27 in the list of *Tactics* in the inventory.\n"
+"\n"
+"We have given this theorem the name §28.  Both this theorem and the one in the previous\n"
+"level will be useful in the next level."
+msgstr ""
+"**Доказательство в письменном виде.**\n"
+"\n"
+"> Докажем, что каждое из множеств является подмножеством другого.  Сначала пусть §0 — произвольный элемент\n"
+"> §1.  Тогда §2, то есть неверно, что §3; иными словами,\n"
+"> §4.  Итак, §5.  Обратно, пусть §6 — произвольный элемент §7.  Тогда неверно,\n"
+"> что §8, поэтому §9, и, следовательно, §10.  Итак, §11.  Поскольку каждое из множеств\n"
+"> является подмножеством другого, §12.\n"
+"\n"
+"Это самый распространённый способ доказать равенство двух множеств.  Он работает, потому что отношение §13\n"
+"*антисимметрично*: если §14 и §15, то у §16 и §17 одни и те же элементы, а значит, они\n"
+"равны.  А шаг «неверно, что §18; иными словами, §19» — это в точности\n"
+"то, что за вас сделала тактика §20.\n"
+"\n"
+"Тактика §21 умеет преобразовывать самые разные виды утверждений с отрицанием в\n"
+"эквивалентные утверждения без внешнего отрицания; используйте\n"
+"§22 для преобразования цели с отрицанием и §23 — для преобразования предположения §24.\n"
+"В этой игре мы ещё не раз встретимся с применением тактики §25.\n"
+"Чтобы узнать подробности об этих тактиках,\n"
+"нажмите на §26 или §27 в разделе *Тактики* инвентаря.\n"
+"\n"
+"Мы дали этой теореме имя §28. И она, и теорема с предыдущего\n"
+"уровня пригодятся нам на следующем уровне."
+
+#. §0: `x`
+#. §1: `x ∈ A`
+#. §2: `x ∈ A`
+#. §3: `x`
+#. §4: `A`
+#. §5: `A`
+#. §6: `A ⊆ A`
+#. §7: `intro x`
+#. §8: `x`
+#. §9: `intro h`
+#. §10: `x ∈ A`
+#. §11: `exact h`
+#. §12: `Subset.refl`
+#. §13: `Set.Subset.refl`
+#. §14: `Set.`
+#: Game/Levels/Subset/L05subref.lean:46
+msgid ""
+"**The proof, written out.**  Mathematicians write proofs in words.  Here is how the\n"
+"proof you just gave would usually be written; each sentence corresponds to one of your tactics:\n"
+"\n"
+"> Let §0 be arbitrary, and suppose §1.  Then §2.  Since §3 was arbitrary, every\n"
+"> element of §4 is an element of §5; that is, §6.\n"
+"\n"
+"§7 is \"Let §8 be arbitrary\", §9 is \"Suppose §10\", and §11 gives\n"
+"the conclusion.  Proving that one set is a subset of another almost always starts this way.\n"
+"\n"
+"The theorem you have proven in this level shows that the subset relation has\n"
+"a property called *reflexivity*.  We have given the theorem the name §12.  You\n"
+"will see it in the list of *Theorems* in the inventory.  (This theorem is included in Lean's\n"
+"mathematical library, Mathlib.  In Mathlib, the name of the theorem is §13.\n"
+"Many other set-theoretic theorems in this game have §14 at the beginnings of their names\n"
+"in Mathlib.)"
+msgstr ""
+"**Доказательство в письменном виде.**  Математики записывают доказательства словами.  Вот как обычно\n"
+"записали бы доказательство, которое вы только что провели; каждое предложение соответствует одной из ваших тактик:\n"
+"\n"
+"> Пусть §0 — произвольный элемент, и предположим, что §1.  Тогда §2.  Поскольку §3 был произвольным, каждый\n"
+"> элемент §4 является элементом §5; то есть §6.\n"
+"\n"
+"§7 — это «Пусть §8 — произвольный элемент», §9 — «Предположим, что §10», а §11 даёт\n"
+"вывод.  Доказательство того, что одно множество является подмножеством другого, почти всегда начинается именно так.\n"
+"\n"
+"Доказанная вами на этом уровне теорема показывает, что отношение подмножества обладает\n"
+"свойством *рефлексивности*. Мы назвали эту теорему §12. Вы\n"
+"увидите её в разделе *Теоремы* инвентаря. (Эта теорема входит в математическую\n"
+"библиотеку Lean — Mathlib. В Mathlib она носит имя §13.\n"
+"Имена многих других теоретико-множественных теорем из нашей игры в библиотеке Mathlib\n"
+"начинаются с префикса §14.)"
+
+#: Game.lean:50
 msgid ""
 "*Game version: 4.4*\n"
 "\n"
@@ -130,6 +795,10 @@ msgid ""
 "\n"
 "## Resources\n"
 "\n"
+"* Daniel J. Velleman, *How To Prove It: A Structured Approach* (Cambridge University\n"
+"Press): the proof techniques practised in this game, explained in depth.\n"
+"* [How To Prove It with Lean](https://djvelleman.github.io/HTPIwL/): the same book's\n"
+"ideas, written out in Lean.\n"
 "* The [Lean Zulip chat](https://leanprover.zulipchat.com/) forum\n"
 "\n"
 "## Problems?\n"
@@ -166,6 +835,10 @@ msgstr ""
 "* **Перевод на русский:** Константин Белянин (Konstantin Belyanin)\n"
 "## Ресурсы\n"
 "\n"
+"* Дэниел Дж. Веллеман (Daniel J. Velleman), *How To Prove It: A Structured Approach* (Cambridge University\n"
+"Press) — подробное изложение техник доказательства, которые отрабатываются в этой игре.\n"
+"* [How To Prove It with Lean](https://djvelleman.github.io/HTPIwL/) — идеи той же книги,\n"
+"записанные на Lean.\n"
 "* Форум [Lean Zulip chat](https://leanprover.zulipchat.com/)\n"
 "\n"
 "## Возникли проблемы?\n"
@@ -188,7 +861,7 @@ msgstr ""
 msgid "A difference is a subset"
 msgstr "Разность — подмножество"
 
-#: Game.lean:87
+#: Game.lean:101
 msgid "A game about set theory."
 msgstr "Игра по теории множеств."
 
@@ -272,7 +945,7 @@ msgstr ""
 #. §0: `x`
 #. §1: `h2`
 #. §2: `intro x h2`
-#: Game/Levels/Comp/L03compsub.lean:52
+#: Game/Levels/Comp/L03compsub.lean:54
 msgid ""
 "As usual, to prove a subset statement you need to introduce both a new object §0 and\n"
 "a new assumption §1.  You can do it in one step with §2."
@@ -309,7 +982,7 @@ msgstr ""
 
 #. §0: `h2 «{h4}»`
 #. §1: `exact h2 «{h4}»`
-#: Game/Levels/Subset/L03have.lean:55
+#: Game/Levels/Subset/L03have.lean:57
 msgid ""
 "As we saw in the last level, §0 is now\n"
 "a proof of the goal, so §1 will close the goal."
@@ -318,7 +991,7 @@ msgstr ""
 "доказывает цель, поэтому команда §1 закроет цель."
 
 #. §0: `intro x h`
-#: Game/Levels/Comp/L06emptysub.lean:54
+#: Game/Levels/Comp/L06emptysub.lean:56
 msgid "As with any subset statement, start with §0."
 msgstr "Как и в любом утверждении о включении, начните с §0."
 
@@ -357,7 +1030,7 @@ msgstr ""
 #. §1: `«{h3}»`
 #. §2: `x ∈ B`
 #. §3: `have`
-#: Game/Levels/Subset/L04imp.lean:65
+#: Game/Levels/Subset/L04imp.lean:67
 msgid ""
 "As you saw in the previous level, you can now apply §0 to §1\n"
 "to justify asserting §2, using the §3 tactic."
@@ -382,25 +1055,6 @@ msgstr ""
 "множество называется §2. Каждый объект §3 является элементом §4: Lean будет воспринимать §5 как\n"
 "доказательство §6."
 
-#. §0: `∅`
-#. §1: `empty_subset`
-#. §2: `Exists.intro ∅ (empty_subset A)`
-#: Game/Levels/FamUnion/L01proveexists.lean:70
-msgid ""
-"By the way, another set that works as a witness for the existential goal in this theorem is the\n"
-"empty set, §0.  To justify the use of that witness, you can use the theorem §1 from\n"
-"Complement World: §2 is also a proof of the goal.\n"
-"\n"
-"Now that you know how to prove existential statements, you're ready to start working with\n"
-"unions of families."
-msgstr ""
-"Кстати, в качестве свидетеля для цели существования в этой теореме подходит и\n"
-"пустое множество §0. Чтобы обосновать выбор такого свидетеля, можно воспользоваться теоремой §1 из\n"
-"мира дополнений: §2 — тоже доказательство цели.\n"
-"\n"
-"Теперь, когда вы умеете доказывать утверждения о существовании, можно переходить к работе с\n"
-"объединениями семейств."
-
 #. §0: `t ∩ u`
 #: Game/Levels/FamCombo/L04threefam.lean:42
 msgid "Choosing the right witness, §0, was the key step in this proof."
@@ -409,14 +1063,6 @@ msgstr "Ключевым шагом этого доказательства бы
 #: Game/Levels/Combo.lean:12
 msgid "Combination World"
 msgstr "Мир комбинаций"
-
-#: Game/Levels/FamUnion/L03unionsubunion.lean:52
-msgid ""
-"Compare this with Family Intersection World, where you showed that the intersection of a larger\n"
-"family is *smaller*."
-msgstr ""
-"Сравните это с миром пересечений семейств, где вы показали, что пересечение большего\n"
-"семейства *меньше*."
 
 #. §0: `⋂₀ (F ∪ G) = (⋂₀ F) ∩ (⋂₀ G)`
 #: Game/Levels/FamUnion/L05unionunion.lean:56
@@ -487,7 +1133,7 @@ msgstr "Поздравляем! Вы прошли мир разностей."
 #. §11: `x ∈ A`
 #. §12: `h`
 #. §13: `exact`
-#: Game/Levels/Subset/L01exact.lean:53
+#: Game/Levels/Subset/L01exact.lean:67
 msgid ""
 "Congratulations! You have completed your first verified proof!\n"
 "\n"
@@ -498,7 +1144,7 @@ msgid ""
 "recognize §5 as a proof of the statement §6.\n"
 "\n"
 "Remember that §7 is a *tactic*. If you ever want information about the §8 tactic,\n"
-"you can click on §9 in the list of tactics on the right.\n"
+"you can click on §9 in the list of *Tactics* in the inventory.\n"
 "\n"
 "Note that, although §10 was a proof of the goal §11, you could not have closed the goal by\n"
 "simply typing §12 in the text box.  Throughout this game, every move you make must invoke a tactic.\n"
@@ -514,7 +1160,7 @@ msgstr ""
 "считать §5 доказательством утверждения §6.\n"
 "\n"
 "Помните, что §7 — это *тактика*. Если вам когда-нибудь понадобится справка о тактике §8,\n"
-"вы можете нажать на §9 в списке тактик справа.\n"
+"вы можете нажать на §9 в разделе *Тактики* инвентаря.\n"
 "\n"
 "Обратите внимание: несмотря на то что §10 было доказательством цели §11, вы не могли закрыть цель,\n"
 "просто введя §12 в текстовое поле. На протяжении всей игры каждый ваш ход должен быть вызовом тактики.\n"
@@ -549,7 +1195,7 @@ msgstr "Видите, как теперь можно применить теор
 #. §1: `t`
 #. §2: `apply Exists.intro «{s}»`
 #. §3: `use «{s}»`
-#: Game/Levels/FamUnion/L03unionsubunion.lean:46
+#: Game/Levels/FamUnion/L03unionsubunion.lean:48
 msgid ""
 "Do you see why §0 is the value to use as a witness for §1 in the goal?\n"
 "Your next step can be either §2 or §3."
@@ -623,7 +1269,7 @@ msgstr "Для любого семейства множеств §0 выполн
 #. §1: `empty_subset A`
 #. §2: `∅ ⊆ A`
 #. §3: `Set.empty_subset`
-#: Game/Levels/Comp/L06emptysub.lean:48
+#: Game/Levels/Comp/L06emptysub.lean:50
 #: Game/Levels/Comp/L07subuniv.lean:34
 msgid ""
 "For any set §0, §1 is a proof of §2.  In Mathlib, the name of this\n"
@@ -634,7 +1280,7 @@ msgstr ""
 
 #. §0: $A$
 #. §1: $\\emptyset \\subseteq A$
-#: Game/Levels/Comp/L06emptysub.lean:52
+#: Game/Levels/Comp/L06emptysub.lean:54
 #: Game/Levels/Comp/L07subuniv.lean:38
 #: Game/Levels/FamUnion/L10sunionpowerset.lean:19
 msgid "For any set §0, §1."
@@ -779,7 +1425,7 @@ msgstr ""
 #. §1: $B$
 #. §2: $C$
 #. §3: $(A \\cap B) \\cap C = A \\cap (B \\cap C)$
-#: Game/Levels/Inter/L08inter_assoc.lean:36
+#: Game/Levels/Inter/L08inter_assoc.lean:38
 #: Game/Levels/Union/L06union_assoc.lean:31
 #: Game/Levels/Combo/L03inter_distrib_union.lean:28
 #: Game/Levels/Combo/L04union_distrib_inter.lean:32
@@ -791,7 +1437,7 @@ msgstr "Для любых множеств §0, §1 и §2 выполняетс�
 #. §1: `mem_empty_iff_false x`
 #. §2: `x ∈ ∅ ↔ False`
 #. §3: `Set.mem_empty_iff_false`
-#: Game/Levels/Comp/L06emptysub.lean:40
+#: Game/Levels/Comp/L06emptysub.lean:42
 msgid ""
 "For any §0, §1 is a proof of the statement §2.  In\n"
 "Mathlib, the name of this theorem is §3."
@@ -839,7 +1485,7 @@ msgstr ""
 #. §1: `apply Or.inr`
 #. §2: `left`
 #. §3: `right`
-#: Game/Levels/FamInter/L06eltwiseunion.lean:41
+#: Game/Levels/FamInter/L06eltwiseunion.lean:43
 msgid ""
 "For the second case, which half of the goal do you think you should try to prove?\n"
 "You can use §0 or §1 (or the equivalent tactics §2 or §3)\n"
@@ -855,7 +1501,7 @@ msgstr ""
 #. §3: `B`
 #. §4: `h3 : A ⊆ B`
 #. §5: `by_contra h3`
-#: Game/Levels/Comp/L01contra.lean:63
+#: Game/Levels/Comp/L01contra.lean:65
 msgid ""
 "For the theorem in this level, your goal is §0, which Lean reads as §1:\n"
 "it is not the case that §2 is a subset of §3.  To use proof by contradiction\n"
@@ -906,11 +1552,11 @@ msgstr ""
 #: Game/Levels/Comp/L05compsubiff.lean:37
 msgid ""
 "Fortunately, the theorem §0 can now be used to prove the goal.\n"
-"(Click on §1 in the list of theorems on the right if you don't\n"
+"(Click on §1 in the list of *Theorems* in the inventory if you don't\n"
 "remember what the theorem says.)"
 msgstr ""
 "К счастью, теперь для доказательства цели можно применить теорему §0.\n"
-"(Нажмите на §1 в списке теорем справа, если не\n"
+"(Нажмите на §1 в разделе *Теоремы* инвентаря, если не\n"
 "помните её формулировку.)"
 
 #. §0: `compl_compl`
@@ -1113,6 +1759,7 @@ msgstr "Как множество подмножеств §0 связано с �
 #. §21: `q`
 #. §22: `p`
 #. §23: `rewrite [t1, t2]`
+#. §24: `t`
 #: Game/Levels/Comp/L03compsub.lean:25
 msgid ""
 "If the expression §0 is a proof of a statement of the form §1, then the tactic\n"
@@ -1129,7 +1776,9 @@ msgid ""
 "will replace §21 with §22.\n"
 "\n"
 "To do multiple replacements, one after another, put a list of proofs inside the brackets, like\n"
-"this:  §23."
+"this:  §23.\n"
+"\n"
+"In a written proof, a rewrite usually reads \"By the definition of …, the goal becomes …\" or \"By theorem §24, …\"."
 msgstr ""
 "Если выражение §0 является доказательством утверждения вида §1, то тактика\n"
 "§2 заменит §3 на §4 везде, где оно встречается в цели. Если же вы хотите\n"
@@ -1145,7 +1794,9 @@ msgstr ""
 "заменит §21 на §22.\n"
 "\n"
 "Чтобы выполнить несколько замен подряд, укажите список доказательств в квадратных скобках через запятую,\n"
-"например: §23."
+"например: §23.\n"
+"\n"
+"В письменном доказательстве переписывание обычно выглядит так: «По определению … цель принимает вид …» или «По теореме §24 …»."
 
 #. §0: `hB : «{x}» ∈ B`
 #. §1: `hC : «{x}» ∈ C`
@@ -1192,22 +1843,28 @@ msgstr ""
 #. §6: `\\>`
 #. §7: `\\langle`
 #. §8: `\\rangle`
+#. §9: `obtain ⟨w, hw⟩ := h`
+#. §10: `w`
 #: Game/Levels/FamUnion/L03unionsubunion.lean:28
 msgid ""
 "If you have an assumption §0, then the tactic §1 will\n"
 "introduce a new object §2 and a new assumption §3 into the proof.  To enter the\n"
-"angle brackets §4, type either §5 and §6 or §7 and §8."
+"angle brackets §4, type either §5 and §6 or §7 and §8.\n"
+"\n"
+"In a written proof, §9 reads \"Choose §10 such that …\"."
 msgstr ""
 "Если у вас есть предположение §0, то тактика §1\n"
 "введёт в доказательство новый объект §2 и новое предположение §3. Чтобы ввести\n"
-"угловые скобки §4, наберите §5 и §6 или §7 и §8."
+"угловые скобки §4, наберите §5 и §6 или §7 и §8.\n"
+"\n"
+"В письменном доказательстве §9 соответствует фразе «Выберем §10 так, чтобы …»."
 
 #. §0: `A : Set U`
 #. §1: `x : U`
 #. §2: `mem_compl_iff A x`
 #. §3: `x ∈ Aᶜ ↔ x ∉ A`
 #. §4: `Set.mem_compl_iff`
-#: Game/Levels/Comp/L02compdef.lean:66
+#: Game/Levels/Comp/L02compdef.lean:68
 msgid ""
 "If you have §0 and §1, then §2 is a proof of the statement\n"
 "§3.  In Mathlib, the name of this theorem is §4."
@@ -1230,7 +1887,7 @@ msgstr "Если у вас есть §0 и §1, то §2 является док
 #. §3: `A ⊆ C`
 #. §4: `Set.Subset.trans`
 #: Game/Levels/Subset/L06subtrans.lean:25
-#: Game/Levels/Comp/L04compcomp.lean:58
+#: Game/Levels/Comp/L04compcomp.lean:61
 msgid ""
 "If you have §0 and §1, then §2 is a proof of §3.\n"
 "In Mathlib, the name of this theorem is §4."
@@ -1256,7 +1913,7 @@ msgstr ""
 #. §2: `A ⊆ A`
 #. §3: `Set.Subset.refl`
 #: Game/Levels/Subset/L05subref.lean:27
-#: Game/Levels/Comp/L03compsub.lean:46
+#: Game/Levels/Comp/L03compsub.lean:48
 msgid ""
 "If you have §0, then §1 is a proof of §2.\n"
 "In Mathlib, the name of this theorem is §3."
@@ -1378,7 +2035,7 @@ msgstr ""
 
 #. §0: `«{h1}»`
 #. §1: `have hAB : «{x}» ∈ A ∩ B := «{h1}».left`
-#: Game/Levels/Inter/L08inter_assoc.lean:57
+#: Game/Levels/Inter/L08inter_assoc.lean:59
 msgid ""
 "If you're stuck at this point,\n"
 "it may help you see how to proceed if you separate\n"
@@ -1401,17 +2058,22 @@ msgstr ""
 #. §8: `h2 : ¬P`
 #. §9: `exact h2 h1`
 #. §10: `False`
+#. §11: `exfalso`
 #: Game/Levels/Comp/L06emptysub.lean:32
 msgid ""
 "If your assumptions are contradictory, §0 changes the goal to §1.  That means you\n"
 "can prove any goal from contradictory assumptions: first use §2, and then prove §3.\n"
 "For example, if you have §4, then §5 will prove §6, and if you have\n"
-"§7 and §8, then §9 will prove §10."
+"§7 and §8, then §9 will prove §10.\n"
+"\n"
+"In a written proof, §11 reads \"It suffices to derive a contradiction.\""
 msgstr ""
 "Если ваши предположения противоречат друг другу, §0 заменяет цель на §1. Это значит, что\n"
 "из противоречивых предположений можно доказать любую цель: сначала примените §2, а затем докажите §3.\n"
 "Например, если у вас есть §4, то §5 докажет §6, а если у вас есть\n"
-"§7 и §8, то §9 докажет §10."
+"§7 и §8, то §9 докажет §10.\n"
+"\n"
+"В письменном доказательстве §11 соответствует фразе «Достаточно получить противоречие»."
 
 #. §0: `P ↔ Q`
 #. §1: `constructor`
@@ -1422,33 +2084,47 @@ msgstr ""
 #. §6: `P`
 #. §7: `Q`
 #. §8: `constructor`
+#. §9: `constructor`
+#. §10: `↔`
+#. §11: `∧`
 #: Game/Levels/Comp/L05compsubiff.lean:61
 msgid ""
 "If your goal has the form §0, then the tactic §1 will replace this\n"
 "goal with the two goals §2 and §3.  If your goal has the form §4, then\n"
 "§5 will replace this goal with the two goals §6 and §7.  There are other\n"
 "situations in which the §8 tactic can be used, but these two are the ones\n"
-"that are most relevant for the set theory game."
+"that are most relevant for the set theory game.\n"
+"\n"
+"In a written proof, §9 reads \"We prove both directions\" (for §10) or \"We prove each part\" (for §11)."
 msgstr ""
 "Если ваша цель имеет вид §0, то тактика §1 заменит её\n"
 "двумя целями: §2 и §3. Если же ваша цель имеет вид §4, то\n"
 "§5 заменит её двумя целями: §6 и §7. Тактику §8 можно применять и в других\n"
-"ситуациях, но в игре по теории множеств наиболее важны именно эти две."
+"ситуациях, но в игре по теории множеств наиболее важны именно эти две.\n"
+"\n"
+"В письменном доказательстве §9 соответствует фразе «Докажем оба направления» (для §10) или «Докажем каждую часть» (для §11)."
 
 #. §0: `P ∨ Q`
 #. §1: `left`
 #. §2: `P`
 #. §3: `left`
+#. §4: `left`
+#. §5: `P`
+#. §6: `P ∨ Q`
 #: Game/Levels/Union/L06union_assoc.lean:56
-#: Game/Levels/Union/L06union_assoc.lean:61
+#: Game/Levels/Union/L06union_assoc.lean:63
 msgid ""
 "If your goal has the form §0, then the tactic §1 will set your goal to be §2.\n"
 "There are other situations in which the §3 tactic can be used, but this is the one\n"
-"that is most relevant for the set theory game."
+"that is most relevant for the set theory game.\n"
+"\n"
+"In a written proof, §4 reads \"We prove §5\" (which is enough to prove §6)."
 msgstr ""
 "Если ваша цель имеет вид §0, то тактика §1 сделает вашей новой целью §2.\n"
 "Тактику §3 можно применять и в других ситуациях, но в игре по теории множеств\n"
-"она нужна прежде всего именно для этого."
+"она нужна прежде всего именно для этого.\n"
+"\n"
+"В письменном доказательстве §4 соответствует фразе «Докажем, что §5» (этого достаточно, чтобы доказать §6)."
 
 #. §0: `push_neg`
 #. §1: `h`
@@ -1467,7 +2143,8 @@ msgstr ""
 #. §14: `∃ x, ¬P x`
 #. §15: `¬∃ x, P x`
 #. §16: `∀ x, ¬P x`
-#: Game/Levels/Comp/L04compcomp.lean:40
+#. §17: `push_neg`
+#: Game/Levels/Comp/L04compcomp.lean:42
 msgid ""
 "If your goal is a negative statement, then the tactic §0 will try to reexpress it as\n"
 "an equivalent positive statement.  Similarly, if an assumption §1 is a negative\n"
@@ -1479,7 +2156,9 @@ msgid ""
 "* §9 is converted to §10.\n"
 "* §11 is converted to §12.\n"
 "* §13 is converted to §14.\n"
-"* §15 is converted to §16."
+"* §15 is converted to §16.\n"
+"\n"
+"In a written proof, §17 reads \"In other words, …\", restating a negative statement in positive form."
 msgstr ""
 "Если ваша цель представляет собой утверждение с отрицанием, тактика §0 попытается преобразовать его в\n"
 "эквивалентное утверждение без внешнего отрицания. Аналогично, если отрицание стоит в предположении §1,\n"
@@ -1491,7 +2170,9 @@ msgstr ""
 "* §9 преобразуется в §10.\n"
 "* §11 преобразуется в §12.\n"
 "* §13 преобразуется в §14.\n"
-"* §15 преобразуется в §16."
+"* §15 преобразуется в §16.\n"
+"\n"
+"В письменном доказательстве §17 соответствует фразе «Иными словами, …», которая переформулирует утверждение с отрицанием без внешнего отрицания."
 
 #. §0: `P ↔ Q`
 #. §1: `P`
@@ -1505,12 +2186,16 @@ msgid ""
 "If your goal is a statement of the form §0, and §1 and §2 are definitionally\n"
 "equal (that is, they become the same statement once the definitions of the symbols occurring\n"
 "in them are written out), then the §3 tactic will close the goal.  It will also close a goal of the form\n"
-"§4, if §5 and §6 are definitionally equal (that is, equal by virtue of definitions)."
+"§4, if §5 and §6 are definitionally equal (that is, equal by virtue of definitions).\n"
+"\n"
+"In a written proof, this step reads \"This holds by definition\" or \"Both sides are the same.\""
 msgstr ""
 "Если ваша цель представляет собой утверждение вида §0, причём §1 и §2 равны\n"
 "по определению (то есть превращаются в одно и то же утверждение, когда расписаны определения\n"
 "входящих в них символов), то тактика §3 закроет цель. Она также закроет цель вида\n"
-"§4, если §5 и §6 равны по определению."
+"§4, если §5 и §6 равны по определению.\n"
+"\n"
+"В письменном доказательстве этот шаг соответствует фразе «Это верно по определению» или «Обе части совпадают»."
 
 #. §0: `¬P`
 #. §1: `P`
@@ -1527,6 +2212,7 @@ msgstr ""
 #. §12: `False`
 #. §13: `h1 h2`
 #. §14: `False`
+#. §15: `by_contra h`
 #: Game/Levels/Comp/L01contra.lean:27
 msgid ""
 "If your goal is §0, for some statement §1, then the tactic\n"
@@ -1538,7 +2224,9 @@ msgid ""
 "To achieve your new goal, you will need to establish\n"
 "§8 and §9, for some statement §10.  If you can do that,\n"
 "then §11 will prove the goal §12.  Notice that §13 will not be\n"
-"recognized as a proof of §14; the negative statement must come first."
+"recognized as a proof of §14; the negative statement must come first.\n"
+"\n"
+"In a written proof, §15 reads \"Suppose, for the sake of contradiction, that …\" (the opposite of the goal)."
 msgstr ""
 "Если ваша цель имеет вид §0 для некоторого утверждения §1, то тактика\n"
 "§2 введёт новое предположение §3 и сделает\n"
@@ -1549,7 +2237,9 @@ msgstr ""
 "Чтобы доказать новую цель, вам нужно будет установить\n"
 "§8 и §9 для некоторого утверждения §10. Если вам это удастся,\n"
 "то выражение §11 докажет цель §12. Обратите внимание, что §13 не будет\n"
-"принято в качестве доказательства §14: утверждение с отрицанием должно идти первым."
+"принято в качестве доказательства §14: утверждение с отрицанием должно идти первым.\n"
+"\n"
+"В письменном доказательстве §15 соответствует фразе «Предположим противное: …» (то есть отрицание цели)."
 
 #. §0: `A = B`
 #. §1: `A`
@@ -1557,13 +2247,20 @@ msgstr ""
 #. §3: `ext x`
 #. §4: `x`
 #. §5: `x ∈ A ↔ x ∈ B`
+#. §6: `ext x`
+#. §7: `x`
+#. §8: `x`
 #: Game/Levels/Inter/L08inter_assoc.lean:30
 msgid ""
 "If your goal is §0, where §1 and §2 are sets, then the tactic §3 will introduce\n"
-"a new arbitrary object §4 into the proof and set the goal to be §5."
+"a new arbitrary object §4 into the proof and set the goal to be §5.\n"
+"\n"
+"In a written proof, §6 reads \"Let §7 be arbitrary; we show that §8 is in one set if and only if it is in the other.\""
 msgstr ""
 "Если ваша цель имеет вид §0, где §1 и §2 — множества, то тактика §3 введёт\n"
-"в доказательство новый произвольный объект §4 и сделает целью §5."
+"в доказательство новый произвольный объект §4 и сделает целью §5.\n"
+"\n"
+"В письменном доказательстве §6 соответствует фразе «Пусть §7 — произвольный объект; покажем, что §8 принадлежит одному множеству тогда и только тогда, когда он принадлежит другому»."
 
 #. §0: `∃ x, P x`
 #. §1: `P x`
@@ -1572,17 +2269,24 @@ msgstr ""
 #. §4: `x`
 #. §5: `use a`
 #. §6: `P a`
+#. §7: `use t`
+#. §8: `t`
+#. §9: `t`
 #: Game/Levels/FamUnion/L02subunion.lean:42
 msgid ""
 "If your goal is §0, where §1 represents some statement about §2, and §3 is a\n"
 "value that could be assigned to §4, then the tactic §5 will\n"
 "set §6 to be the goal.  It will then see if this new goal follows easily from your\n"
-"assumptions, and if so it will close the goal."
+"assumptions, and if so it will close the goal.\n"
+"\n"
+"In a written proof, §7 reads \"Take §8.\"  Then you show that §9 has the required property."
 msgstr ""
 "Если ваша цель имеет вид §0, где §1 — некоторое утверждение о §2, а §3 —\n"
 "значение, которое можно подставить вместо §4, то тактика §5\n"
 "сделает новой целью §6. Затем она проверит, не следует ли эта новая цель напрямую из ваших\n"
-"предположений, и если да, то сразу закроет её."
+"предположений, и если да, то сразу закроет её.\n"
+"\n"
+"В письменном доказательстве §7 соответствует фразе «Возьмём §8».  Затем нужно показать, что §9 обладает требуемым свойством."
 
 #. §0: `F`
 #. §1: `G`
@@ -1890,6 +2594,7 @@ msgstr ""
 #. §5: `rcases`
 #. §6: `P ∨ Q`
 #. §7: `rcases`
+#. §8: `rcases h with h1 | h2`
 #: Game/Levels/Union/L03cases.lean:19
 msgid ""
 "If §0 is a proof of a statement of the form §1, then the tactic\n"
@@ -1899,7 +2604,9 @@ msgid ""
 "\n"
 "The §5 tactic has other uses.  In particular, it can be applied to proofs of statements\n"
 "that do not have the form §6.  However, we will not discuss these other uses of the\n"
-"§7 tactic in this game."
+"§7 tactic in this game.\n"
+"\n"
+"In a written proof, §8 reads \"*Case 1:* … *Case 2:* …\"."
 msgstr ""
 "Если §0 является доказательством утверждения вида §1, то тактика\n"
 "§2 разобьёт доказательство на случаи. В первом случае у вас появится новое\n"
@@ -1908,7 +2615,9 @@ msgstr ""
 "\n"
 "У тактики §5 есть и другие применения. В частности, её можно применять к доказательствам утверждений,\n"
 "не имеющих вида §6. Однако в этой игре другие способы использования\n"
-"тактики §7 мы рассматривать не будем."
+"тактики §7 мы рассматривать не будем.\n"
+"\n"
+"В письменном доказательстве §8 соответствует записи «*Случай 1:* … *Случай 2:* …»."
 
 #. §0: `A`
 #. §1: `F`
@@ -1974,7 +2683,7 @@ msgstr ""
 #. §7: `ᶜ`
 #. §8: `\\compl`
 #. §9: `\\^c`
-#: Game/Levels/Comp/L02compdef.lean:39
+#: Game/Levels/Comp/L02compdef.lean:41
 msgid ""
 "If §0 is a set of objects from the universe §1, then §2 is the complement of §3; that is,\n"
 "§4 is the set of objects from §5 that are not elements of §6.  You can enter the symbol §7\n"
@@ -2016,7 +2725,7 @@ msgstr ""
 #. §0: `A`
 #. §1: `compl_compl A`
 #. §2: `Aᶜᶜ = A`
-#: Game/Levels/Comp/L04compcomp.lean:64
+#: Game/Levels/Comp/L04compcomp.lean:67
 msgid "If §0 is a set, then §1 is a proof of §2."
 msgstr "Если §0 — множество, то §1 является доказательством §2."
 
@@ -2041,7 +2750,7 @@ msgstr ""
 #. §4: `⋂₀ F ⊆ A`
 #. §5: `Set.sInter_subset_of_mem`
 #: Game/Levels/FamInter/L01intersub.lean:66
-#: Game/Levels/FamUnion/L02subunion.lean:52
+#: Game/Levels/FamUnion/L02subunion.lean:54
 msgid ""
 "If §0 is a set, §1 is a family of sets, and §2, then §3 is a\n"
 "proof of §4.  In Mathlib, the name of this theorem is §5."
@@ -2187,7 +2896,7 @@ msgstr ""
 #. §0: `«{x}» ∈ A`
 #. §1: `«{x}» ∈ A`
 #. §2: `by_cases hA : «{x}» ∈ A`
-#: Game/Levels/FamInter/L06eltwiseunion.lean:35
+#: Game/Levels/FamInter/L06eltwiseunion.lean:37
 msgid ""
 "If §0, then the goal is easy to prove.  This suggests breaking\n"
 "the proof into cases depending on whether or not §1.  You can do this with the tactic\n"
@@ -2224,30 +2933,6 @@ msgstr "В мире объединений семейств вы докажет�
 msgid "In each case, §0 will give you a set §1 that you can use as the witness for the goal."
 msgstr "В каждом случае §0 даст вам множество §1, которое можно использовать как свидетеля для цели."
 
-#. §0: `t`
-#. §1: `apply t`
-#. §2: `t`
-#. §3: `P ∧ Q`
-#. §4: `constructor`
-#. §5: `apply And.intro`
-#. §6: `P`
-#. §7: `Q`
-#: Game/Levels/Inter/L05subint.lean:39
-msgid ""
-"In general, if you think that some theorem §0 could be used to prove the goal, the tactic\n"
-"§1 will work backwards from the goal, setting as new goals any hypotheses that are\n"
-"needed for the application of the theorem §2.\n"
-"\n"
-"If your goal has the form §3, then the §4 tactic will have the same\n"
-"effect as §5; that is, it will set §6 and §7 as goals to be proven."
-msgstr ""
-"В общем случае, если вы считаете, что для доказательства цели можно применить некоторую теорему §0, тактика\n"
-"§1 позволит рассуждать в обратном направлении — от цели, сделав новыми целями все посылки,\n"
-"необходимые для применения теоремы §2.\n"
-"\n"
-"Если ваша цель имеет вид §3, то тактика §4 даст тот же\n"
-"результат, что и §5, то есть сделает новыми целями утверждения §6 и §7."
-
 #. §0: `P → Q`
 #. §1: `intro h`
 #. §2: `h : P`
@@ -2261,7 +2946,7 @@ msgstr ""
 #. §10: `Q`
 #. §11: `intro`
 #. §12: `intro`
-#: Game/Levels/Subset/L04imp.lean:72
+#: Game/Levels/Subset/L04imp.lean:74
 msgid ""
 "In general, if your goal has the form §0, then the tactic §1 will add §2 to\n"
 "the list of assumptions and set §3 to be the goal.  If you have assumptions\n"
@@ -2270,7 +2955,7 @@ msgid ""
 "applied to a proof of §9, produces a proof of §10.\n"
 "\n"
 "As usual, for more information about the new tactic §11, you can click on §12\n"
-"in the list of tactics on the right."
+"in the list of *Tactics* in the inventory."
 msgstr ""
 "В общем случае, если ваша цель имеет вид §0, тактика §1 добавит §2 в\n"
 "список предположений и сделает целью §3. Если у вас есть предположения\n"
@@ -2279,7 +2964,7 @@ msgstr ""
 "применении к доказательству §9 выдаёт доказательство §10.\n"
 "\n"
 "Как обычно, чтобы узнать больше о новой тактике §11, вы можете нажать на §12\n"
-"в списке тактик справа."
+"в разделе *Тактики* инвентаря."
 
 #. §0: $F$
 #. §1: $\\bigcap F$
@@ -2390,7 +3075,7 @@ msgstr ""
 "На этом уровне вы опробуете эти идеи на практике."
 
 #. §0: `exact h`
-#: Game/Levels/Subset/L01exact.lean:49
+#: Game/Levels/Subset/L01exact.lean:63
 msgid ""
 "In order to complete this proof, type §0 in the text box\n"
 "under the goal and click on \"Execute\" or hit the \"Return\" or \"Enter\" key."
@@ -2468,7 +3153,7 @@ msgstr ""
 msgid "In the same way, you could prove that §0."
 msgstr "Точно так же можно доказать, что §0."
 
-#: Game.lean:88
+#: Game.lean:102
 msgid ""
 "In this game you will learn the basics of theorem proving in Lean by proving\n"
 "theorems about unions, intersections, and complements of sets."
@@ -2756,7 +3441,7 @@ msgstr ""
 #. §1: `Aᶜ`
 #. §2: `A`
 #. §3: `apply Subset.antisymm`
-#: Game/Levels/Comp/L04compcomp.lean:69
+#: Game/Levels/Comp/L04compcomp.lean:72
 msgid ""
 "In this level, your goal is §0--that is, the complement of §1 is equal to §2.\n"
 "So §3 is a good way to start."
@@ -2928,16 +3613,16 @@ msgid ""
 "away how to justify this assertion, you can just write §2 and Lean will\n"
 "set §3 as your immediate goal.  Once you achieve that goal, Lean will add\n"
 "§4 to your list of assumptions, and you can continue with\n"
-"the proof of your original goal.  For further details, click on §5 in the list of tactics\n"
-"on the right."
+"the proof of your original goal.  For further details, click on §5 in the list of *Tactics*\n"
+"in the inventory."
 msgstr ""
 "Было бы полезно знать, что §0.\n"
 "Чтобы ввести это утверждение, можно воспользоваться тактикой §1. Если вы не видите сразу,\n"
 "как его обосновать, просто напишите §2, и Lean\n"
 "сделает вашей ближайшей целью §3. Как только вы докажете эту цель, Lean добавит\n"
 "§4 в список предположений, и вы сможете вернуться к\n"
-"доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в списке тактик\n"
-"справа."
+"доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в разделе *Тактики*\n"
+"инвентаря."
 
 #. §0: `A ∪ B`
 #. §1: `⋃₀ {A, B}`
@@ -2953,7 +3638,7 @@ msgstr ""
 #. §1: `«{h3}»`
 #. §2: `h2`
 #. §3: `«{h4}»`
-#: Game/Levels/Subset/L04imp.lean:68
+#: Game/Levels/Subset/L04imp.lean:70
 msgid ""
 "Just as you were able to apply §0 to §1 in the last step,\n"
 "you can now apply §2 to §3 to prove the goal."
@@ -2996,7 +3681,7 @@ msgstr ""
 #. §5: $A \\subseteq B$
 #. §6: $x \\in B \\to x \\in C$
 #. §7: $x \\in A → x \\in C$
-#: Game/Levels/Subset/L04imp.lean:56
+#: Game/Levels/Subset/L04imp.lean:58
 msgid ""
 "Let §0 be an object from the universe §1, and let §2, §3, and §4 be sets\n"
 "such that §5 and §6.  Then §7."
@@ -3024,7 +3709,7 @@ msgstr ""
 #. §3: $U$
 #. §4: $x ∈ A$
 #. §5: $x \\in A$
-#: Game/Levels/Subset/L01exact.lean:46
+#: Game/Levels/Subset/L01exact.lean:60
 msgid ""
 "Let §0 be an object in the universe §1, and let §2 be a set whose elements\n"
 "come from §3.  Suppose that §4.  Then §5."
@@ -3037,7 +3722,7 @@ msgstr ""
 #. §2: $A$
 #. §3: $U$
 #. §4: $x \\in A^c \\leftrightarrow x \\notin A$
-#: Game/Levels/Comp/L02compdef.lean:70
+#: Game/Levels/Comp/L02compdef.lean:72
 msgid ""
 "Let §0 be an object in the universe §1, and let §2 be a set whose elements\n"
 "come from §3.  Then §4."
@@ -3065,27 +3750,10 @@ msgstr "Далее мы докажем закон ассоциативности
 msgid "Next, we'll see how to prove that a union is a subset of another set."
 msgstr "Далее мы увидим, как доказать, что объединение является подмножеством другого множества."
 
-#. §0: `cases`
-#. §1: `rcases`
-#. §2: `rcases`
-#: Game/Levels/Union/L03cases.lean:50
-msgid ""
-"Note that Lean also has a §0 tactic, but the syntax is a little more complicated.\n"
-"That's why we have chosen to use the §1 tactic.\n"
-"\n"
-"The §2 tactic has other uses.  However, in this game we will be using it only with\n"
-"assumptions that are \"or\" statements, to break the proof into cases."
-msgstr ""
-"Отметим, что в Lean также есть тактика §0, но у неё чуть более сложный синтаксис.\n"
-"Именно поэтому мы решили использовать тактику §1.\n"
-"\n"
-"У тактики §2 есть и другие применения. Однако в этой игре мы будем использовать её только с\n"
-"предположениями, содержащими «или», чтобы разбить доказательство на случаи."
-
 #. §0: `«{h2}»`
 #. §1: `(A ∪ «{t}»)`
 #. §2: `A ∪ «{t}»`
-#: Game/Levels/FamInter/L06eltwiseunion.lean:52
+#: Game/Levels/FamInter/L06eltwiseunion.lean:54
 msgid ""
 "Note that you can apply §0 to §1.\n"
 "You'll need to include the parentheses around §2 when you do that."
@@ -3111,7 +3779,7 @@ msgstr ""
 #. §1: `«{x}» ∈ A ∩ B ∩ C ↔ «{x}» ∈ A ∩ (B ∩ C)`
 #. §2: `A ∩ B ∩ C`
 #. §3: `A ∩ (B ∩ C)`
-#: Game/Levels/Inter/L08inter_assoc.lean:45
+#: Game/Levels/Inter/L08inter_assoc.lean:47
 msgid ""
 "Notice that Lean has introduced the new object §0 into the proof, and\n"
 "your goal is now §1.  Proving this goal will show that\n"
@@ -3126,7 +3794,7 @@ msgstr ""
 #. §0: `A ∩ B ∩ C = A ∩ (B ∩ C)`
 #. §1: `(A ∩ B) ∩ C = A ∩ (B ∩ C)`
 #. §2: `ext x`
-#: Game/Levels/Inter/L08inter_assoc.lean:38
+#: Game/Levels/Inter/L08inter_assoc.lean:40
 msgid ""
 "Notice that Lean has written the goal as §0, with no\n"
 "parentheses on the left.  When an intersection of more than two sets is written\n"
@@ -3146,7 +3814,7 @@ msgstr ""
 #. §1: `have`
 #. §2: `x ∈ B`
 #. §3: `h2 : x ∉ B`
-#: Game/Levels/Comp/L01contra.lean:68
+#: Game/Levels/Comp/L01contra.lean:70
 msgid ""
 "Notice that the goal is now §0.  To achieve that goal,\n"
 "you must prove contradictory statements.  You can do that by\n"
@@ -3168,7 +3836,7 @@ msgstr ""
 "всеобщности относится только к §0, а не к §1. Без этих скобок Lean решил бы,\n"
 "что квантор всеобщности распространяется на всю оставшуюся часть утверждения."
 
-#: Game/Levels/FamInter/L06eltwiseunion.lean:57
+#: Game/Levels/FamInter/L06eltwiseunion.lean:59
 msgid ""
 "Notice that you have contradictory assumptions.  You can prove anything\n"
 "from contradictory assumptions.  Do you see how?"
@@ -3194,7 +3862,7 @@ msgstr ""
 "доказать цель. Это значит, что тактика §2 сделает целью §3."
 
 #. §0: `«{h4}» : x ∈ B`
-#: Game/Levels/Subset/L03have.lean:53
+#: Game/Levels/Subset/L03have.lean:55
 msgid ""
 "Notice that §0 has been added to the list of assumptions.\n"
 "Can you complete the proof now?"
@@ -3216,7 +3884,7 @@ msgstr ""
 
 #. §0: `«{h3}» : x ∈ A`
 #. §1: `x ∈ C`
-#: Game/Levels/Subset/L04imp.lean:63
+#: Game/Levels/Subset/L04imp.lean:65
 msgid ""
 "Notice that §0 is now listed under *Assumptions*, and your new goal is\n"
 "§1."
@@ -3277,7 +3945,7 @@ msgstr ""
 
 #. §0: `«{h3}»`
 #. §1: `rcases «{h3}» with «{h3}»A | «{h3}»B`
-#: Game/Levels/Union/L03cases.lean:39
+#: Game/Levels/Union/L03cases.lean:41
 msgid ""
 "Now the assumption §0 is an \"or\" statement.  The easiest way to use such an\n"
 "assumption is to break your proof into cases.  To do this in Lean, use the tactic\n"
@@ -3299,18 +3967,18 @@ msgid ""
 "away how to justify this assertion, you can just write §2 and Lean will\n"
 "set §3 as your immediate goal.  Once you achieve that goal, Lean will add\n"
 "§4 to your list of assumptions, and you can continue with\n"
-"the proof of your original goal.  For further details, click on §5 in the list of tactics\n"
-"on the right."
+"the proof of your original goal.  For further details, click on §5 in the list of *Tactics*\n"
+"in the inventory."
 msgstr ""
 "Теперь используйте §0, чтобы ввести утверждение §1. Если вы не видите сразу,\n"
 "как его обосновать, просто напишите §2, и Lean\n"
 "сделает вашей ближайшей целью §3. Как только вы докажете эту цель, Lean добавит\n"
 "§4 в список предположений, и вы сможете вернуться к\n"
-"доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в списке тактик\n"
-"справа."
+"доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в разделе *Тактики*\n"
+"инвентаря."
 
 #. §0: `h1`
-#: Game/Levels/FamInter/L06eltwiseunion.lean:47
+#: Game/Levels/FamInter/L06eltwiseunion.lean:49
 msgid "Now use §0."
 msgstr "Теперь используйте §0."
 
@@ -3328,13 +3996,13 @@ msgid "Now what statement would you like to contradict to complete the proof?"
 msgstr "А теперь — противоречие с каким утверждением вы хотите получить, чтобы завершить доказательство?"
 
 #. §0: `«{h1}»`
-#: Game/Levels/Comp/L04compcomp.lean:75
+#: Game/Levels/Comp/L04compcomp.lean:78
 msgid "Now write out the definition of complement in §0."
 msgstr "Теперь распишите определение дополнения в предположении §0."
 
 #. §0: `«{h}»`
 #. §1: `rewrite [mem_empty_iff_false] at «{h}»`
-#: Game/Levels/Comp/L06emptysub.lean:56
+#: Game/Levels/Comp/L06emptysub.lean:58
 msgid "Now write out what §0 means, using §1."
 msgstr "Теперь распишите, что означает §0, с помощью §1."
 
@@ -3360,7 +4028,7 @@ msgstr "Теперь можно использовать §0, чтобы рас�
 #. §3: `«{x}» ∈ C`
 #. §4: `with`
 #. §5: `rcases`
-#: Game/Levels/Union/L03cases.lean:43
+#: Game/Levels/Union/L03cases.lean:45
 msgid ""
 "Now you have *two* goals.  For the first, the assumption §0 has been\n"
 "replaced with §1, and for the second it has been replaced with §2.  In both\n"
@@ -3384,7 +4052,7 @@ msgstr ""
 "Теперь у вас есть §0. Что получится, если применить §1 к §2 и\n"
 "§3?"
 
-#: Game/Levels/Comp/L03compsub.lean:68
+#: Game/Levels/Comp/L03compsub.lean:70
 msgid "Now your goal is a negative statement, so try proof by contradiction."
 msgstr "Теперь ваша цель — утверждение с отрицанием, поэтому попробуйте применить доказательство от противного."
 
@@ -3426,7 +4094,7 @@ msgstr "Теперь ваша ситуация похожа на предыду�
 #. §2: `«{x}» ∈ Aᶜ`
 #. §3: `«{x}» ∉ A`
 #. §4: `rewrite [mem_compl_iff A «{x}»]`
-#: Game/Levels/Comp/L03compsub.lean:55
+#: Game/Levels/Comp/L03compsub.lean:57
 msgid ""
 "Now §0 is a proof of the statement §1, which tells us\n"
 "that we can reexpress the goal §2 as §3.  To do this reexpression,\n"
@@ -3440,7 +4108,7 @@ msgstr ""
 #. §1: `False`
 #. §2: `exfalso`
 #. §3: `False`
-#: Game/Levels/Comp/L06emptysub.lean:58
+#: Game/Levels/Comp/L06emptysub.lean:60
 msgid "Now §0 is a proof of §1.  Use §2 to change the goal to §3."
 msgstr "Теперь §0 — доказательство §1. Примените §2, чтобы заменить цель на §3."
 
@@ -3463,7 +4131,7 @@ msgstr "Теперь §0 доказывает цель."
 #. §4: `push_neg`
 #. §5: `«{h1}»`
 #. §6: `push_neg at «{h1}»`
-#: Game/Levels/Comp/L04compcomp.lean:80
+#: Game/Levels/Comp/L04compcomp.lean:83
 msgid ""
 "Now §0 says §1, which means §2.  Of course, this can be simplified to\n"
 "§3.  To perform this simplification, you'll need a new tactic, §4.  To simplify\n"
@@ -3475,7 +4143,7 @@ msgstr ""
 
 #. §0: `x`
 #. §1: `h3`
-#: Game/Levels/Union/L03cases.lean:33
+#: Game/Levels/Union/L03cases.lean:35
 msgid ""
 "Of course, to start a subset proof you need to introduce an object §0 and an\n"
 "assumption §1."
@@ -3650,7 +4318,7 @@ msgstr ""
 #. §11: `A ∈ F ∧ «{x}» ∈ A`
 #. §12: `apply Exists.intro A`
 #. §13: `A ∈ F ∧ «{x}» ∈ A`
-#: Game/Levels/FamUnion/L02subunion.lean:60
+#: Game/Levels/FamUnion/L02subunion.lean:62
 msgid ""
 "Remember that the goal §0 is an abbreviation for\n"
 "§1.  As we saw in the last level, we can prove this by coming up with\n"
@@ -3756,7 +4424,7 @@ msgstr ""
 #. §1: `x ∈ A`
 #. §2: `h3`
 #. §3: `intro h3`
-#: Game/Levels/Subset/L04imp.lean:59
+#: Game/Levels/Subset/L04imp.lean:61
 msgid ""
 "Since our goal in this level is the statement §0, our first step for\n"
 "this proof is to assume §1.  To introduce that assumption,\n"
@@ -3790,7 +4458,7 @@ msgstr ""
 "А значит, §4 является доказательством цели."
 
 #. §0: `apply Iff.intro`
-#: Game/Levels/Inter/L08inter_assoc.lean:49
+#: Game/Levels/Inter/L08inter_assoc.lean:51
 msgid ""
 "Since your goal is an \"if and only if\" statement, a good next step\n"
 "is §0."
@@ -3799,7 +4467,7 @@ msgstr ""
 "будет §0."
 
 #. §0: `intro h1`
-#: Game/Levels/Inter/L08inter_assoc.lean:52
+#: Game/Levels/Inter/L08inter_assoc.lean:54
 msgid ""
 "Since your goal is an \"if-then\" statement, a good next step\n"
 "is §0."
@@ -3810,7 +4478,7 @@ msgstr ""
 #. §0: `∅`
 #. §1: `∅`
 #. §2: `A`
-#: Game/Levels/Comp/L06emptysub.lean:62
+#: Game/Levels/Comp/L06emptysub.lean:64
 msgid ""
 "Since §0 has no elements, the statement \"every element of §1 is an element of §2\" can't\n"
 "fail.  Mathematicians say that a statement like this is *vacuously true*."
@@ -4007,7 +4675,7 @@ msgstr "Подмножество объединения семейства"
 #. §2: $F \\subseteq G$
 #. §3: $\\bigcap G \\subseteq \\bigcap F$
 #: Game/Levels/FamInter/L02intersubinter.lean:25
-#: Game/Levels/FamUnion/L03unionsubunion.lean:35
+#: Game/Levels/FamUnion/L03unionsubunion.lean:37
 msgid ""
 "Suppose §0 and §1 are families of sets and §2.\n"
 "Then §3."
@@ -4099,10 +4767,10 @@ msgstr "Пусть §0 и §1 — множества. Тогда §2."
 #. §1: $B \\subseteq C$
 #. §2: $A \\subseteq C$
 #: Game/Levels/Subset/L06subtrans.lean:29
-#: Game/Levels/Comp/L01contra.lean:61
+#: Game/Levels/Comp/L01contra.lean:63
 #: Game/Levels/Inter/L04proveand.lean:27
 #: Game/Levels/Inter/L05subint.lean:18
-#: Game/Levels/Union/L03cases.lean:31
+#: Game/Levels/Union/L03cases.lean:33
 #: Game/Levels/Combo/L05union_sub_inter_sub.lean:18
 msgid "Suppose §0 and §1.  Then §2."
 msgstr "Пусть §0 и §1. Тогда §2."
@@ -4111,7 +4779,7 @@ msgstr "Пусть §0 и §1. Тогда §2."
 #. §1: $A \\in F$
 #. §2: $\\bigcap F \\subseteq A$
 #: Game/Levels/FamInter/L01intersub.lean:70
-#: Game/Levels/FamUnion/L02subunion.lean:56
+#: Game/Levels/FamUnion/L02subunion.lean:58
 msgid "Suppose §0 is a family of sets and §1.  Then §2."
 msgstr "Пусть §0 — семейство множеств и §1. Тогда §2."
 
@@ -4183,7 +4851,7 @@ msgstr ""
 #. §4: $F$
 #. §5: $A \\cup s \\in G$
 #. §6: $\\bigcap G \\subseteq A \\cup (\\bigcap F)$
-#: Game/Levels/FamInter/L06eltwiseunion.lean:29
+#: Game/Levels/FamInter/L06eltwiseunion.lean:31
 msgid ""
 "Suppose §0 is a set, §1 and §2 are families of sets, and for every set §3 in §4,\n"
 "§5.  Then §6."
@@ -4200,7 +4868,7 @@ msgstr "Пусть §0 — множество. Тогда существует �
 
 #. §0: $A$
 #. §1: $(A^c)^c = A$
-#: Game/Levels/Comp/L04compcomp.lean:67
+#: Game/Levels/Comp/L04compcomp.lean:70
 msgid "Suppose §0 is a set.  Then §1."
 msgstr "Пусть §0 — множество. Тогда §1."
 
@@ -4230,13 +4898,13 @@ msgstr ""
 #. §1: $B \\subseteq C$
 #. §2: $x \\in A$
 #. §3: $x \\in C$
-#: Game/Levels/Subset/L03have.lean:46
+#: Game/Levels/Subset/L03have.lean:48
 msgid "Suppose §0, §1, and §2.  Then §3."
 msgstr "Пусть §0, §1 и §2. Тогда §3."
 
 #. §0: $A \\subseteq B$
 #. §1: $B^c \\subseteq A^c$
-#: Game/Levels/Comp/L03compsub.lean:50
+#: Game/Levels/Comp/L03compsub.lean:52
 #: Game/Levels/Inter/L01and.lean:42
 #: Game/Levels/Inter/L02elt_inter_elt_right.lean:44
 #: Game/Levels/FamUnion/L08powerset.lean:37
@@ -4318,7 +4986,7 @@ msgstr ""
 #. §3: `hs : s ∈ F ∧ «{x}» ∈ s`
 #. §4: `s`
 #. §5: `«{h2}»`
-#: Game/Levels/FamUnion/L03unionsubunion.lean:41
+#: Game/Levels/FamUnion/L03unionsubunion.lean:43
 msgid ""
 "The assumption §0 is now an existential statement.  Thus, §1\n"
 "will introduce a new object §2 and a new assumption §3 into the proof.\n"
@@ -4333,7 +5001,7 @@ msgstr ""
 #. §0: `«{h1}»`
 #. §1: `«{x}» ∉ Aᶜ`
 #. §2: `¬«{x}» ∈ Aᶜ`
-#: Game/Levels/Comp/L04compcomp.lean:77
+#: Game/Levels/Comp/L04compcomp.lean:80
 msgid ""
 "The assumption §0 now says §1, which means §2.  It will be helpful to\n"
 "write out the definition of complement again in this assumption."
@@ -4375,7 +5043,7 @@ msgstr "Пустое множество"
 msgid "The exact tactic"
 msgstr "Тактика exact"
 
-#: Game/Levels/FamInter/L06eltwiseunion.lean:39
+#: Game/Levels/FamInter/L06eltwiseunion.lean:41
 msgid "The first case is the easy one."
 msgstr "Первый случай — простой."
 
@@ -4441,7 +5109,7 @@ msgstr ""
 #. §1: `=`
 #. §2: `↔`
 #. §3: `mem_compl_iff`
-#: Game/Levels/Comp/L02compdef.lean:77
+#: Game/Levels/Comp/L02compdef.lean:79
 msgid ""
 "The name of the tactic §0 is short for \"reflexivity\", which is the property of\n"
 "both §1 and §2 that is the basis for the tactic.\n"
@@ -4475,7 +5143,7 @@ msgstr ""
 #. §2: `apply Iff.intro`
 #. §3: `P → Q`
 #. §4: `Q → P`
-#: Game/Levels/Comp/L05compsubiff.lean:70
+#: Game/Levels/Comp/L05compsubiff.lean:72
 msgid ""
 "The proof in this level illustrates how previously proven theorems can be used in proofs.\n"
 "\n"
@@ -4489,14 +5157,14 @@ msgstr ""
 "тактика §1 даст тот же результат, что и §2, то есть\n"
 "сделает новыми целями утверждения §3 и §4."
 
-#: Game/Levels/Comp/L04compcomp.lean:85
+#: Game/Levels/Comp/L04compcomp.lean:88
 msgid "The proof of the second goal is similar."
 msgstr "Вторая цель доказывается аналогично."
 
 #. §0: `x ∈ Aᶜ`
 #. §1: `x ∉ A`
 #. §2: `rfl`
-#: Game/Levels/Comp/L02compdef.lean:73
+#: Game/Levels/Comp/L02compdef.lean:75
 msgid ""
 "The proof of the theorem in this level is very easy.\n"
 "Since §0 and §1 are definitionally equivalent, §2 will close the goal."
@@ -4530,43 +5198,23 @@ msgstr "Текущая ситуация должна напомнить вам �
 #. §0: `by_cases h : P`
 #. §1: `h : P`
 #. §2: `h : ¬P`
+#. §3: `by_cases h : P`
+#. §4: `P`
+#. §5: `P`
+#. §6: `¬P`
 #: Game/Levels/FamInter/L06eltwiseunion.lean:22
 msgid ""
 "The tactic §0 breaks the proof into two cases.  In the first case, the\n"
 "assumption §1 is added to the list of assumptions, and in the second case, the\n"
-"assumption §2 is added."
+"assumption §2 is added.\n"
+"\n"
+"In a written proof, §3 reads \"Either §4 is true or it isn't.  *Case 1:* §5 … *Case 2:* §6 …\"."
 msgstr ""
 "Тактика §0 разбивает доказательство на два случая. В первом случае в список\n"
 "предположений добавляется §1, а во втором —\n"
-"предположение §2."
-
-#. §0: `Subset.refl`
-#. §1: `Set.Subset.refl`
-#. §2: `Set.`
-#: Game/Levels/Subset/L05subref.lean:46
-msgid ""
-"The theorem you have proven in this level shows that the subset relation has\n"
-"a property called *reflexivity*.  We have given the theorem the name §0.  You\n"
-"will see it in the list of theorems on the right.  (This theorem is included in Lean's\n"
-"mathematical library, Mathlib.  In Mathlib, the name of the theorem is §1.\n"
-"Many other set-theoretic theorems in this game have §2 at the beginnings of their names\n"
-"in Mathlib.)"
-msgstr ""
-"Доказанная вами на этом уровне теорема показывает, что отношение подмножества обладает\n"
-"свойством *рефлексивности*. Мы назвали эту теорему §0. Вы\n"
-"увидите её в списке теорем справа. (Эта теорема входит в математическую\n"
-"библиотеку Lean — Mathlib. В Mathlib она носит имя §1.\n"
-"Имена многих других теоретико-множественных теорем из нашей игры в библиотеке Mathlib\n"
-"начинаются с префикса §2.)"
-
-#. §0: `Subset.trans`
-#: Game/Levels/Subset/L06subtrans.lean:41
-msgid ""
-"The theorem you have proven in this level shows that the subset relation has\n"
-"a property called *transitivity*.  We have given the theorem the name §0."
-msgstr ""
-"Доказанная вами на этом уровне теорема показывает, что отношение подмножества обладает\n"
-"свойством *транзитивности*. Мы назвали эту теорему §0."
+"предположение §2.\n"
+"\n"
+"В письменном доказательстве §3 соответствует фразе «Либо §4 верно, либо нет.  *Случай 1:* §5 … *Случай 2:* §6 …»."
 
 #. §0: `compl_subset_compl_of_subset «{h1}»`
 #: Game/Levels/Comp/L05compsubiff.lean:44
@@ -4587,36 +5235,6 @@ msgstr "Обе части §0 по определению означают од�
 msgid "The universe"
 msgstr "Универсум"
 
-#. §0: `push_neg`
-#. §1: `push_neg`
-#. §2: `push_neg at h`
-#. §3: `h`
-#. §4: `apply`
-#. §5: `push_neg`
-#. §6: `apply`
-#. §7: `compl_compl`
-#: Game/Levels/Comp/L04compcomp.lean:97
-msgid ""
-"The §0 tactic can reexpress a number of different kinds of negative statements as\n"
-"equivalent positive statements; use\n"
-"§1 to reexpress a negative goal, and §2 to reexpress a negative assumption §3.\n"
-"We'll see many more uses of the §4 tactic in this game.\n"
-"For more details about the use of these tactics,\n"
-"click on §5 or §6 under the list of tactics on the right.\n"
-"\n"
-"We have given this theorem the name §7.  Both this theorem and the one in the previous\n"
-"level will be useful in the next level."
-msgstr ""
-"Тактика §0 умеет преобразовывать самые разные виды утверждений с отрицанием в\n"
-"эквивалентные утверждения без внешнего отрицания; используйте\n"
-"§1 для преобразования цели с отрицанием и §2 — для преобразования предположения §3.\n"
-"В этой игре мы ещё не раз встретимся с применением тактики §4.\n"
-"Чтобы узнать подробности об этих тактиках,\n"
-"нажмите на §5 или §6 в списке тактик справа.\n"
-"\n"
-"Мы дали этой теореме имя §7. И она, и теорема с предыдущего\n"
-"уровня пригодятся нам на следующем уровне."
-
 #. §0: `rewrite`
 #. §1: `rewrite`
 #. §2: `rw`
@@ -4624,23 +5242,23 @@ msgstr ""
 #. §4: `rw`
 #. §5: `rewrite`
 #. §6: `compl_subset_compl_of_subset`
-#: Game/Levels/Comp/L03compsub.lean:77
+#: Game/Levels/Comp/L03compsub.lean:79
 msgid ""
 "The §0 tactic is often useful for writing out definitions.  For more information about\n"
-"how it works, click on §1 in the list of tactics on the right.  You can also use §2\n"
+"how it works, click on §1 in the list of *Tactics* in the inventory.  You can also use §2\n"
 "instead of §3.  (There is actually a small difference between the tactics §4 and\n"
 "§5, but the difference won't concern us in this game.)\n"
 "\n"
 "You'll find the theorem you proved in this level listed as §6 in the list of\n"
-"theorems on the right.  This theorem will be useful later in this world."
+"*Theorems* in the inventory.  This theorem will be useful later in this world."
 msgstr ""
 "Тактика §0 часто бывает полезна для разворачивания определений. Чтобы узнать больше о том,\n"
-"как она работает, нажмите на §1 в списке тактик справа. Вы также можете использовать §2\n"
+"как она работает, нажмите на §1 в разделе *Тактики* инвентаря. Вы также можете использовать §2\n"
 "вместо §3. (На самом деле между тактиками §4 и\n"
 "§5 есть небольшое различие, но в этой игре оно для нас не существенно.)\n"
 "\n"
-"Доказанную на этом уровне теорему вы найдёте под именем §6 в списке\n"
-"теорем справа. Она пригодится позже в этом мире."
+"Доказанную на этом уровне теорему вы найдёте под именем §6 в разделе\n"
+"*Теоремы* инвентаря. Она пригодится позже в этом мире."
 
 #. §0: `rewrite`
 #. §1: `rewrite [mem_compl_iff]`
@@ -4653,7 +5271,7 @@ msgstr ""
 #. §8: `mem_compl_iff`
 #. §9: `B`
 #. §10: `«{x}»`
-#: Game/Levels/Comp/L03compsub.lean:59
+#: Game/Levels/Comp/L03compsub.lean:61
 msgid ""
 "The §0 tactic is smart enough to figure out some things on its own.  If you\n"
 "had just written §1, then Lean would have figured out how to apply the\n"
@@ -4674,7 +5292,7 @@ msgstr ""
 "сам поймёт, что в этом случае теорему §8 нужно применить к §9 и §10."
 
 #. §0: `push_neg`
-#: Game/Levels/Comp/L04compcomp.lean:88
+#: Game/Levels/Comp/L04compcomp.lean:91
 msgid ""
 "There are two ways to complete the proof now.  Since your goal is a negative statement,\n"
 "one natural strategy to use would be proof by contradiction.  A second possibility is to\n"
@@ -4687,23 +5305,6 @@ msgstr ""
 "повторить подход из первой половины: снова расписать определение дополнения в цели,\n"
 "а затем упростить полученное двойное отрицание с помощью тактики §0. Подойдёт\n"
 "любой из этих путей."
-
-#. §0: `apply Exists.intro A`
-#. §1: `use A`
-#. §2: `use`
-#. §3: `A`
-#. §4: `t`
-#: Game/Levels/FamUnion/L02subunion.lean:72
-msgid ""
-"There is another tactic you could have used to complete this proof.  Instead of\n"
-"§0, you could write §1.  The §2 tactic is actually a powerful\n"
-"tactic.  Not only does it fill in §3 for §4 in the existential goal, it then tries to\n"
-"complete the proof on its own--and in this case, it would have succeeded!"
-msgstr ""
-"Завершить это доказательство можно было и с помощью другой тактики. Вместо\n"
-"§0 вы могли написать §1. На самом деле §2 — весьма мощная\n"
-"тактика. Она не только подставляет §3 вместо §4 в цель существования, но затем ещё и пытается\n"
-"самостоятельно довести доказательство до конца — и в данном случае у неё бы это получилось!"
 
 #. §0: `push_neg`
 #: Game/Levels/Combo/L01compunion.lean:13
@@ -4835,7 +5436,7 @@ msgstr ""
 "![Диаграмма: A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)](images/combo-distrib.svg)"
 
 #. §0: `«{h2}» : «{x}» ∉ B`
-#: Game/Levels/Comp/L03compsub.lean:70
+#: Game/Levels/Comp/L03compsub.lean:72
 msgid ""
 "This should remind you of the first level of this world.  To get a contradiction,\n"
 "try to contradict §0."
@@ -4904,7 +5505,7 @@ msgstr "В завершение Мира комбинаций мы докаже�
 #. §1: `∈`
 #. §2: `\\mem`
 #. §3: `\\in`
-#: Game/Levels/Subset/L03have.lean:49
+#: Game/Levels/Subset/L03have.lean:51
 msgid ""
 "To get started on this proof, type §0\n"
 "in the text box and click \"Execute\" or hit \"Return\" or \"Enter\".\n"
@@ -4937,15 +5538,15 @@ msgid ""
 "right away how to justify this assertion, you can just write §2\n"
 "and Lean will set §3 as your immediate goal.  Once you achieve that goal,\n"
 "Lean will add §4 to your list of assumptions, and you can continue\n"
-"with the proof of your original goal.  For further details, click on §5 in the list of tactics\n"
-"on the right."
+"with the proof of your original goal.  For further details, click on §5 in the list of *Tactics*\n"
+"in the inventory."
 msgstr ""
 "Чтобы воспользоваться §0, вам потребуется установить, что §1. Если вы не видите\n"
 "сразу, как обосновать это утверждение, просто напишите §2,\n"
 "и Lean сделает вашей ближайшей целью §3. Как только вы докажете эту цель,\n"
 "Lean добавит §4 в список предположений, и вы сможете вернуться\n"
-"к доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в списке тактик\n"
-"справа."
+"к доказательству исходной цели. Чтобы узнать подробности, нажмите на §5 в разделе *Тактики*\n"
+"инвентаря."
 
 #. §0: `False`
 #: Game/Levels/Diff/L05diffinter.lean:41
@@ -4999,7 +5600,7 @@ msgid "To start on this proof, try writing out the meaning of intersection in §
 msgstr "Чтобы начать доказательство, попробуйте расписать определение пересечения в предположении §0."
 
 #. §0: `«{h3}»`
-#: Game/Levels/Union/L03cases.lean:36
+#: Game/Levels/Union/L03cases.lean:38
 msgid ""
 "To understand the logic of this proof, it will help to write out the definition\n"
 "of union in §0."
@@ -5193,6 +5794,8 @@ msgstr "Снова используйте §0, чтобы ввести пред�
 #. §14: `have h := t`
 #. §15: `P`
 #. §16: `t`
+#. §17: `have h : P := t`
+#. §18: `P`
 #: Game/Levels/Subset/L03have.lean:22
 msgid ""
 "Use §0 to assert a statement that you can prove from your current\n"
@@ -5214,7 +5817,9 @@ msgid ""
 "\n"
 "* If you write §14, then Lean will try to figure out what statement\n"
 "§15 is proven by the expression §16 and, if it can figure it out, it will fill\n"
-"it in for you."
+"it in for you.\n"
+"\n"
+"In a written proof, §17 reads \"Since …, we know that §18.\""
 msgstr ""
 "Используйте §0, чтобы ввести новое утверждение, которое вы можете вывести из текущих\n"
 "предположений. Новому утверждению необходимо присвоить идентификатор; обязательно\n"
@@ -5235,22 +5840,30 @@ msgstr ""
 "\n"
 "* Если вы напишете §14, то Lean сам попытается определить, какое утверждение\n"
 "§15 доказывается выражением §16, и если ему это удастся, подставит\n"
-"его автоматически."
+"его автоматически.\n"
+"\n"
+"В письменном доказательстве §17 соответствует фразе «Поскольку …, имеем §18»."
 
 #. §0: `exact`
 #. §1: `t`
 #. §2: `exact t`
-#: Game/Levels/Subset/L01exact.lean:32
+#. §3: `exact`
+#. §4: `P`
+#: Game/Levels/Subset/L01exact.lean:44
 msgid ""
 "Use §0 to close a goal.  If some expression §1 is a proof of\n"
 "the goal, then §2 will close the goal.\n"
 "\n"
-"Think of \"exact\" as meaning \"this is exactly what is needed to prove the goal.\""
+"Think of \"exact\" as meaning \"this is exactly what is needed to prove the goal.\"\n"
+"\n"
+"In a written proof, §3 is usually the last sentence of an argument: \"So §4, as required.\""
 msgstr ""
 "Используйте §0 для закрытия цели. Если некоторое выражение §1 является доказательством\n"
 "цели, то команда §2 закроет её.\n"
 "\n"
-"Слово «exact» (точный) здесь можно понимать так: «это в точности то, что нужно для доказательства цели»."
+"Слово «exact» (точный) здесь можно понимать так: «это в точности то, что нужно для доказательства цели».\n"
+"\n"
+"В письменном доказательстве §3 обычно соответствует последней фразе рассуждения: «Итак, §4, что и требовалось доказать»."
 
 #. §0: `intro`
 #. §1: `intro`
@@ -5267,6 +5880,12 @@ msgstr ""
 #. §12: `intro x h`
 #. §13: `intro x`
 #. §14: `intro h`
+#. §15: `intro x`
+#. §16: `A ⊆ B`
+#. §17: `x`
+#. §18: `P → Q`
+#. §19: `intro h`
+#. §20: `P`
 #: Game/Levels/Subset/L04imp.lean:38
 msgid ""
 "Use §0 to introduce either a new assumption or a new object into your proof.\n"
@@ -5282,7 +5901,9 @@ msgid ""
 "Be sure to use a variable name that is not already in use.  The goal will then be §11.\n"
 "\n"
 "You can do multiple introductions in one step: for example, §12 has the same\n"
-"effect as doing §13 followed by §14."
+"effect as doing §13 followed by §14.\n"
+"\n"
+"In a written proof, §15 for a goal about all objects (such as §16) reads \"Let §17 be arbitrary.\"  For a goal §18, §19 reads \"Suppose §20.\""
 msgstr ""
 "Используйте §0, чтобы ввести в доказательство новое предположение или новый объект.\n"
 "\n"
@@ -5297,7 +5918,9 @@ msgstr ""
 "Обязательно используйте имя переменной, которое ещё не занято. После этого целью станет §11.\n"
 "\n"
 "Можно вводить сразу несколько элементов за один шаг: например, команда §12 даёт тот же\n"
-"результат, что и последовательное выполнение §13 и §14."
+"результат, что и последовательное выполнение §13 и §14.\n"
+"\n"
+"В письменном доказательстве §15 для цели обо всех объектах (например, §16) соответствует фразе «Пусть §17 — произвольный элемент».  Для цели §18 команда §19 соответствует фразе «Предположим, что §20»."
 
 #. §0: `h1`
 #: Game/Levels/Combo/L05union_sub_inter_sub.lean:30
@@ -5322,34 +5945,40 @@ msgid "We'll prove one more property of intersections in the next level."
 msgstr "На следующем уровне мы докажем ещё одно свойство пересечений."
 
 #. §0: `U`
-#. §1: `x`
-#. §2: `U`
-#. §3: `x : U`
-#. §4: `A`
-#. §5: `U`
-#. §6: `A : Set U`
-#. §7: `x`
-#. §8: `U`
-#. §9: `A`
-#. §10: `Set U`
-#. §11: `x`
-#. §12: `A`
-#. §13: `x ∈ A`
-#. §14: `∈`
-#. §15: `\\mem`
-#. §16: `\\in`
+#. §1: `x : U`
+#. §2: `x`
+#. §3: `x`
+#. §4: `U`
+#. §5: `A : Set U`
+#. §6: `A`
+#. §7: `U`
+#. §8: `x`
+#. §9: `U`
+#. §10: `A`
+#. §11: `Set U`
+#. §12: `x ∈ A`
+#. §13: `x`
+#. §14: `A`
+#. §15: `∈`
+#. §16: `\\mem`
+#. §17: `\\in`
 #: Game/Levels/Subset.lean:21
 msgid ""
 "Welcome to Subset World! In this world you will learn about sets and\n"
 "subsets, and you will also learn the basics of proving theorems in Lean.\n"
 "\n"
-"The elements of the sets in this world will come from a universe called §0.\n"
-"To specify that an\n"
-"object §1 belongs to the universe §2, we write §3.  To specify\n"
-"that §4 is a set of objects from §5, we write §6.  (The terminology used\n"
-"in Lean is that §7 has *type* §8 and §9 has *type* §10.)  To\n"
-"say that §11 is an element of §12, we write §13.  (You can enter\n"
-"the symbol §14 by typing §15 or §16, followed by a space.)\n"
+"The elements of the sets in this world will come from a universe called §0:\n"
+"the collection of all the objects we are talking about.\n"
+"\n"
+"Two kinds of notation look alike but mean different things:\n"
+"\n"
+"* §1 says what *kind* of thing §2 is: §3 is an object in the universe §4.\n"
+"Similarly, §5 says that §6 is a set of objects from §7.  (Lean's\n"
+"terminology is that §8 has *type* §9 and §10 has *type* §11.)\n"
+"These are declarations, not statements: there is nothing to prove about them.\n"
+"* §12 is a *statement*: it says that §13 is an element of the set §14.\n"
+"Like any statement, it may be true or false, so it can be assumed or proved.\n"
+"(You can enter the symbol §15 by typing §16 or §17, followed by a space.)\n"
 "\n"
 "You will prove theorems in this game by using tools called *tactics*.\n"
 "The aim is to prove the theorem by applying tactics\n"
@@ -5361,13 +5990,18 @@ msgstr ""
 "Добро пожаловать в Мир подмножеств! В этом мире вы познакомитесь с множествами и\n"
 "подмножествами, а также освоите основы доказательства теорем в Lean.\n"
 "\n"
-"Элементы множеств в этом мире берутся из универсума §0.\n"
-"Чтобы указать, что\n"
-"объект §1 принадлежит универсуму §2, мы пишем §3. Чтобы указать,\n"
-"что §4 — это множество объектов из §5, мы пишем §6. (В терминологии\n"
-"Lean говорят, что §7 имеет *тип* §8, а §9 имеет *тип* §10.) Чтобы\n"
-"записать, что §11 является элементом §12, используется обозначение §13. (Ввести\n"
-"символ §14 можно, набрав §15 или §16 и нажав пробел.)\n"
+"Элементы множеств в этом мире берутся из универсума §0 —\n"
+"совокупности всех объектов, о которых идёт речь.\n"
+"\n"
+"Два вида записи похожи друг на друга, но означают разное:\n"
+"\n"
+"* §1 указывает, *какого рода* объектом является §2: §3 — объект из универсума §4.\n"
+"Аналогично, §5 означает, что §6 — множество объектов из §7.  (В терминологии\n"
+"Lean говорят, что §8 имеет *тип* §9, а §10 имеет *тип* §11.)\n"
+"Это объявления, а не утверждения: доказывать про них нечего.\n"
+"* §12 — это *утверждение*: оно говорит, что §13 является элементом множества §14.\n"
+"Как и любое утверждение, оно может быть истинным или ложным, поэтому его можно предположить или доказать.\n"
+"(Ввести символ §15 можно, набрав §16 или §17 и нажав пробел.)\n"
 "\n"
 "Доказывать теоремы в этой игре вы будете с помощью специальных команд, называемых *тактиками*.\n"
 "Задача состоит в том, чтобы доказать теорему, применяя тактики\n"
@@ -5375,10 +6009,6 @@ msgstr ""
 "\n"
 "Давайте изучим несколько базовых тактик. Нажмите «Начать» (Start) ниже,\n"
 "чтобы приступить."
-
-#: Game/Levels/Inter/L08inter_assoc.lean:71
-msgid "Well done!  You're ready to move on to Union World."
-msgstr "Отличная работа! Теперь вы готовы перейти в Мир объединений."
 
 #. §0: `A`
 #. §1: `B ∪ C`
@@ -5479,7 +6109,7 @@ msgstr ""
 "Если расписать определение пересечения в цели, вы сразу увидите, как\n"
 "завершить этот уровень."
 
-#: Game/Levels/FamInter/L06eltwiseunion.lean:33
+#: Game/Levels/FamInter/L06eltwiseunion.lean:35
 msgid "Writing out the meaning of the goal will make the proof easier to understand."
 msgstr "Если расписать смысл цели, ход доказательства станет понятнее."
 
@@ -5501,7 +6131,7 @@ msgstr "Первую часть §0 можно выделить с помощь�
 #. §3: `x ∈ B → False`
 #. §4: `«{h4}» : x ∈ B`
 #. §5: `exact h2 «{h4}»`
-#: Game/Levels/Comp/L01contra.lean:73
+#: Game/Levels/Comp/L01contra.lean:75
 msgid ""
 "You can think of §0 (which is shorthand for §1)\n"
 "as meaning \"if §2 were true, then that would lead to a contradiction\"--in other\n"
@@ -5515,49 +6145,17 @@ msgstr ""
 "Применив это к вашему новому предположению §4, вы получите нужное\n"
 "противоречие. Таким образом, команда §5 закроет цель."
 
-#. §0: `by_contra`
-#. §1: `¬`
-#. §2: `by_contra`
-#. §3: `False`
-#. §4: `False`
-#. §5: `h1 : P`
-#. §6: `h2 : ¬P`
-#. §7: `P`
-#. §8: `exact h2 h1`
-#. §9: `exact h1 h2`
-#: Game/Levels/Comp/L01contra.lean:80
-msgid ""
-"You can use the §0 tactic in any proof to assume the\n"
-"opposite of your goal.  But it is most useful when the goal\n"
-"starts with the symbol §1.  After using the §2 tactic,\n"
-"your goal will be §3.\n"
-"\n"
-"To complete a proof by contradiction, you must prove contradictory statements.\n"
-"If your goal is §4 and you have assumptions §5 and §6, for\n"
-"some statement §7, then §8 will close the goal.  Note that §9 won't\n"
-"work; you must list the negative statement first to establish a contradiction."
-msgstr ""
-"Вы можете использовать тактику §0 в любом доказательстве, чтобы предположить\n"
-"противоположное вашей цели. Но особенно полезна она тогда, когда цель\n"
-"начинается с символа §1. После применения тактики §2\n"
-"вашей целью станет §3.\n"
-"\n"
-"Чтобы завершить доказательство от противного, нужно получить два противоречащих друг другу утверждения.\n"
-"Если ваша цель — §4 и у вас есть предположения §5 и §6 для\n"
-"некоторого утверждения §7, то команда §8 закроет цель. Обратите внимание, что §9 не\n"
-"сработает: чтобы зафиксировать противоречие, сначала нужно указать утверждение с отрицанием."
-
 #. §0: `have`
 #. §1: `have`
-#: Game/Levels/Subset/L03have.lean:59
+#: Game/Levels/Subset/L03have.lean:61
 msgid ""
 "You can use the §0 tactic to add a new statement to your list of\n"
 "assumptions, as long as you can justify it with a proof.  For further\n"
-"information, click on §1 in the list of tactics on the right."
+"information, click on §1 in the list of *Tactics* in the inventory."
 msgstr ""
 "С помощью тактики §0 вы можете добавить в список предположений новое утверждение,\n"
 "если сумеете обосновать его доказательством. Чтобы узнать\n"
-"подробности, нажмите на §1 в списке тактик справа."
+"подробности, нажмите на §1 в разделе *Тактики* инвентаря."
 
 #. §0: `apply`
 #. §1: `t`
@@ -5568,6 +6166,8 @@ msgstr ""
 #. §6: `P`
 #. §7: `t`
 #. §8: `apply t`
+#. §9: `apply t`
+#. §10: `t`
 #: Game/Levels/Comp/L04compcomp.lean:32
 msgid ""
 "You can use the §0 tactic to work backwards from the goal.  Suppose you think that you\n"
@@ -5575,14 +6175,18 @@ msgid ""
 "is a proof of the goal of the form §2, where the question mark needs to be replaced\n"
 "with a proof of some statement §3 to which the theorem §4 must be applied.  The tactic\n"
 "§5 will then set §6 as your goal.  If §7 must be applied to more than one proof to\n"
-"establish the goal, then §8 will set all of the needed proofs as goals."
+"establish the goal, then §8 will set all of the needed proofs as goals.\n"
+"\n"
+"In a written proof, §9 reads \"By theorem §10, it suffices to show …\": it works backwards from the goal."
 msgstr ""
 "Тактика §0 позволяет рассуждать в обратном направлении — от цели. Допустим, вы считаете, что\n"
 "сможете доказать цель с помощью некоторой теоремы §1. Иными словами, вы предполагаете, что\n"
 "доказательство цели имеет вид §2, где вместо вопросительного знака нужно подставить\n"
 "доказательство некоторого утверждения §3, к которому применяется теорема §4. Тогда тактика\n"
 "§5 сделает вашей новой целью §6. Если для доказательства цели теорему §7 нужно применить\n"
-"к нескольким доказательствам, то §8 сделает новыми целями все утверждения, доказательства которых необходимо предоставить."
+"к нескольким доказательствам, то §8 сделает новыми целями все утверждения, доказательства которых необходимо предоставить.\n"
+"\n"
+"В письменном доказательстве §9 соответствует фразе «По теореме §10 достаточно показать …»: рассуждение ведётся в обратном направлении, от цели."
 
 #. §0: `compl_subset_compl_of_subset «{h1}»`
 #. §1: `Aᶜᶜ ⊆ Bᶜᶜ`
@@ -5606,7 +6210,7 @@ msgid "You don't need the assumption §0: §1 proves the goal."
 msgstr "Предположение §0 вам не понадобится: §1 доказывает цель."
 
 #. §0: `«{h2}»`
-#: Game/Levels/FamInter/L06eltwiseunion.lean:49
+#: Game/Levels/FamInter/L06eltwiseunion.lean:51
 msgid ""
 "You haven't used §0 yet.  If you don't see how to use it,\n"
 "write out its definition."
@@ -5708,19 +6312,6 @@ msgstr ""
 "расписать определение — он сделает это сам. Иными словами, если у вас\n"
 "есть §1, Lean сразу примет §2 в качестве доказательства §3."
 
-#. §0: `intro`
-#. §1: `intro`
-#. §2: `intro`
-#: Game/Levels/FamInter/L02intersubinter.lean:48
-msgid ""
-"You probably used §0 several times in this proof.  Recall that two §1 steps in a row\n"
-"can be combined into one step.  Click on §2 in the list of tactics on the right for\n"
-"further details."
-msgstr ""
-"Вероятно, в этом доказательстве вы использовали §0 несколько раз. Напомним, что два идущих подряд шага §1\n"
-"можно объединить в один. Нажмите на §2 в списке тактик справа, чтобы\n"
-"узнать подробности."
-
 #: Game/Levels/Inter/L03inter_sub_left.lean:13
 msgid "You should be able to combine ideas from previous levels to solve this one."
 msgstr "Чтобы пройти этот уровень, вам достаточно объединить идеи из предыдущих уровней."
@@ -5738,17 +6329,7 @@ msgstr ""
 msgid "You've finished Combination World!"
 msgstr "Вы прошли Мир комбинаций!"
 
-#: Game/Levels/FamInter/L06eltwiseunion.lean:63
-msgid ""
-"You've finished Family Intersection World!  As you might guess, you can also take the union of\n"
-"a family of sets.  Can you guess how to define it?  Continue on to Family Union World to see\n"
-"if your guess is right."
-msgstr ""
-"Вы прошли Мир пересечений семейств! Как нетрудно догадаться, для семейства множеств можно\n"
-"взять и объединение. Догадываетесь, как оно определяется? Переходите в Мир объединений семейств и проверьте\n"
-"свою догадку."
-
-#: Game/Levels/Union/L06union_assoc.lean:68
+#: Game/Levels/Union/L06union_assoc.lean:72
 msgid ""
 "You've mastered reasoning about complements, intersections, and unions.  Two worlds are now open:\n"
 "in Combination World we'll start mixing these operations up, and in Family Intersection World\n"
@@ -5796,7 +6377,7 @@ msgstr ""
 
 #. §0: `Aᶜᶜ ⊆ A`
 #. §1: `A ⊆ Aᶜᶜ`
-#: Game/Levels/Comp/L04compcomp.lean:72
+#: Game/Levels/Comp/L04compcomp.lean:75
 #: Game/Levels/Inter/L05subint.lean:34
 msgid ""
 "Your immediate goal now is to prove that §0.  Once you close that goal,\n"
@@ -5845,7 +6426,7 @@ msgstr "§0 является доказательством цели."
 
 #. §0: `«{h3}» h1`
 #. §1: `x ∈ B`
-#: Game/Levels/Comp/L01contra.lean:71
+#: Game/Levels/Comp/L01contra.lean:73
 msgid "§0 is a proof of §1."
 msgstr "§0 является доказательством §1."
 
@@ -5988,7 +6569,7 @@ msgstr ""
 #. §15: `False`
 #. §16: `False`
 #. §17: `exact h hP`
-#: Game/Levels/Comp/L01contra.lean:41
+#: Game/Levels/Comp/L01contra.lean:43
 msgid ""
 "§0 means \"it is not the case that §1\".  To enter the symbol §2,\n"
 "type §3.\n"
@@ -6103,7 +6684,7 @@ msgstr ""
 #. §25: `Q → P`
 #. §26: `h`
 #. §27: `rewrite`
-#: Game/Levels/Comp/L02compdef.lean:44
+#: Game/Levels/Comp/L02compdef.lean:46
 msgid ""
 "§0 means \"§1 if and only if §2\".  You can enter the symbol §3 by typing §4.\n"
 "\n"
@@ -6224,7 +6805,7 @@ msgstr ""
 #. §3: `∈`
 #. §4: `\\mem`
 #. §5: `\\in`
-#: Game/Levels/Subset/L01exact.lean:40
+#: Game/Levels/Subset/L01exact.lean:54
 msgid ""
 "§0 means that §1 is an element of §2.  To enter the symbol §3, type\n"
 "§4 or §5."

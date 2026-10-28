@@ -22,8 +22,8 @@ Statement (A B C : Set U) (h1 : A ∪ C ⊆ B ∪ C) (h2 : A ∩ C ⊆ B ∩ C) 
   away how to justify this assertion, you can just write `have hAC : {x} ∈ A ∪ C` and Lean will
   set `{x} ∈ A ∪ C` as your immediate goal.  Once you achieve that goal, Lean will add
   `hAC : {x} ∈ A ∪ C` to your list of assumptions, and you can continue with
-  the proof of your original goal.  For further details, click on `have` in the list of tactics
-  on the right."
+  the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+  in the inventory."
   have h4 : x ∈ A ∪ C
   rewrite [mem_union]
   exact Or.inl h3

@@ -47,7 +47,17 @@ Statement (F G : Set (Set U)) (h1 : F ⊆ G) : ⋂₀ G ⊆ ⋂₀ F := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `F ⊆ G`, and let `x` be an arbitrary element of `⋂₀ G`.  To show that `x ∈ ⋂₀ F`,
+> let `t` be an arbitrary set in `F`; we must show that `x ∈ t`.  Since `F ⊆ G`, `t ∈ G`, and
+> since `x` belongs to every set in `G`, `x ∈ t`.  So `x` belongs to every set in `F`, which
+> means that `x ∈ ⋂₀ F`.  Since `x` was arbitrary, `⋂₀ G ⊆ ⋂₀ F`.
+
+Notice the direction: a *larger* family has a *smaller* intersection, because each extra set in
+the family is one more set that the elements of the intersection have to belong to.
+
 You probably used `intro` several times in this proof.  Recall that two `intro` steps in a row
-can be combined into one step.  Click on `intro` in the list of tactics on the right for
+can be combined into one step.  Click on `intro` in the list of *Tactics* in the inventory for
 further details.
 "

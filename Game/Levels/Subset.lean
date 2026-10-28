@@ -22,13 +22,18 @@ Introduction
 "Welcome to Subset World! In this world you will learn about sets and
 subsets, and you will also learn the basics of proving theorems in Lean.
 
-The elements of the sets in this world will come from a universe called `U`.
-To specify that an
-object `x` belongs to the universe `U`, we write `x : U`.  To specify
-that `A` is a set of objects from `U`, we write `A : Set U`.  (The terminology used
-in Lean is that `x` has *type* `U` and `A` has *type* `Set U`.)  To
-say that `x` is an element of `A`, we write `x ∈ A`.  (You can enter
-the symbol `∈` by typing `\\mem` or `\\in`, followed by a space.)
+The elements of the sets in this world will come from a universe called `U`:
+the collection of all the objects we are talking about.
+
+Two kinds of notation look alike but mean different things:
+
+* `x : U` says what *kind* of thing `x` is: `x` is an object in the universe `U`.
+Similarly, `A : Set U` says that `A` is a set of objects from `U`.  (Lean's
+terminology is that `x` has *type* `U` and `A` has *type* `Set U`.)
+These are declarations, not statements: there is nothing to prove about them.
+* `x ∈ A` is a *statement*: it says that `x` is an element of the set `A`.
+Like any statement, it may be true or false, so it can be assumed or proved.
+(You can enter the symbol `∈` by typing `\\mem` or `\\in`, followed by a space.)
 
 You will prove theorems in this game by using tools called *tactics*.
 The aim is to prove the theorem by applying tactics

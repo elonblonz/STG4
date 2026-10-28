@@ -32,7 +32,9 @@ NewDefinition empty
 /-- If your assumptions are contradictory, `exfalso` changes the goal to `False`.  That means you
 can prove any goal from contradictory assumptions: first use `exfalso`, and then prove `False`.
 For example, if you have `h : False`, then `exact h` will prove `False`, and if you have
-`h1 : P` and `h2 : ¬P`, then `exact h2 h1` will prove `False`. -/
+`h1 : P` and `h2 : ¬P`, then `exact h2 h1` will prove `False`.
+
+In a written proof, `exfalso` reads "It suffices to derive a contradiction." -/
 TacticDoc exfalso
 
 NewTactic exfalso

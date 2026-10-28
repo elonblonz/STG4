@@ -38,6 +38,14 @@ Statement (A B C : Set U) (h1 : A ⊆ B) (h2 : A ⊆ C) : A ⊆ B ∩ C := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `A ⊆ B` and `A ⊆ C`, and let `x` be an arbitrary element of `A`.  Since `A ⊆ B`,
+> `x ∈ B`, and since `A ⊆ C`, `x ∈ C`.  Therefore `x ∈ B ∩ C`.  Since `x` was arbitrary,
+> `A ⊆ B ∩ C`.
+
+To prove an \"and\" statement, you prove each half; that is what `apply And.intro` set up.
+
 In general, if you think that some theorem `t` could be used to prove the goal, the tactic
 `apply t` will work backwards from the goal, setting as new goals any hypotheses that are
 needed for the application of the theorem `t`.

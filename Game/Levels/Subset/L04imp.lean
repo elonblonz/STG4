@@ -48,7 +48,9 @@ about `x`, then you can use the tactic `intro x` to introduce a new object `x` i
 Be sure to use a variable name that is not already in use.  The goal will then be `P x`.
 
 You can do multiple introductions in one step: for example, `intro x h` has the same
-effect as doing `intro x` followed by `intro h`. -/
+effect as doing `intro x` followed by `intro h`.
+
+In a written proof, `intro x` for a goal about all objects (such as `A ⊆ B`) reads "Let `x` be arbitrary."  For a goal `P → Q`, `intro h` reads "Suppose `P`." -/
 TacticDoc intro
 
 NewTactic intro
@@ -78,5 +80,5 @@ acting like a function: a proof of `P → Q` can be thought of as a function whi
 applied to a proof of `P`, produces a proof of `Q`.
 
 As usual, for more information about the new tactic `intro`, you can click on `intro`
-in the list of tactics on the right.
+in the list of *Tactics* in the inventory.
 "

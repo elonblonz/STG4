@@ -58,8 +58,8 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
     right away how to justify this assertion, you can just write `have {h2}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}`
     and Lean will set `{t}ᶜ ∈ \{s | sᶜ ∈ F}` as your immediate goal.  Once you achieve that goal,
     Lean will add `{h2}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}` to your list of assumptions, and you can continue
-    with the proof of your original goal.  For further details, click on `have` in the list of tactics
-    on the right."
+    with the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+    in the inventory."
   rewrite [mem_sUnion]
   push_neg
   intro t h2
@@ -69,8 +69,8 @@ Statement (F : Set (Set U)) : (⋃₀ F)ᶜ = ⋂₀ {s | sᶜ ∈ F} := by
   right away how to justify this assertion, you can just write `have {h3}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}`
   and Lean will set `{t}ᶜ ∈ \{s | sᶜ ∈ F}` as your immediate goal.  Once you achieve that goal,
   Lean will add `{h3}a : {t}ᶜ ∈ \{s | sᶜ ∈ F}` to your list of assumptions, and you can continue
-  with the proof of your original goal.  For further details, click on `have` in the list of tactics
-  on the right."
+  with the proof of your original goal.  For further details, click on `have` in the list of *Tactics*
+  in the inventory."
   have h3a : tᶜ ∈ {A | Aᶜ ∈ F}
   rewrite [mem_setOf]
   rewrite [compl_compl]

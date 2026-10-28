@@ -14,8 +14,18 @@ Introduction
 # Welcome to the Set Theory Game
 #### An introduction to mathematical proof.
 
-In this game, you will solve a sequence of levels by proving theorems.  The game
-is based on an interactive theorem prover called *Lean*.
+In this game, you will solve a sequence of levels by proving theorems.
+
+A *proof* is a chain of steps that leads from what you are given to what
+you want to show, where every step is justified.  In each level the game
+shows you the *givens* (the objects and assumptions you may use) and the
+*goal* (the statement you must prove).  You make progress one step at a time,
+and each step changes the givens or the goal, until nothing is left to prove.
+
+Every step you take is checked by an interactive theorem prover called *Lean*.
+Lean accepts a step only if it is fully justified, and it tells you at once
+when something is wrong.  So you can experiment freely: a wrong step costs
+nothing, and when Lean accepts your proof, you know it is correct.
 
 The theorems in this game will be about sets.
 A *set* is a collection of objects; the objects in the collection are
@@ -58,6 +68,10 @@ Warning: In most browsers, deleting cookies will also clear the local storage
 
 ## Resources
 
+* Daniel J. Velleman, *How To Prove It: A Structured Approach* (Cambridge University
+Press): the proof techniques practised in this game, explained in depth.
+* [How To Prove It with Lean](https://djvelleman.github.io/HTPIwL/): the same book's
+ideas, written out in Lean.
 * The [Lean Zulip chat](https://leanprover.zulipchat.com/) forum
 
 ## Problems?

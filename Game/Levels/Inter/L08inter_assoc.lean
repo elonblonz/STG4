@@ -28,7 +28,9 @@ statement `(A ∩ B) ∩ C = A ∩ (B ∩ C)`.  In Mathlib, the name of this the
 TheoremDoc STG4.inter_assoc as "inter_assoc" in "∩∪"
 
 /-- If your goal is `A = B`, where `A` and `B` are sets, then the tactic `ext x` will introduce
-a new arbitrary object `x` into the proof and set the goal to be `x ∈ A ↔ x ∈ B`. -/
+a new arbitrary object `x` into the proof and set the goal to be `x ∈ A ↔ x ∈ B`.
+
+In a written proof, `ext x` reads "Let `x` be arbitrary; we show that `x` is in one set if and only if it is in the other." -/
 TacticDoc ext
 
 NewTactic ext
@@ -70,5 +72,18 @@ Statement inter_assoc (A B C : Set U) : (A ∩ B) ∩ C = A ∩ (B ∩ C) := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> Let `x` be arbitrary.  Suppose first that `x ∈ (A ∩ B) ∩ C`.  Then `x ∈ A ∩ B` and `x ∈ C`,
+> so `x ∈ A`, `x ∈ B`, and `x ∈ C`.  Since `x ∈ B` and `x ∈ C`, `x ∈ B ∩ C`, and since also
+> `x ∈ A`, `x ∈ A ∩ (B ∩ C)`.  The converse is similar: if `x ∈ A ∩ (B ∩ C)`, then `x ∈ A`,
+> `x ∈ B`, and `x ∈ C`, so `x ∈ A ∩ B` and therefore `x ∈ (A ∩ B) ∩ C`.  Thus the two sets have
+> exactly the same elements, so they are equal.
+
+This is the method behind `ext`: two sets are equal when every object belongs to one exactly
+when it belongs to the other.  Associativity is familiar from arithmetic, where
+`(a * b) * c = a * (b * c)`; it is what allows us to write `A ∩ B ∩ C` without worrying about
+parentheses.
+
 Well done!  You're ready to move on to Union World.
 "

@@ -34,7 +34,9 @@ will be able to use some theorem `t` to prove the goal.  In other words, you thi
 is a proof of the goal of the form `t ?`, where the question mark needs to be replaced
 with a proof of some statement `P` to which the theorem `t` must be applied.  The tactic
 `apply t` will then set `P` as your goal.  If `t` must be applied to more than one proof to
-establish the goal, then `apply t` will set all of the needed proofs as goals. -/
+establish the goal, then `apply t` will set all of the needed proofs as goals.
+
+In a written proof, `apply t` reads "By theorem `t`, it suffices to show …": it works backwards from the goal. -/
 TacticDoc apply
 
 /-- If your goal is a negative statement, then the tactic `push_neg` will try to reexpress it as
@@ -48,7 +50,8 @@ reexpressions performed by the `push_neg` tactic:
 * `¬(P → Q)` is converted to `P ∧ ¬Q`.
 * `¬∀ x, P x` is converted to `∃ x, ¬P x`.
 * `¬∃ x, P x` is converted to `∀ x, ¬P x`.
--/
+
+In a written proof, `push_neg` reads "In other words, …", restating a negative statement in positive form. -/
 TacticDoc push_neg
 
 NewTactic apply push_neg
@@ -96,12 +99,25 @@ Statement compl_compl (A : Set U) : Aᶜᶜ = A := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> We prove that each set is a subset of the other.  First, let `x` be an arbitrary element of
+> `Aᶜᶜ`.  Then `x ∉ Aᶜ`, which means that it is not the case that `x ∉ A`; in other words,
+> `x ∈ A`.  So `Aᶜᶜ ⊆ A`.  Conversely, let `x` be an arbitrary element of `A`.  Then it is not
+> the case that `x ∉ A`, so `x ∉ Aᶜ`, and therefore `x ∈ Aᶜᶜ`.  So `A ⊆ Aᶜᶜ`.  Since each set
+> is a subset of the other, `Aᶜᶜ = A`.
+
+This is the most common way to prove that two sets are equal.  It works because `⊆` is
+*antisymmetric*: if `A ⊆ B` and `B ⊆ A`, then `A` and `B` have the same elements, so they are
+equal.  And the step \"it is not the case that `x ∉ A`; in other words, `x ∈ A`\" is exactly
+what `push_neg` did for you.
+
 The `push_neg` tactic can reexpress a number of different kinds of negative statements as
 equivalent positive statements; use
 `push_neg` to reexpress a negative goal, and `push_neg at h` to reexpress a negative assumption `h`.
 We'll see many more uses of the `apply` tactic in this game.
 For more details about the use of these tactics,
-click on `push_neg` or `apply` under the list of tactics on the right.
+click on `push_neg` or `apply` in the list of *Tactics* in the inventory.
 
 We have given this theorem the name `compl_compl`.  Both this theorem and the one in the previous
 level will be useful in the next level.

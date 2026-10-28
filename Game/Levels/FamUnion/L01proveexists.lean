@@ -69,6 +69,14 @@ Statement (A : Set U) : ∃ s, s ⊆ A := by
 
 Conclusion
 "
+**The proof, written out.**
+
+> We need a set `s` such that `s ⊆ A`.  Take `s = A`: every set is a subset of itself.
+
+To prove that something exists, you name an example (a *witness*) and show that it has the
+required property.  `Exists.intro A h` does exactly that: `A` is the witness, and `h` shows that
+it works.
+
 By the way, another set that works as a witness for the existential goal in this theorem is the
 empty set, `∅`.  To justify the use of that witness, you can use the theorem `empty_subset` from
 Complement World: `Exists.intro ∅ (empty_subset A)` is also a proof of the goal.

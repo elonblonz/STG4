@@ -42,7 +42,9 @@ TheoremTab "⋂₀⋃₀"
 /-- If your goal is `∃ x, P x`, where `P x` represents some statement about `x`, and `a` is a
 value that could be assigned to `x`, then the tactic `use a` will
 set `P a` to be the goal.  It will then see if this new goal follows easily from your
-assumptions, and if so it will close the goal. -/
+assumptions, and if so it will close the goal.
+
+In a written proof, `use t` reads "Take `t`."  Then you show that `t` has the required property. -/
 TacticDoc use
 
 NewTactic use
@@ -71,6 +73,12 @@ Statement subset_sUnion_of_mem (A : Set U) (F : Set (Set U)) (h1 : A ∈ F) : A 
 
 Conclusion
 "
+**The proof, written out.**
+
+> Suppose `A ∈ F`, and let `x` be an arbitrary element of `A`.  To show that `x ∈ ⋃₀ F`, we
+> must find a set in `F` that contains `x`.  The set `A` works, since `A ∈ F` and `x ∈ A`.
+> Since `x` was arbitrary, `A ⊆ ⋃₀ F`.
+
 There is another tactic you could have used to complete this proof.  Instead of
 `apply Exists.intro A`, you could write `use A`.  The `use` tactic is actually a powerful
 tactic.  Not only does it fill in `A` for `t` in the existential goal, it then tries to
