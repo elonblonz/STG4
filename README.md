@@ -39,13 +39,13 @@ container is created and served on port 3000 when it starts. After editing Lean 
 ### Without Docker
 
 You need [elan](https://github.com/leanprover/elan) (the Lean toolchain manager), Node.js
-20+, and git. Clone the game engine next to this repository, at the tag that matches
-`lean-toolchain`:
+20+, and git. Clone the game engine (our fork, at the release the Docker setup uses) next to
+this repository:
 
 ```sh
 lake exe cache get   # download prebuilt Mathlib
 lake build
-git clone --depth 1 --branch "$(cut -d: -f2 lean-toolchain)" https://github.com/leanprover-community/lean4game.git ../lean4game
+git clone --depth 1 --branch stg4-v2 https://github.com/elonblonz/lean4game.git ../lean4game
 cd ../lean4game && npm install && npm start
 ```
 
@@ -101,7 +101,7 @@ engine, not from this repository. We use our fork,
 plus dark mode, the phone and tablet layout, the visual refresh, and fixes to level
 navigation and submitting commands. The Docker image builds a fixed release of it, the tag
 set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
-(currently `stg4-v1`), so every build gets the same engine. To build against another engine,
+(currently `stg4-v2`), so every build gets the same engine. To build against another engine,
 e.g. a branch you are working on:
 
 ```sh

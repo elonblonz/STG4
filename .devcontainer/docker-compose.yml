@@ -8,7 +8,7 @@ services:
       # (an empty LEAN4GAME_REF means the upstream tag matching our Lean version).
       args:
         LEAN4GAME_REPO: ${LEAN4GAME_REPO:-https://github.com/elonblonz/lean4game.git}
-        LEAN4GAME_REF: ${LEAN4GAME_REF-stg4-v1}
+        LEAN4GAME_REF: ${LEAN4GAME_REF-stg4-v2}
     # Used by `docker compose up`; the VS Code dev container overrides it and runs
     # the same steps via `onCreateCommand` / `postStartCommand` instead.
     command: bash .devcontainer/run.sh
