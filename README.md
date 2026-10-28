@@ -93,19 +93,22 @@ with `--dry-run` first to see what would change.
 Strings that were drafted without native-speaker review are listed in
 `.i18n/TRANSLATIONS_TODO.md`.
 
-## Running against a lean4game fork
+## The game engine
 
 The game's UI comes from the [lean4game](https://github.com/leanprover-community/lean4game)
-engine, not from this repository. The Docker image applies our engine changes on top of
-upstream from `.devcontainer/lean4game-patches/0001-stg4-engine.patch` (dark mode, the
-phone and tablet layout, the visual refresh, and fixes to level navigation and submitting
-commands; the patch's header lists the commits). To work on the engine itself, point the
-Docker build at your fork:
+engine, not from this repository. We use our fork,
+[elonblonz/lean4game](https://github.com/elonblonz/lean4game), branch `stg4-ui`: upstream
+plus dark mode, the phone and tablet layout, the visual refresh, and fixes to level
+navigation and submitting commands. The Docker image builds against that branch. To build
+against another engine, e.g. a branch you are working on:
 
 ```sh
 LEAN4GAME_REPO=https://github.com/<you>/lean4game.git LEAN4GAME_REF=<branch> \
   docker compose -f .devcontainer/docker-compose.yml build
 ```
+
+Engine changes are made in the fork and merged into `stg4-ui`; rebuild the image to pick
+them up.
 
 To use a local checkout of the engine's Lean server instead of the published one, run
 `lake update -R -Klean4game.local`. It expects the checkout at `../lean4game` (see

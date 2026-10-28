@@ -18,23 +18,16 @@ USER node
 WORKDIR /home/node
 
 # Clone the game engine and install its npm dependencies here, so they are cached in the image
-# rather than redone per container. By default this is the upstream tag matching our Lean
-# version; set LEAN4GAME_REPO / LEAN4GAME_REF (see docker-compose.yml) to build against a fork.
-ARG LEAN4GAME_REPO=https://github.com/leanprover-community/lean4game.git
-ARG LEAN4GAME_REF=
+# rather than redone per container. By default this is our engine fork (upstream lean4game
+# plus our changes, branch `stg4-ui`); set LEAN4GAME_REPO / LEAN4GAME_REF (see
+# docker-compose.yml) to build against another one. With LEAN4GAME_REF empty, the upstream
+# tag matching our Lean version is used, e.g. for
+#   LEAN4GAME_REPO=https://github.com/leanprover-community/lean4game.git LEAN4GAME_REF=
+ARG LEAN4GAME_REPO=https://github.com/elonblonz/lean4game.git
+ARG LEAN4GAME_REF=stg4-ui
 RUN git clone --depth 1 --branch "${LEAN4GAME_REF:-$(grep -oE '[^:]+$' /lean-toolchain)}" \
     "$LEAN4GAME_REPO" lean4game \
   && cd lean4game && npm install
-
-# Engine changes we carry on top of upstream: `0001-stg4-engine.patch` is `git diff` of our
-# engine fork against the upstream tag (its header lists the fork's commits). Patches the
-# engine already contains, e.g. when building against our fork, are skipped.
-COPY --chown=node .devcontainer/lean4game-patches /home/node/lean4game-patches
-RUN cd lean4game && for p in ../lean4game-patches/*.patch; do \
-    [ -e "$p" ] || continue; \
-    if git apply --reverse --check "$p" 2>/dev/null; then echo "already applied: $p"; \
-    else git apply "$p" && echo "applied: $p"; fi; \
-  done
 
 # Mount point for the `.lake` named volume (see docker-compose.yml). Creating it here
 # makes the volume owned by `node` instead of `root`.

@@ -3,11 +3,12 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-      # Build against a lean4game fork, e.g.
+      # The engine: our fork's `stg4-ui` branch by default. To build against another one, e.g.
       #   LEAN4GAME_REPO=https://github.com/you/lean4game.git LEAN4GAME_REF=my-branch docker compose ... build
+      # (an empty LEAN4GAME_REF means the upstream tag matching our Lean version).
       args:
-        LEAN4GAME_REPO: ${LEAN4GAME_REPO:-https://github.com/leanprover-community/lean4game.git}
-        LEAN4GAME_REF: ${LEAN4GAME_REF:-}
+        LEAN4GAME_REPO: ${LEAN4GAME_REPO:-https://github.com/elonblonz/lean4game.git}
+        LEAN4GAME_REF: ${LEAN4GAME_REF-stg4-ui}
     # Used by `docker compose up`; the VS Code dev container overrides it and runs
     # the same steps via `onCreateCommand` / `postStartCommand` instead.
     command: bash .devcontainer/run.sh
