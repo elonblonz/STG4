@@ -7,9 +7,14 @@ set -euo pipefail
 
 build() {
   cd ~/game
+  # Only download the Mathlib modules the game imports (and what they import), not all of
+  # Mathlib: about 1 GB instead of 6. With no Mathlib imports this downloads everything.
+  local modules
+  modules=$(grep -rhoE '^import Mathlib[A-Za-z0-9_.]*' Game Game.lean | cut -d' ' -f2 | sort -u)
   # Downloads occasionally fail on flaky networks; anything still missing after a retry
   # is just compiled locally by `lake build`.
-  lake exe cache get || lake exe cache get || echo "WARNING: Mathlib cache incomplete, building the rest locally"
+  # shellcheck disable=SC2086
+  lake exe cache get $modules || lake exe cache get $modules || echo "WARNING: Mathlib cache incomplete, building the rest locally"
   lake build
 }
 
