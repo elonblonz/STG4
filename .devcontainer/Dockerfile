@@ -24,7 +24,7 @@ WORKDIR /home/node
 # empty, the upstream tag matching our Lean version is used, e.g. for
 #   LEAN4GAME_REPO=https://github.com/leanprover-community/lean4game.git LEAN4GAME_REF=
 ARG LEAN4GAME_REPO=https://github.com/elonblonz/lean4game.git
-ARG LEAN4GAME_REF=stg4-v3
+ARG LEAN4GAME_REF=stg4-v4
 RUN git clone --depth 1 --branch "${LEAN4GAME_REF:-$(grep -oE '[^:]+$' /lean-toolchain)}" \
     "$LEAN4GAME_REPO" lean4game \
   && cd lean4game && npm ci

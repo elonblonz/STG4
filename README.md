@@ -45,7 +45,7 @@ this repository:
 ```sh
 lake exe cache get   # download prebuilt Mathlib
 lake build
-git clone --depth 1 --branch stg4-v3 https://github.com/elonblonz/lean4game.git ../lean4game
+git clone --depth 1 --branch stg4-v4 https://github.com/elonblonz/lean4game.git ../lean4game
 cd ../lean4game && npm install && npm start
 ```
 
@@ -99,10 +99,13 @@ The game's UI comes from the [lean4game](https://github.com/leanprover-community
 engine, not from this repository. We use our fork,
 [elonblonz/lean4game](https://github.com/elonblonz/lean4game), branch `stg4-ui`: upstream
 plus dark mode, the phone and tablet layout, the visual refresh, written proofs (each
-completed proof written out, with a journal and LaTeX export), and fixes to level
+completed proof written out, with a journal and LaTeX export), a hint ladder, a glossary,
+keyboard navigation, faster Lean start-up, and fixes to level
 navigation and submitting commands. The Docker image builds a fixed release of it, the tag
 set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
-(currently `stg4-v3`), so every build gets the same engine. To build against another engine,
+(currently `stg4-v4`), so every build gets the same engine. The game's levels are compiled
+against the Lean server of the same release (`gameServerRelease` in `lakefile.lean`). To
+build against another engine,
 e.g. a branch you are working on:
 
 ```sh
@@ -111,8 +114,9 @@ LEAN4GAME_REPO=https://github.com/<you>/lean4game.git LEAN4GAME_REF=<branch> \
 ```
 
 To release engine changes: commit them on the fork's `stg4-ui` branch, tag the commit
-`stg4-v<N+1>` and push both (`git push fork stg4-ui stg4-v<N+1>`), then update the tag in
-the two files above and rebuild the image.
+`stg4-v<N+1>` and push both (`git push fork stg4-ui stg4-v<N+1>`). Then update the tag in
+the two files above and in `lakefile.lean`, run `lake update GameServer` and `lake build`
+(which regenerates `.i18n/en/Game.pot`), and rebuild the image.
 
 To use a local checkout of the engine's Lean server instead of the published one, run
 `lake update -R -Klean4game.local`. It expects the checkout at `../lean4game` (see
