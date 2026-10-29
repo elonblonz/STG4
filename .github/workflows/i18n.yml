@@ -19,4 +19,5 @@ jobs:
       - name: Check diagrams are up to date with scripts/make_diagrams.py
         run: |
           python3 scripts/make_diagrams.py
-          git diff --exit-code -- images/ || { echo "::error::Run 'python scripts/make_diagrams.py' and commit the result"; exit 1; }
+          # Also catches new diagrams that were never committed (`git diff` ignores untracked files).
+          test -z "$(git status --porcelain -- images/)" || { git status --short -- images/; echo "::error::Run 'python scripts/make_diagrams.py' and commit the result"; exit 1; }

@@ -22,6 +22,9 @@ Statement (F : Set (Set U)) : (⋂₀ F)ᶜ = ⋃₀ {s | sᶜ ∈ F} := by
   apply Iff.intro
   intro h1
   rewrite [mem_compl_iff] at h1
+  Hint (hidden := true) "`{h1}` says that `{x}` is not in every set of `F`.  Write out `⋂₀` with
+  `rewrite [mem_sInter] at {h1}` and use `push_neg at {h1}`: that gives you a set in `F` that
+  doesn't contain `{x}`."
   Branch
     rewrite [mem_sUnion]
     by_contra h2

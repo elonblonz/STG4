@@ -32,12 +32,12 @@ the existential statement.)  In this level, you'll try out this theorem.
 If you have `h : P a`, for some object `a`, then `Exists.intro a h` is a proof of `∃ x, P x`,
 so `exact Exists.intro a h` will close the goal.
 If you think `P a` is true, but you don't yet have a proof of it, then `apply Exists.intro a`
-will set `P a` as your goal.  The tactic `use a` does the same thing, but it also tries to
+will set `P a` as your goal.  The tactic `use a` (introduced in a later level) does the same thing, but it also tries to
 prove `P a`; if it doesn't succeed, then it leaves `P a` as a goal for you to prove.
 
 ### If you have an assumption `h : ∃ x, P x`
 
-The tactic `obtain ⟨w, hw⟩ := h` will
+The tactic `obtain ⟨w, hw⟩ := h` (introduced in a later level) will
 introduce a new object `w` and a new assumption `hw : P w` into the proof.  To enter the
 angle brackets `⟨ ⟩`, type either `\<` and `\>` or `\langle` and `\rangle`.
 -/

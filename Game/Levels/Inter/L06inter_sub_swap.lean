@@ -26,7 +26,7 @@ TheoremDoc STG4.inter_subset_swap as "inter_subset_swap" in "∩∪"
 Statement inter_subset_swap (A B : Set U) : A ∩ B ⊆ B ∩ A := by
   intro x h
   Hint (hidden := true) "It will help you see how to proceed if you
-  write out the definition of intersection in both the assumption {h} and the goal.
+  write out the definition of intersection in both the assumption `{h}` and the goal.
   Using the `rewrite` tactic isn't necessary; you can just do the rewriting in
   your head rather than asking Lean to do it.  But if it helps you to figure out the
   proof, go ahead and use the `rewrite` tactic."

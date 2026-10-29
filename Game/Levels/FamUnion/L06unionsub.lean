@@ -31,6 +31,8 @@ Statement sUnion_subset_iff (A : Set U) (F : Set (Set U)) : ⋃₀ F ⊆ A ↔ �
   prove the goal.  That means that `apply {h1}` will set `{x} ∈ ⋃₀ F` as the goal."
   apply h1
   rewrite [mem_sUnion]
+  Hint (hidden := true) "`use {s}` fills in the witness, and then also proves the rest of the goal
+  from your assumptions, so it finishes this part of the proof."
   use s
   intro h1
   intro x h2
@@ -41,5 +43,5 @@ Statement sUnion_subset_iff (A : Set U) (F : Set (Set U)) : ⋃₀ F ⊆ A ↔ �
 Conclusion
 "
 This theorem is the mirror image of the one in Family Intersection World about when `A ⊆ ⋂₀ F`:
-it says that `⋃₀ F` is the *smallest* set that contains every element of `F`.
+it says that `⋃₀ F` is the *smallest* set that has every element of `F` as a subset.
 "

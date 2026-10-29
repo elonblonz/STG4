@@ -49,7 +49,7 @@ links, and ways to interact with the Lean community.
 
 Info
 "
-*Game version: 4.4*
+*Game version: 4.5*
 
 ## Progress saving
 
@@ -86,9 +86,9 @@ game memes) then head on over to the [Lean Discord](https://discord.gg/WZ9bs9UCv
 
 Alternatively, if you experience issues / bugs you can also open github issues:
 * For issues with the game engine, please open an
-[issue at the lean4game repo](https://github.com/leanprover-community/lean4game/issues).
+[issue at our lean4game repo](https://github.com/elonblonz/lean4game/issues).
 * For issues about the game's content, please open an
-[issue at the STG repo](https://github.com/djvelleman/STG4/issues).
+[issue at our STG4 repo](https://github.com/elonblonz/STG4/issues).
 "
 
 Dependency Intersection → Union
@@ -100,7 +100,7 @@ Dependency Combination → Difference
 Languages "en" "es" "ru"
 CaptionShort "A game about set theory."
 CaptionLong "In this game you will learn the basics of theorem proving in Lean by proving
-theorems about unions, intersections, and complements of sets."
+theorems about sets: subsets, complements, intersections, unions, differences, and families of sets."
 CoverImage "images/cover.png"
 
 MakeGame

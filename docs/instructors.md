@@ -26,9 +26,10 @@ paragraph, then compare it with the written-out proofs.
 
 ## Worlds, objectives and HTPI sections
 
-Worlds unlock in order (Intersection and Union open Combination World; Combination opens
-Difference World and, together with the family worlds, Family Combination World). Times are
-rough guides for a student new to proofs.
+Worlds unlock in order: Subset → Complement → Intersection → Union. Union World opens both
+Combination World and Family Intersection World; Combination opens Difference World;
+Family Intersection opens Family Union; and Combination and Family Union together open Family
+Combination World. Times are rough guides for a student new to proofs.
 
 | World | Levels | Students learn to… | Tactics introduced | HTPI |
 |---|---|---|---|---|

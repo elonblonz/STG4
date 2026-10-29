@@ -8,7 +8,7 @@ variable {U : Type}
 
 World "Subset"
 Level 2
-Title "A subset hypothesis"
+Title "A subset assumption"
 
 Introduction
 "

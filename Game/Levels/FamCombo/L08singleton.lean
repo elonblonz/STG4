@@ -38,6 +38,7 @@ Statement (A : Set U) (h1 : ∀ F, (⋃₀ F = A → A ∈ F)) : ∃ x, A = {x} 
   family must help you prove that `A` is a singleton."
   have h2 := h1 {s | ∃ x ∈ A, s = {x}}
   have h3 : ⋃₀ {s | ∃ x ∈ A, s = {x}} = A
+  Hint (hidden := true) "Prove this equation of sets with `ext`, as usual."
   ext x
   apply Iff.intro
   intro h3

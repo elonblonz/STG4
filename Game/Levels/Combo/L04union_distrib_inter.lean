@@ -31,6 +31,10 @@ TheoremDoc STG4.union_distrib_left as "union_distrib_left" in "∩∪"
 
 /-- For any sets $A$, $B$, and $C$, $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$. -/
 Statement union_distrib_left (A B C : Set U) : A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C) := by
+  Hint (hidden := true) "**The idea.**  Write `A ∪ (B ∩ C)` as its double complement with
+  `rewrite [← compl_compl (A ∪ (B ∩ C))]`, then push the inner complement inward with `compl_union`
+  and `compl_inter`.  Inside, you get an intersection with a union, where `inter_distrib_left`
+  applies.  Then push the complements back out."
   rewrite [← compl_compl (A ∪ (B ∩ C))]
   rewrite [compl_union]
   Hint "You might be tempted to use `rewrite [compl_inter]` as your next step.  But
@@ -52,8 +56,8 @@ Conclusion
 "
 This is the second distributive law, and here the analogy with arithmetic breaks down:
 `a + (b * c) = (a + b) * (a + c)` is false for numbers, but for sets both distributive laws hold.
-In fact, any equation built from `∩`, `∪` and `ᶜ` stays true when you swap `∩` and `∪`
-everywhere.
+In fact, any equation built from `∩`, `∪` and `ᶜ` that holds for *all* sets stays true when you
+swap `∩` and `∪` everywhere (the *duality principle*).
 
 To finish off Combination World, we'll do one more tricky theorem.
 "

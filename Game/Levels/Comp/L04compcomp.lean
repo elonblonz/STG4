@@ -64,7 +64,8 @@ TheoremDoc Set.Subset.antisymm as "Subset.antisymm" in "⊆"
 
 NewTheorem Set.Subset.antisymm
 
-/-- If `A` is a set, then `compl_compl A` is a proof of `Aᶜᶜ = A`. -/
+/-- If `A` is a set, then `compl_compl A` is a proof of `Aᶜᶜ = A`.  In Mathlib, the name of this
+theorem is `compl_compl`. -/
 TheoremDoc STG4.compl_compl as "compl_compl" in "ᶜ"
 
 /-- Suppose $A$ is a set.  Then $(A^c)^c = A$. -/

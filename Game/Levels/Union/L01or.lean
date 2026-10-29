@@ -29,13 +29,13 @@ If you have `hP : P`, then `Or.inl hP` is a proof of `P ∨ Q`, so `exact Or.inl
 will close the goal.  Similarly, if you have `hQ : Q`, then `Or.inr hQ` is a proof
 of `P ∨ Q`.  If you don't have a proof of either `P` or `Q`, but you think you know
 which one is true, then you can use `apply Or.inl` to set the goal to be `P`, or
-`apply Or.inr` to set the goal to be `Q`.  Alternatively, the tactic `left` will have
+`apply Or.inr` to set the goal to be `Q`.  Alternatively, the tactic `left` (introduced in a later level) will have
 the same effect as `apply Or.inl`, and `right` will have the same effect as
 `apply Or.inr`.
 
 ### If you have an assumption `h : P ∨ Q`
 
-A good strategy would be to use proof by cases.  The tactic `rcases h with hP | hQ`
+A good strategy would be to use proof by cases.  The tactic `rcases h with hP | hQ` (introduced in a later level)
 will break the proof into two cases.  In case 1, the assumption `h` is replaced by
 `hP : P`, and in case 2 it is replaced by `hQ : Q`.  In both cases, you must prove
 the goal.

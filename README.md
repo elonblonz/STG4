@@ -39,13 +39,13 @@ container is created and served on port 3000 when it starts. After editing Lean 
 ### Without Docker
 
 You need [elan](https://github.com/leanprover/elan) (the Lean toolchain manager), Node.js
-20+, and git. Clone the game engine next to this repository, at the tag that matches
-`lean-toolchain`:
+20+, and git. Clone the game engine (our fork, at the release the Docker setup uses) next to
+this repository:
 
 ```sh
 lake exe cache get   # download prebuilt Mathlib
 lake build
-git clone --depth 1 --branch "$(cut -d: -f2 lean-toolchain)" https://github.com/leanprover-community/lean4game.git ../lean4game
+git clone --depth 1 --branch stg4-v3 https://github.com/elonblonz/lean4game.git ../lean4game
 cd ../lean4game && npm install && npm start
 ```
 
@@ -98,10 +98,11 @@ Strings that were drafted without native-speaker review are listed in
 The game's UI comes from the [lean4game](https://github.com/leanprover-community/lean4game)
 engine, not from this repository. We use our fork,
 [elonblonz/lean4game](https://github.com/elonblonz/lean4game), branch `stg4-ui`: upstream
-plus dark mode, the phone and tablet layout, the visual refresh, and fixes to level
+plus dark mode, the phone and tablet layout, the visual refresh, written proofs (each
+completed proof written out, with a journal and LaTeX export), and fixes to level
 navigation and submitting commands. The Docker image builds a fixed release of it, the tag
 set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
-(currently `stg4-v1`), so every build gets the same engine. To build against another engine,
+(currently `stg4-v3`), so every build gets the same engine. To build against another engine,
 e.g. a branch you are working on:
 
 ```sh
@@ -121,10 +122,14 @@ To use a local checkout of the engine's Lean server instead of the published one
 
 Pushing to `main` builds the game and uploads it as a workflow artifact. To publish it to
 [adam.math.hhu.de](https://adam.math.hhu.de), open
-`https://adam.math.hhu.de/import/trigger/<owner>/<repo>`.
+`https://adam.math.hhu.de/import/trigger/<owner>/<repo>`. Note that adam.math.hhu.de serves
+the game with the upstream engine: our engine changes (dark mode, the phone layout, the visual
+refresh and the fixes) appear only when the game runs on our fork, as in the Docker setup or a
+self-hosted server.
 
-If you host the patched engine yourself, replace the placeholder impressum and privacy
-policy in the engine's `client/public/legal/` (`impressum.md`, `privacy.md`) with your own.
+If you host our engine fork yourself, replace the placeholder impressum and privacy policy in
+its `client/public/legal/` (`impressum.md`, `privacy.md`) with your own, and read the fork's
+`doc/server.md` (sandbox, memory limits, and the relay's settings).
 
 ## License
 

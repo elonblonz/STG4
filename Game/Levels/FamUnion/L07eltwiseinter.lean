@@ -12,7 +12,7 @@ Title "Union of a family of intersections"
 
 Introduction
 "
-In this level, we introduce another way to define sets.  If `P x` is a statement about an
+In this level, we take a closer look at another way to define sets.  If `P x` is a statement about an
 unspecified object `x`, then `{x | P x}` denotes the set of all values of `x` that make `P x`
 come out true.  This is often called *set-builder notation*.  For example,
 `{x | x ∈ A ∧ x ∈ B}` is another way to write `A ∩ B`.
@@ -33,6 +33,10 @@ TheoremTab "{ }"
 /--Suppose $A$ is a set and $F$ is a family of sets.  Then $A \cap (\bigcup F) =
 \bigcup\{s \mid \exists u \in F, s = A \cap u\}$.-/
 Statement (A : Set U) (F : Set (Set U)) : A ∩ (⋃₀ F) = ⋃₀ {s | ∃ u ∈ F, s = A ∩ u} := by
+  Hint (hidden := true) "**The idea.**  For `→`: if `x ∈ A` and `x ∈ u` for some `u ∈ F`, then
+  `A ∩ u` is the set you need, because it is in the family on the right and contains `x`.  For
+  `←`: if `x` is in some set of that family, that set is `A ∩ u` for some `u ∈ F`, so `x ∈ A` and
+  `x ∈ u`."
   ext x
   apply Iff.intro
   intro h1
