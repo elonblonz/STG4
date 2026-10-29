@@ -17,7 +17,7 @@ def LocalGameServer : Dependency := {
 }
 
 /-- The release of our lean4game fork that the game is built against (as in `.devcontainer`). -/
-def gameServerRelease : String := "stg4-v4"
+def gameServerRelease : String := "stg4-v5"
 
 /--
 Use the GameServer version from github: our fork, elonblonz/lean4game.
