@@ -45,7 +45,7 @@ this repository:
 ```sh
 lake exe cache get   # download prebuilt Mathlib
 lake build
-git clone --depth 1 --branch stg4-v5 https://github.com/elonblonz/lean4game.git ../lean4game
+git clone --depth 1 --branch stg4-v6 https://github.com/elonblonz/lean4game.git ../lean4game
 cd ../lean4game && npm install && npm start
 ```
 
@@ -103,7 +103,7 @@ completed proof written out, with a journal and LaTeX export), a hint ladder, a 
 keyboard navigation, faster Lean start-up, and fixes to level
 navigation and submitting commands. The Docker image builds a fixed release of it, the tag
 set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
-(currently `stg4-v5`), so every build gets the same engine. The game's levels are compiled
+(currently `stg4-v6`), so every build gets the same engine. The game's levels are compiled
 against the Lean server of the same release (`gameServerRelease` in `lakefile.lean`). To
 build against another engine,
 e.g. a branch you are working on:
