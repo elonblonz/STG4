@@ -16,15 +16,18 @@ def LocalGameServer : Dependency := {
   opts := ∅
 }
 
+/-- The release of our lean4game fork that the game is built against (as in `.devcontainer`). -/
+def gameServerRelease : String := "stg4-v4"
+
 /--
-Use the GameServer version from github.
+Use the GameServer version from github: our fork, elonblonz/lean4game.
 Deactivate local version with `lake update -R`.
 -/
 def RemoteGameServer : Dependency := {
   name := `GameServer
   scope := "hhu-adam"
-  src? := DependencySrc.git "https://github.com/leanprover-community/lean4game.git" leanVersion "server"
-  version := .git leanVersion
+  src? := DependencySrc.git "https://github.com/elonblonz/lean4game.git" gameServerRelease "server"
+  version := .git gameServerRelease
   opts := ∅
 }
 
