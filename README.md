@@ -45,7 +45,7 @@ this repository:
 ```sh
 lake exe cache get   # download prebuilt Mathlib
 lake build
-git clone --depth 1 --branch stg4-v2 https://github.com/elonblonz/lean4game.git ../lean4game
+git clone --depth 1 --branch stg4-v3 https://github.com/elonblonz/lean4game.git ../lean4game
 cd ../lean4game && npm install && npm start
 ```
 
@@ -98,10 +98,11 @@ Strings that were drafted without native-speaker review are listed in
 The game's UI comes from the [lean4game](https://github.com/leanprover-community/lean4game)
 engine, not from this repository. We use our fork,
 [elonblonz/lean4game](https://github.com/elonblonz/lean4game), branch `stg4-ui`: upstream
-plus dark mode, the phone and tablet layout, the visual refresh, and fixes to level
+plus dark mode, the phone and tablet layout, the visual refresh, written proofs (each
+completed proof written out, with a journal and LaTeX export), and fixes to level
 navigation and submitting commands. The Docker image builds a fixed release of it, the tag
 set as `LEAN4GAME_REF` in `.devcontainer/docker-compose.yml` and `.devcontainer/Dockerfile`
-(currently `stg4-v2`), so every build gets the same engine. To build against another engine,
+(currently `stg4-v3`), so every build gets the same engine. To build against another engine,
 e.g. a branch you are working on:
 
 ```sh
