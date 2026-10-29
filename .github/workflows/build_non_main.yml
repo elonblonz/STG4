@@ -18,6 +18,7 @@ jobs:
         with:
           use-github-cache: false
       # `lake build` regenerates the English template; it must match the committed one, or the
-      # translations were updated against stale strings.
+      # translations were updated against stale strings. (Its creation date changes daily, so
+      # that line doesn't count.)
       - name: Check that .i18n/en/Game.pot is up to date
-        run: git diff --exit-code -- .i18n/en/Game.pot || { echo "::error::Rebuild the game and update the translations (see README)"; exit 1; }
+        run: git diff --exit-code -I '^"POT-Creation-Date: ' -- .i18n/en/Game.pot || { echo "::error::Rebuild the game and update the translations (see README)"; exit 1; }
